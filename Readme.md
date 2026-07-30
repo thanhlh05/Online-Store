@@ -2,7 +2,7 @@
 
 ## 1. Tổng quan dự án
 
-Kiểm Chứng Phần Mềm - Online Shopping Store là một web bán hàng trực tuyến được xây dựng theo mô hình Full-stack, bao gồm phần Backend cung cấp REST API và phần Frontend cung cấp giao diện web cho người dùng.
+Kiểm Chứng Phần Mềm - Online Shopping Store là một ứng dung web bán hàng trực tuyến được xây dựng theo mô hình Full-stack, bao gồm phần Backend cung cấp REST API và phần Frontend cung cấp giao diện web cho người dùng.
 
 Dự án được tổ chức thành hai thành phần chính là Backend và Frontend. Ứng dụng có thể được chạy trực tiếp trên môi trường local hoặc triển khai bằng Docker.
 
