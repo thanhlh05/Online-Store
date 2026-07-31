@@ -1,0 +1,57 @@
+name: CI Pipeline (Build & Test)
+
+# Kích hoạt khi có code đẩy lên nhánh main hoặc dev
+on:
+  push:
+    branches: [ "main", "dev" ]
+  pull_request:
+    branches: [ "main", "dev" ]
+
+jobs:
+  # 1. KIỂM THỬ BACKEND
+  backend-test:
+    name: Backend Test (Java)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend # Chỉ định thư mục chứa backend
+    
+    steps:
+      - name: Lấy code từ GitHub về máy ảo
+        uses: actions/checkout@v4
+
+      - name: Cài đặt Java JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Chạy Unit Test Backend
+        # Lệnh này sẽ tải thư viện maven và chạy các file test trong thư mục src/test
+        run: mvn clean test
+
+  # 2. KIỂM THỬ FRONTEND
+  frontend-test:
+    name: Frontend Build (Node.js)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend # Chỉ định thư mục chứa frontend
+
+    steps:
+      - name: Lấy code từ GitHub về máy ảo
+        uses: actions/checkout@v4
+
+      - name: Cài đặt Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: './frontend/package-lock.json'
+
+      - name: Cài đặt các thư viện Frontend
+        run: npm install
+
+      - name: Kiểm tra Build Code (Đảm bảo không lỗi cú pháp)
+        run: npm run build

@@ -1,0 +1,26 @@
+name: CD Pipeline (Deploy to Production)
+
+# Chỉ kích hoạt khi code được GỘP (merge/push) vào đúng nhánh main
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Lấy code mới nhất
+        uses: actions/checkout@v4
+
+      - name: Giả lập quá trình Deploy (Kiểm tra Docker Compose)
+        # Bước này đảm bảo file docker-compose của bạn hợp lệ, không bị lỗi khi đưa lên server
+        run: |
+          echo "Bắt đầu quá trình Deploy lên Server..."
+          docker compose build
+          echo "Deploy thành công! Hệ thống sẵn sàng."
+          
+      # LƯU Ý CHO BẠN: 
+      # Nếu sau này môn học yêu cầu deploy lên Server VPS thật (AWS, Azure), 
+      # bạn sẽ thêm actions SSH vào đây (như appleboy/ssh-action).
