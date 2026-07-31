@@ -1,6 +1,5 @@
 name: CD Pipeline (Deploy to Production)
 
-# Chỉ kích hoạt khi code được GỘP (merge/push) vào đúng nhánh main
 on:
   push:
     branches: [ "main" ]
@@ -11,16 +10,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Lấy code mới nhất
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Giả lập quá trình Deploy (Kiểm tra Docker Compose)
-        # Bước này đảm bảo file docker-compose của bạn hợp lệ, không bị lỗi khi đưa lên server
+      - name: Cài đặt Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Build Frontend chuẩn bị cho Docker
+        run: |
+          cd frontend
+          npm install
+          npm run build
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
+
+      - name: Giả lập quá trình Deploy (Docker Compose Build)
         run: |
           echo "Bắt đầu quá trình Deploy lên Server..."
           docker compose build
           echo "Deploy thành công! Hệ thống sẵn sàng."
-          
-      # LƯU Ý CHO BẠN: 
-      # Nếu sau này môn học yêu cầu deploy lên Server VPS thật (AWS, Azure), 
-      # bạn sẽ thêm actions SSH vào đây (như appleboy/ssh-action).
