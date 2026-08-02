@@ -277,7 +277,7 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "text/plain"
               }
             ],
             "body": {
@@ -285,7 +285,7 @@
               "raw": "2",
               "options": {
                 "raw": {
-                  "language": "json"
+                  "language": "text"
                 }
               }
             },
@@ -412,7 +412,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/order?page=1&size=10",
+              "raw": "{{base_url}}/order?page=0&size=10",
               "host": [
                 "{{base_url}}"
               ],
@@ -422,7 +422,7 @@
               "query": [
                 {
                   "key": "page",
-                  "value": "1"
+                  "value": "0"
                 },
                 {
                   "key": "size",
