@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "599c0538-b7e7-4747-9e8f-71df79972dbb",
+    "_postman_id": "df75e2ad-f8b4-4181-bb88-72bcd403b2ab",
     "name": "OnlineShoppingStore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "56876251",
-    "_collection_link": "https://go.postman.co/collection/56876251-599c0538-b7e7-4747-9e8f-71df79972dbb?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/56876251-df75e2ad-f8b4-4181-bb88-72bcd403b2ab?source=collection_link"
   },
   "item": [
     {
@@ -21,13 +21,10 @@
                   "    pm.response.to.have.status(200);\r",
                   "});\r",
                   "\r",
-                  "var jsonData = pm.response.json();\r",
-                  "var token = jsonData.token || jsonData.jwt;\r",
-                  "\r",
-                  "if (token) {\r",
-                  "    pm.environment.set(\"customer_token\", token);\r",
-                  "    pm.environment.set(\"token\", token);\r",
-                  "    console.log(\"Saved customer token.\");\r",
+                  "// Tự động bóc tách Token từ kết quả và lưu vào biến môi trường 'token'\r",
+                  "if (pm.response.code === 200) {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.environment.set(\"token\", jsonData.token);\r",
                   "}"
                 ],
                 "type": "text/javascript",
@@ -71,12 +68,10 @@
                   "    pm.response.to.have.status(200);\r",
                   "});\r",
                   "\r",
-                  "var jsonData = pm.response.json();\r",
-                  "var token = jsonData.token || jsonData.jwt;\r",
-                  "\r",
-                  "if (token) {\r",
-                  "    pm.environment.set(\"employee_token\", token);\r",
-                  "    console.log(\"Saved employee token.\");\r",
+                  "// Tự động bóc tách Token từ kết quả và lưu vào biến môi trường 'token'\r",
+                  "if (pm.response.code === 200) {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.environment.set(\"token\", jsonData.token);\r",
                   "}"
                 ],
                 "type": "text/javascript",
@@ -108,16 +103,429 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Manager Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "// Tự động bóc tách Token từ kết quả và lưu vào biến môi trường 'token'\r",
+                  "if (pm.response.code === 200) {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.environment.set(\"token\", jsonData.token);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"manager1@email.com\",\r\n  \"password\": \"123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"testuser1@email.com\",\r\n  \"password\": \"123\",\r\n  \"name\": \"Test User\",\r\n  \"phone\": \"0987654321\",\r\n  \"address\": \"123 Test Street\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile/customer1@email.com",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profile",
+                "customer1@email.com"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"customer1@email.com\",\r\n  \"password\": \"123\",\r\n  \"name\": \"Customer 1 Updated\",\r\n  \"phone\": \"0123456789\",\r\n  \"address\": \"123 Main St, New City\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profile"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
     {
       "name": "Product",
-      "item": []
+      "item": [
+        {
+          "name": "Get All Products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/product?page=1&size=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "product"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product Detail",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/product/B0001",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "product",
+                "B0001"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add New Product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": \"B000929\",\r\n  \"productName\": \"Angular in Action\",\r\n  \"productPrice\": 40.00,\r\n  \"productStock\": 50,\r\n  \"productDescription\": \"Book for learning Angular\",\r\n  \"productIcon\": \"https://via.placeholder.com/150\",\r\n  \"categoryType\": 0,\r\n  \"productStatus\": 0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/seller/product/new",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "seller",
+                "product",
+                "new"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Edit Product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": \"B0001\",\r\n  \"productName\": \"Core Java - 2nd Edition\",\r\n  \"productPrice\": 35.00,\r\n  \"productStock\": 100,\r\n  \"productDescription\": \"Updated Java book\",\r\n  \"productIcon\": \"https://via.placeholder.com/150\",\r\n  \"categoryType\": 0,\r\n  \"productStatus\": 0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/seller/product/B0001/edit",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "seller",
+                "product",
+                "B0001",
+                "edit"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/seller/product/B0005/delete",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "seller",
+                "product",
+                "B0005",
+                "delete"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     },
     {
       "name": "Category",
-      "item": []
+      "item": [
+        {
+          "name": "Get Category",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "var jsonData = pm.response.json();\r",
+                  "var token = jsonData.token || jsonData.jwt;\r",
+                  "\r",
+                  "if (token) {\r",
+                  "    pm.environment.set(\"customer_token\", token);\r",
+                  "    pm.environment.set(\"token\", token);\r",
+                  "    console.log(\"Saved customer token.\");\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/category/0?page=1&size=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "category",
+                "0"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     },
     {
       "name": "Cart",
@@ -129,7 +537,9 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.response.to.have.status(200);"
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -139,8 +549,14 @@
           ],
           "request": {
             "auth": {
-              "type": "inherit",
-              "inherit": []
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
             },
             "method": "GET",
             "header": [],
@@ -163,7 +579,9 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.response.to.have.status(200);"
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -173,8 +591,14 @@
           ],
           "request": {
             "auth": {
-              "type": "inherit",
-              "inherit": []
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
             },
             "method": "POST",
             "header": [
@@ -211,7 +635,9 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.response.to.have.status(200);"
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -221,8 +647,14 @@
           ],
           "request": {
             "auth": {
-              "type": "inherit",
-              "inherit": []
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
             },
             "method": "POST",
             "header": [
@@ -260,7 +692,9 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.response.to.have.status(200);"
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -270,14 +704,20 @@
           ],
           "request": {
             "auth": {
-              "type": "inherit",
-              "inherit": []
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
             },
             "method": "PUT",
             "header": [
               {
                 "key": "Content-Type",
-                "value": "text/plain"
+                "value": "application/json"
               }
             ],
             "body": {
@@ -285,7 +725,7 @@
               "raw": "2",
               "options": {
                 "raw": {
-                  "language": "text"
+                  "language": "json"
                 }
               }
             },
@@ -315,7 +755,9 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.response.to.have.status(200);"
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -325,8 +767,14 @@
           ],
           "request": {
             "auth": {
-              "type": "inherit",
-              "inherit": []
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
             },
             "method": "DELETE",
             "header": [],
@@ -356,7 +804,9 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.response.to.have.status(200);"
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -366,8 +816,14 @@
           ],
           "request": {
             "auth": {
-              "type": "inherit",
-              "inherit": []
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
             },
             "method": "POST",
             "header": [],
@@ -396,7 +852,9 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.response.to.have.status(200);"
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -404,15 +862,33 @@
               }
             }
           ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
             "auth": {
-              "type": "inherit",
-              "inherit": []
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
             },
             "method": "GET",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "{{base_url}}/order?page=0&size=10",
+              "raw": "{{base_url}}/order?page=1&size=10",
               "host": [
                 "{{base_url}}"
               ],
@@ -422,7 +898,7 @@
               "query": [
                 {
                   "key": "page",
-                  "value": "0"
+                  "value": "1"
                 },
                 {
                   "key": "size",
@@ -440,7 +916,9 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.response.to.have.status(200);"
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -450,25 +928,25 @@
           ],
           "request": {
             "auth": {
-              "type": "inherit",
-              "inherit": []
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
             },
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/order/1",
+              "raw": "{{base_url}}/order/7",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "order",
-                "1"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "1"
-                }
+                "7"
               ]
             }
           },
@@ -481,7 +959,9 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.response.to.have.status(200);"
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -491,26 +971,26 @@
           ],
           "request": {
             "auth": {
-              "type": "inherit",
-              "inherit": []
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
             },
             "method": "PATCH",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/order/cancel/1",
+              "raw": "{{base_url}}/order/cancel/13",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "order",
                 "cancel",
-                "1"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "1"
-                }
+                "13"
               ]
             }
           },
@@ -523,7 +1003,9 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.response.to.have.status(200);"
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -545,20 +1027,14 @@
             "method": "PATCH",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/order/finish/1",
+              "raw": "{{base_url}}/order/finish/7",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "order",
                 "finish",
-                "1"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "1"
-                }
+                "7"
               ]
             }
           },
@@ -572,7 +1048,7 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{customer_token}}",
+        "value": "{{token}}",
         "type": "string"
       }
     ]
