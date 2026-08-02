@@ -1,0 +1,31 @@
+# 1. Cấu hình chung: Tự động phát hiện các file văn bản
+* text=auto
+
+# 2. Mã nguồn Java (Backend Spring Boot - 49.9%)
+*.java text eol=lf
+*.properties text eol=lf
+*.xml text eol=lf
+*.gradle text eol=lf
+
+# 3. Mã nguồn TypeScript & JavaScript (Frontend Angular - 32.7%)
+*.ts text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+
+# 4. Giao diện HTML & CSS/SCSS (Frontend Angular - 17%)
+*.html text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+
+# 5. Tài liệu & File cấu hình CI/CD / Postman
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# 6. Ép buộc KHÔNG đụng vào các file ảnh / nén (Binary)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.jar binary
+*.zip binary
