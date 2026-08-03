@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "df75e2ad-f8b4-4181-bb88-72bcd403b2ab",
+    "_postman_id": "625c6737-be83-48fc-9b41-24d5ec11caea",
     "name": "OnlineShoppingStore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "56876251",
-    "_collection_link": "https://go.postman.co/collection/56876251-df75e2ad-f8b4-4181-bb88-72bcd403b2ab?source=collection_link"
+    "_exporter_id": "48754664",
+    "_collection_link": "https://go.postman.co/collection/48754664-625c6737-be83-48fc-9b41-24d5ec11caea?source=collection_link"
   },
   "item": [
     {
@@ -24,7 +24,7 @@
                   "// Tự động bóc tách Token từ kết quả và lưu vào biến môi trường 'token'\r",
                   "if (pm.response.code === 200) {\r",
                   "    var jsonData = pm.response.json();\r",
-                  "    pm.environment.set(\"token\", jsonData.token);\r",
+                  "    pm.environment.set(\"customerToken\", jsonData.token);\r",
                   "}"
                 ],
                 "type": "text/javascript",
@@ -71,7 +71,7 @@
                   "// Tự động bóc tách Token từ kết quả và lưu vào biến môi trường 'token'\r",
                   "if (pm.response.code === 200) {\r",
                   "    var jsonData = pm.response.json();\r",
-                  "    pm.environment.set(\"token\", jsonData.token);\r",
+                  "    pm.environment.set(\"employeeToken\", jsonData.token);\r",
                   "}"
                 ],
                 "type": "text/javascript",
@@ -118,7 +118,7 @@
                   "// Tự động bóc tách Token từ kết quả và lưu vào biến môi trường 'token'\r",
                   "if (pm.response.code === 200) {\r",
                   "    var jsonData = pm.response.json();\r",
-                  "    pm.environment.set(\"token\", jsonData.token);\r",
+                  "    pm.environment.set(\"managerToken\", jsonData.token);\r",
                   "}"
                 ],
                 "type": "text/javascript",
@@ -199,8 +199,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Should return 401 Unauthorized\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -210,6 +210,9 @@
             }
           ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "GET",
             "header": [],
             "url": {
@@ -232,8 +235,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Should return 401 Unauthorized\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -243,6 +246,9 @@
             }
           ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "PUT",
             "header": [],
             "body": {
@@ -353,8 +359,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Employee cannot create product\", function () {\r",
+                  "    pm.response.to.have.status(403);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -364,6 +370,16 @@
             }
           ],
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{employeeToken}}",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "POST",
             "header": [],
             "body": {
@@ -396,8 +412,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Customer cannot create product\", function () {\r",
+                  "    pm.response.to.have.status(403);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -407,6 +423,16 @@
             }
           ],
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{customerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "PUT",
             "header": [],
             "body": {
@@ -440,8 +466,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Employee cannot delete product\", function () {\r",
+                  "    pm.response.to.have.status(403);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -451,6 +477,16 @@
             }
           ],
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{employeeToken}}",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "DELETE",
             "header": [],
             "url": {
@@ -537,8 +573,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Manager cannot access cart\", function () {\r",
+                  "    pm.response.to.have.status(403);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -553,7 +589,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{token}}",
+                  "value": "{{managerToken}}",
                   "type": "string"
                 }
               ]
@@ -579,8 +615,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Manager cannot access cart\", function () {\r",
+                  "    pm.response.to.have.status(403);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -595,7 +631,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{token}}",
+                  "value": "{{managerToken}}",
                   "type": "string"
                 }
               ]
@@ -635,8 +671,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Manager cannot access cart\", function () {\r",
+                  "    pm.response.to.have.status(403);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -651,7 +687,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{token}}",
+                  "value": "{{managerToken}}",
                   "type": "string"
                 }
               ]
@@ -692,8 +728,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Manager cannot access cart\", function () {\r",
+                  "    pm.response.to.have.status(403);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -708,7 +744,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{token}}",
+                  "value": "{{managerToken}}",
                   "type": "string"
                 }
               ]
@@ -755,8 +791,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Manager cannot access cart\", function () {\r",
+                  "    pm.response.to.have.status(403);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -771,7 +807,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{token}}",
+                  "value": "{{managerToken}}",
                   "type": "string"
                 }
               ]
@@ -804,8 +840,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Manager cannot checkout\", function () {\r",
+                  "    pm.response.to.have.status(403);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -820,7 +856,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{token}}",
+                  "value": "{{managerToken}}",
                   "type": "string"
                 }
               ]
@@ -852,8 +888,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Should return 401 Unauthorized\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -867,14 +903,7 @@
           },
           "request": {
             "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{token}}",
-                  "type": "string"
-                }
-              ]
+              "type": "noauth"
             },
             "method": "GET",
             "header": [],
@@ -916,8 +945,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Should return 401 Unauthorized\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -928,14 +957,7 @@
           ],
           "request": {
             "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{token}}",
-                  "type": "string"
-                }
-              ]
+              "type": "noauth"
             },
             "method": "GET",
             "header": [],
@@ -959,8 +981,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Should return 401 Unauthorized\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -971,14 +993,7 @@
           ],
           "request": {
             "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{token}}",
-                  "type": "string"
-                }
-              ]
+              "type": "noauth"
             },
             "method": "PATCH",
             "header": [],
@@ -1003,8 +1018,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Customer cannot finish order\", function () {\r",
+                  "    pm.response.to.have.status(403);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -1019,7 +1034,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{employee_token}}",
+                  "value": "{{customerToken}}",
                   "type": "string"
                 }
               ]
