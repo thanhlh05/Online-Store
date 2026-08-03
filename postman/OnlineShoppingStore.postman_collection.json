@@ -1,565 +1,750 @@
 {
   "info": {
-    "_postman_id": "625c6737-be83-48fc-9b41-24d5ec11caea",
+    "_postman_id": "c345953e-1e3c-4e80-8ff1-9315e6136776",
     "name": "OnlineShoppingStore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "48754664",
-    "_collection_link": "https://go.postman.co/collection/48754664-625c6737-be83-48fc-9b41-24d5ec11caea?source=collection_link"
+    "_exporter_id": "56876251",
+    "_collection_link": "https://go.postman.co/collection/56876251-c345953e-1e3c-4e80-8ff1-9315e6136776?source=collection_link"
   },
   "item": [
     {
       "name": "User",
       "item": [
         {
-          "name": "Customer Login",
-          "event": [
+          "name": "1. Positive Cases",
+          "item": [
             {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
-                  "});\r",
-                  "\r",
-                  "// Tự động bóc tách Token từ kết quả và lưu vào biến môi trường 'token'\r",
-                  "if (pm.response.code === 200) {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.environment.set(\"customerToken\", jsonData.token);\r",
-                  "}"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"username\": \"customer1@email.com\",\r\n  \"password\": \"123\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
+              "name": "Customer Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Login Customer thành công - 200 OK\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "if (pm.response.code === 200) {",
+                      "    var res = pm.response.json();",
+                      "    pm.environment.set(\"customer_token\", res.token || res.jwt);",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
                 }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/login",
-              "host": [
-                "{{base_url}}"
               ],
-              "path": [
-                "login"
-              ]
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"customer1@email.com\",\n  \"password\": \"123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Employee Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Login Employee thành công - 200 OK\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "if (pm.response.code === 200) {",
+                      "    var res = pm.response.json();",
+                      "    pm.environment.set(\"employee_token\", res.token || res.jwt);",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"employee1@email.com\",\n  \"password\": \"123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Manager Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Login Manager thành công - 200 OK\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "if (pm.response.code === 200) {",
+                      "    var res = pm.response.json();",
+                      "    pm.environment.set(\"manager_token\", res.token || res.jwt);",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"manager1@email.com\",\n  \"password\": \"123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Register",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Đăng ký tài khoản - 200 OK\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"testuser1@email.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0987654321\",\n  \"address\": \"123 Test Street\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Profile (Chính chủ - 200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Xem đúng Profile - 200 OK\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "    pm.expect(pm.response.json().email).to.exist;",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/profile/customer1@email.com",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "profile",
+                    "customer1@email.com"
+                  ]
+                }
+              },
+              "response": []
             }
-          },
-          "response": []
+          ]
         },
         {
-          "name": "Employee Login",
-          "event": [
+          "name": "2. Negative & Security",
+          "item": [
             {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
-                  "});\r",
-                  "\r",
-                  "// Tự động bóc tách Token từ kết quả và lưu vào biến môi trường 'token'\r",
-                  "if (pm.response.code === 200) {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.environment.set(\"employeeToken\", jsonData.token);\r",
-                  "}"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"username\": \"employee1@email.com\",\r\n  \"password\": \"123\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
+              "name": "Negative Login (Sai pass - 401)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Login sai password - 401 Unauthorized\", function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
                 }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/login",
-              "host": [
-                "{{base_url}}"
               ],
-              "path": [
-                "login"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Manager Login",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
-                  "});\r",
-                  "\r",
-                  "// Tự động bóc tách Token từ kết quả và lưu vào biến môi trường 'token'\r",
-                  "if (pm.response.code === 200) {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.environment.set(\"managerToken\", jsonData.token);\r",
-                  "}"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"username\": \"manager1@email.com\",\r\n  \"password\": \"123\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"customer1@email.com\",\n  \"password\": \"wrongpass\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "login"
+                  ]
                 }
-              }
+              },
+              "response": []
             },
-            "url": {
-              "raw": "{{base_url}}/login",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "login"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Register",
-          "event": [
             {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"email\": \"testuser1@email.com\",\r\n  \"password\": \"123\",\r\n  \"name\": \"Test User\",\r\n  \"phone\": \"0987654321\",\r\n  \"address\": \"123 Test Street\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
+              "name": "Get Profile (Khác email - 400)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Xem sai Profile bị chặn - Status 400 Bad Request\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
                 }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/register",
-              "host": [
-                "{{base_url}}"
               ],
-              "path": [
-                "register"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get Profile",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Should return 401 Unauthorized\", function () {\r",
-                  "    pm.response.to.have.status(401);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/profile/customer1@email.com",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "profile",
-                "customer1@email.com"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Update Profile",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Should return 401 Unauthorized\", function () {\r",
-                  "    pm.response.to.have.status(401);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"email\": \"customer1@email.com\",\r\n  \"password\": \"123\",\r\n  \"name\": \"Customer 1 Updated\",\r\n  \"phone\": \"0123456789\",\r\n  \"address\": \"123 Main St, New City\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/profile/otheruser@email.com",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "profile",
+                    "otheruser@email.com"
+                  ]
                 }
-              }
+              },
+              "response": []
             },
-            "url": {
-              "raw": "{{base_url}}/profile",
-              "host": [
-                "{{base_url}}"
+            {
+              "name": "Update Profile (Khác email body - 400)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Sửa Profile email khác token - Status 400 Bad Request\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
               ],
-              "path": [
-                "profile"
-              ]
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"otheruser@email.com\",\n  \"password\": \"123\",\n  \"name\": \"Hacker\",\n  \"phone\": \"0123456789\",\n  \"address\": \"Unknown St\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/profile",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "profile"
+                  ]
+                }
+              },
+              "response": []
             }
-          },
-          "response": []
+          ]
         }
       ]
     },
     {
-      "name": "Product",
+      "name": "Product & Category",
       "item": [
         {
-          "name": "Get All Products",
-          "event": [
+          "name": "1. Positive Cases",
+          "item": [
             {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/product?page=1&size=10",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "product"
-              ],
-              "query": [
+              "name": "Get All Products (200)",
+              "event": [
                 {
-                  "key": "page",
-                  "value": "1"
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Lấy danh sách sản phẩm - 200 OK\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/product?page=1&size=10",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "product"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Product Detail (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Xem chi tiết sản phẩm - 200 OK\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/product/B0001",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "product",
+                    "B0001"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Category (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Lấy danh mục - 200 OK\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/category/0?page=1&size=10",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "category",
+                    "0"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add New Product (By Manager - 200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Manager thêm SP thành công - 200 OK\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{manager_token}}",
+                      "type": "string"
+                    }
+                  ]
                 },
-                {
-                  "key": "size",
-                  "value": "10"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get Product Detail",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/product/B0001",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "product",
-                "B0001"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Add New Product",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Employee cannot create product\", function () {\r",
-                  "    pm.response.to.have.status(403);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{employeeToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"productId\": \"B000929\",\r\n  \"productName\": \"Angular in Action\",\r\n  \"productPrice\": 40.00,\r\n  \"productStock\": 50,\r\n  \"productDescription\": \"Book for learning Angular\",\r\n  \"productIcon\": \"https://via.placeholder.com/150\",\r\n  \"categoryType\": 0,\r\n  \"productStatus\": 0\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/seller/product/new",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "seller",
-                "product",
-                "new"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Edit Product",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Customer cannot create product\", function () {\r",
-                  "    pm.response.to.have.status(403);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{customerToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"productId\": \"B0001\",\r\n  \"productName\": \"Core Java - 2nd Edition\",\r\n  \"productPrice\": 35.00,\r\n  \"productStock\": 100,\r\n  \"productDescription\": \"Updated Java book\",\r\n  \"productIcon\": \"https://via.placeholder.com/150\",\r\n  \"categoryType\": 0,\r\n  \"productStatus\": 0\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/seller/product/B0001/edit",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "seller",
-                "product",
-                "B0001",
-                "edit"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Delete Product",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Employee cannot delete product\", function () {\r",
-                  "    pm.response.to.have.status(403);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{employeeToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/seller/product/B0005/delete",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "seller",
-                "product",
-                "B0005",
-                "delete"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Category",
-      "item": [
-        {
-          "name": "Get Category",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
-                  "});\r",
-                  "\r",
-                  "var jsonData = pm.response.json();\r",
-                  "var token = jsonData.token || jsonData.jwt;\r",
-                  "\r",
-                  "if (token) {\r",
-                  "    pm.environment.set(\"customer_token\", token);\r",
-                  "    pm.environment.set(\"token\", token);\r",
-                  "    console.log(\"Saved customer token.\");\r",
-                  "}"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/category/0?page=1&size=10",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "category",
-                "0"
-              ],
-              "query": [
-                {
-                  "key": "page",
-                  "value": "1"
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"productId\": \"B000119\",\n  \"productName\": \"Angular in Action\",\n  \"productPrice\": 40.00,\n  \"productStock\": 50,\n  \"productDescription\": \"Book for learning Angular\",\n  \"productIcon\": \"https://via.placeholder.com/150\",\n  \"categoryType\": 0,\n  \"productStatus\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
-                {
-                  "key": "size",
-                  "value": "10"
+                "url": {
+                  "raw": "{{base_url}}/seller/product/new",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "seller",
+                    "product",
+                    "new"
+                  ]
                 }
-              ]
+              },
+              "response": []
+            },
+            {
+              "name": "Edit Product (By Employee/Manager - 200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Sửa sản phẩm thành công - 200 OK\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employee_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"productId\": \"B0001\",\n  \"productName\": \"Core Java - 2nd Edition\",\n  \"productPrice\": 35.00,\n  \"productStock\": 100,\n  \"productDescription\": \"Updated Java book\",\n  \"productIcon\": \"https://via.placeholder.com/150\",\n  \"categoryType\": 0,\n  \"productStatus\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/seller/product/B0001/edit",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "seller",
+                    "product",
+                    "B0001",
+                    "edit"
+                  ]
+                }
+              },
+              "response": []
             }
-          },
-          "response": []
+          ]
+        },
+        {
+          "name": "2. Negative & Security",
+          "item": [
+            {
+              "name": "Add New Product (By Employee - 403)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Employee không có quyền thêm SP - Status 403 Forbidden\", function () {",
+                      "    pm.response.to.have.status(403);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employee_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"productId\": \"B000120\",\n  \"productName\": \"Forbidden Book\",\n  \"productPrice\": 40.00,\n  \"productStock\": 50,\n  \"productDescription\": \"Book for learning Angular\",\n  \"productIcon\": \"https://via.placeholder.com/150\",\n  \"categoryType\": 0,\n  \"productStatus\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/seller/product/new",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "seller",
+                    "product",
+                    "new"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add New Product (Trùng ID - 400)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Thêm sản phẩm trùng ID - Status 400 Bad Request\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{manager_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"productId\": \"B0001\",\n  \"productName\": \"Duplicate Book\",\n  \"productPrice\": 40.00,\n  \"productStock\": 50,\n  \"productDescription\": \"Book\",\n  \"productIcon\": \"https://via.placeholder.com/150\",\n  \"categoryType\": 0,\n  \"productStatus\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/seller/product/new",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "seller",
+                    "product",
+                    "new"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Product (By Employee - 403)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Employee không được xóa sản phẩm - Status 403 Forbidden\", function () {",
+                      "    pm.response.to.have.status(403);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employee_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/seller/product/B0005/delete",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "seller",
+                    "product",
+                    "B0005",
+                    "delete"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
         }
       ]
     },
@@ -567,314 +752,491 @@
       "name": "Cart",
       "item": [
         {
-          "name": "View current cart",
-          "event": [
+          "name": "1. Positive Cases",
+          "item": [
             {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Manager cannot access cart\", function () {\r",
-                  "    pm.response.to.have.status(403);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
+              "name": "View current cart (By Customer - 200)",
+              "event": [
                 {
-                  "key": "token",
-                  "value": "{{managerToken}}",
-                  "type": "string"
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Customer xem giỏ hàng - Status 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
                 }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/cart",
-              "host": [
-                "{{base_url}}"
               ],
-              "path": [
-                "cart"
-              ]
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add product to cart (By Customer - 200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Customer thêm SP vào giỏ hàng - Status 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"productId\": \"B0001\", \"quantity\": 2}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/cart/add",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "add"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Merge cart (By Customer - 200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Customer merge cart - Status 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\"productId\": \"B0001\", \"count\": 1}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update quantity (Raw Number - 200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Cập nhật số lượng dạng số - Status 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "2",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/cart/2",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Remove product from cart (By Customer - 200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Xóa SP khỏi giỏ hàng - Status 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/cart/B0001",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "B0001"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Place order (By Customer - 200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Customer checkout thành công - Status 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/cart/checkout",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "checkout"
+                  ]
+                }
+              },
+              "response": []
             }
-          },
-          "response": []
+          ]
         },
         {
-          "name": "Merge cart from Local/Cookie",
-          "event": [
+          "name": "2. Negative & Security",
+          "item": [
             {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Manager cannot access cart\", function () {\r",
-                  "    pm.response.to.have.status(403);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
+              "name": "View cart (By Manager - 403)",
+              "event": [
                 {
-                  "key": "token",
-                  "value": "{{managerToken}}",
-                  "type": "string"
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Manager không được xem cart - Status 403 Forbidden\", function () {",
+                      "    pm.response.to.have.status(403);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
                 }
-              ]
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "[{\"productId\": \"B0001\", \"count\": 1}]",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/cart",
-              "host": [
-                "{{base_url}}"
               ],
-              "path": [
-                "cart"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Add a product to the cart",
-          "event": [
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{manager_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart"
+                  ]
+                }
+              },
+              "response": []
+            },
             {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Manager cannot access cart\", function () {\r",
-                  "    pm.response.to.have.status(403);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
+              "name": "Add to cart (By Manager - 403)",
+              "event": [
                 {
-                  "key": "token",
-                  "value": "{{managerToken}}",
-                  "type": "string"
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Manager không được add cart - Status 403 Forbidden\", function () {",
+                      "    pm.response.to.have.status(403);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
                 }
-              ]
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\"productId\": \"B0001\", \"quantity\": 2}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/cart/add",
-              "host": [
-                "{{base_url}}"
               ],
-              "path": [
-                "cart",
-                "add"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Update quantity",
-          "event": [
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{manager_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"productId\": \"B0001\", \"quantity\": 2}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/cart/add",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "add"
+                  ]
+                }
+              },
+              "response": []
+            },
             {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Manager cannot access cart\", function () {\r",
-                  "    pm.response.to.have.status(403);\r",
-                  "});"
+              "name": "Update quantity (Gửi JSON sai định dạng - 400)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Gửi JSON vào API số nguyên - Status 400 Bad Request\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
                 ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{managerToken}}",
-                  "type": "string"
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"quantity\": 2}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/cart/2",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "2"
+                  ]
                 }
-              ]
+              },
+              "response": []
             },
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "2",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/cart/B0001",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "cart",
-                "B0001"
-              ],
-              "variable": [
-                {
-                  "key": "itemId",
-                  "value": "B0001"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Remove product from the cart",
-          "event": [
             {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Manager cannot access cart\", function () {\r",
-                  "    pm.response.to.have.status(403);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
+              "name": "Place order (By Manager - 403)",
+              "event": [
                 {
-                  "key": "token",
-                  "value": "{{managerToken}}",
-                  "type": "string"
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Manager không được checkout - Status 403 Forbidden\", function () {",
+                      "    pm.response.to.have.status(403);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
                 }
-              ]
-            },
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/cart/B0001",
-              "host": [
-                "{{base_url}}"
               ],
-              "path": [
-                "cart",
-                "B0001"
-              ],
-              "variable": [
-                {
-                  "key": "itemId",
-                  "value": "B0001"
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{manager_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/cart/checkout",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "checkout"
+                  ]
                 }
-              ]
+              },
+              "response": []
             }
-          },
-          "response": []
-        },
-        {
-          "name": "Place order",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Manager cannot checkout\", function () {\r",
-                  "    pm.response.to.have.status(403);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{managerToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/cart/checkout",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "cart",
-                "checkout"
-              ]
-            }
-          },
-          "response": []
+          ]
         }
       ]
     },
@@ -882,214 +1244,408 @@
       "name": "Order",
       "item": [
         {
-          "name": "List of orders",
-          "event": [
+          "name": "1. Positive Cases",
+          "item": [
             {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Should return 401 Unauthorized\", function () {\r",
-                  "    pm.response.to.have.status(401);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "GET",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/order?page=1&size=10",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "order"
-              ],
-              "query": [
+              "name": "List of orders (By Customer)",
+              "event": [
                 {
-                  "key": "page",
-                  "value": "1"
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Customer lấy danh sách đơn thành công - Status 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
                 },
-                {
-                  "key": "size",
-                  "value": "10"
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/order?page=1&size=10",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ]
                 }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "View order details",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Should return 401 Unauthorized\", function () {\r",
-                  "    pm.response.to.have.status(401);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "noauth"
+              },
+              "response": []
             },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/order/7",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "order",
-                "7"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Cancel order",
-          "event": [
             {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Should return 401 Unauthorized\", function () {\r",
-                  "    pm.response.to.have.status(401);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "PATCH",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/order/cancel/13",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "order",
-                "cancel",
-                "13"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Complete order",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Customer cannot finish order\", function () {\r",
-                  "    pm.response.to.have.status(403);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
+              "name": "List of orders (By Manager)",
+              "event": [
                 {
-                  "key": "token",
-                  "value": "{{customerToken}}",
-                  "type": "string"
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Manager lấy danh sách đơn thành công - Status 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
                 }
-              ]
-            },
-            "method": "PATCH",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/order/finish/7",
-              "host": [
-                "{{base_url}}"
               ],
-              "path": [
-                "order",
-                "finish",
-                "7"
-              ]
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{manager_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/order?page=1&size=10",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "View order details (Đúng chủ đơn - 200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Xem đúng chi tiết đơn của mình - Status 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/order/7",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order",
+                    "7"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Cancel order (Đúng chủ đơn - 200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Hủy đơn của mình thành công - Status 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/order/cancel/13",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order",
+                    "cancel",
+                    "13"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Complete order (By Employee - 200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Nhân viên chốt đơn thành công - Status 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employee_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/order/finish/7",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order",
+                    "finish",
+                    "7"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Complete order (By Manager - 200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Manager chốt đơn thành công - Status 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{manager_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/order/finish/7",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order",
+                    "finish",
+                    "7"
+                  ]
+                }
+              },
+              "response": []
             }
-          },
-          "response": []
+          ]
+        },
+        {
+          "name": "2. Negative & Security",
+          "item": [
+            {
+              "name": "View order details (Sai chủ đơn - 401)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Hệ thống chặn xem đơn người khác - Status 401 Unauthorized\", function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/order/999",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order",
+                    "999"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Cancel order (Sai chủ đơn - 401)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Hệ thống chặn hủy đơn người khác - Status 401 Unauthorized\", function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/order/cancel/999",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order",
+                    "cancel",
+                    "999"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Complete order (By Customer - 403)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Khách hàng không có quyền chốt đơn - Status 403 Forbidden\", function () {",
+                      "    pm.response.to.have.status(403);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/order/finish/7",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order",
+                    "finish",
+                    "7"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
         }
       ]
-    }
-  ],
-  "auth": {
-    "type": "bearer",
-    "bearer": [
-      {
-        "key": "token",
-        "value": "{{token}}",
-        "type": "string"
-      }
-    ]
-  },
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          ""
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          ""
-        ]
-      }
     }
   ]
 }
