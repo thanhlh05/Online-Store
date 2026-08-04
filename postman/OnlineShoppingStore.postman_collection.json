@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "db9558df-9a69-4799-acae-777cb434a5ff",
+    "_postman_id": "291250eb-c998-455a-8d21-80cb77528d01",
     "name": "OnlineShoppingStore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "56876251",
-    "_collection_link": "https://go.postman.co/collection/56876251-db9558df-9a69-4799-acae-777cb434a5ff?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/56876251-291250eb-c998-455a-8d21-80cb77528d01?source=collection_link"
   },
   "item": [
     {
@@ -767,14 +767,14 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "{{base_url}}/seller/product/B000119/delete",
+                  "raw": "{{base_url}}/seller/product/D0001/delete",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "B000119",
+                    "D0001",
                     "delete"
                   ]
                 }
