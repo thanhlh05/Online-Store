@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "c345953e-1e3c-4e80-8ff1-9315e6136776",
+    "_postman_id": "db9558df-9a69-4799-acae-777cb434a5ff",
     "name": "OnlineShoppingStore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "56876251",
-    "_collection_link": "https://go.postman.co/collection/56876251-c345953e-1e3c-4e80-8ff1-9315e6136776?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/56876251-db9558df-9a69-4799-acae-777cb434a5ff?source=collection_link"
   },
   "item": [
     {
@@ -152,6 +152,53 @@
               "response": []
             },
             {
+              "name": "Customer2 Login (dùng cho order thuộc customer2)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Login Customer2 thanh cong - 200 OK\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "if (pm.response.code === 200) {\r",
+                      "    var res = pm.response.json();\r",
+                      "    pm.environment.set(\"customer2_token\", res.token || res.jwt);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"username\": \"customer2@email.com\",\r\n  \"password\": \"123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
               "name": "Register",
               "event": [
                 {
@@ -171,7 +218,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"testuser1@email.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0987654321\",\n  \"address\": \"123 Test Street\"\n}",
+                  "raw": "{\r\n  \"email\": \"testuser_{{$timestamp}}@email.com\",\r\n  \"password\": \"123\",\r\n  \"name\": \"Test User\",\r\n  \"phone\": \"0987654321\",\r\n  \"address\": \"123 Test Street\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -227,6 +274,56 @@
                   "path": [
                     "profile",
                     "customer1@email.com"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Profile (Chính chủ - 200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Cap nhat Profile cua chinh minh thanh cong - 200 OK\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"email\": \"customer1@email.com\",\r\n  \"password\": \"123\",\r\n  \"name\": \"Customer 1 Updated\",\r\n  \"phone\": \"0123456789\",\r\n  \"address\": \"123 Main St, New City\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/profile",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "profile"
                   ]
                 }
               },
@@ -364,6 +461,52 @@
                   ],
                   "path": [
                     "profile"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Register (Email đã tồn tại - Kỳ vọng 400, THỰC TẾ có thể 500 - BUG)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "// LUU Y: API_Spec ghi ro loi phai tra 400, nhung thuc te co the tra 500\r",
+                      "// (bug that da phat hien - backend khong catch duplicate key exception).\r",
+                      "// Giu assert 400 de test tiep tuc bao do (fail) cho toi khi bug duoc fix.\r",
+                      "pm.test(\"Dang ky email da ton tai phai bi tu choi - 400 Bad Request\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"email\": \"customer1@email.com\",\r\n  \"password\": \"123\",\r\n  \"name\": \"Duplicate User\",\r\n  \"phone\": \"0987654321\",\r\n  \"address\": \"123 Test Street\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
                   ]
                 }
               },
@@ -593,6 +736,50 @@
                 }
               },
               "response": []
+            },
+            {
+              "name": "Delete Product (By Manager - 200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Manager xoa san pham thanh cong - 200 OK\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{manager_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/seller/product/B000119/delete",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "seller",
+                    "product",
+                    "B000119",
+                    "delete"
+                  ]
+                }
+              },
+              "response": []
             }
           ]
         },
@@ -739,6 +926,59 @@
                     "product",
                     "B0005",
                     "delete"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Edit Product (By Customer - 403)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Customer khong duoc phep sua san pham - Status 403 Forbidden\", function () {\r",
+                      "    pm.response.to.have.status(403);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"productId\": \"B0001\",\r\n  \"productName\": \"Hacked Edit\",\r\n  \"productPrice\": 1.00,\r\n  \"productStock\": 1,\r\n  \"productDescription\": \"x\",\r\n  \"productIcon\": \"https://via.placeholder.com/150\",\r\n  \"categoryType\": 0,\r\n  \"productStatus\": 0\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/seller/product/B0001/edit",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "seller",
+                    "product",
+                    "B0001",
+                    "edit"
                   ]
                 }
               },
@@ -946,13 +1186,13 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/cart/2",
+                  "raw": "{{base_url}}/cart/B0001",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "cart",
-                    "2"
+                    "B0001"
                   ]
                 }
               },
@@ -1183,13 +1423,13 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/cart/2",
+                  "raw": "{{base_url}}/cart/B0001",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "cart",
-                    "2"
+                    "B0001"
                   ]
                 }
               },
@@ -1231,6 +1471,98 @@
                   "path": [
                     "cart",
                     "checkout"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Merge cart (By Manager - 403)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Manager khong duoc merge cart - Status 403 Forbidden\", function () {\r",
+                      "    pm.response.to.have.status(403);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{manager_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\"productId\": \"B0001\", \"count\": 1}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/cart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Remove product from cart (By Manager - 403)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Manager khong duoc xoa SP khoi cart - Status 403 Forbidden\", function () {\r",
+                      "    pm.response.to.have.status(403);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{manager_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/cart/B0001",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "B0001"
                   ]
                 }
               },
@@ -1375,13 +1707,13 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{base_url}}/order/7",
+                  "raw": "{{base_url}}/order/2147483642",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "order",
-                    "7"
+                    "2147483642"
                   ]
                 }
               },
@@ -1408,7 +1740,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "{{customer_token}}",
+                      "value": "{{customer2_token}}",
                       "type": "string"
                     }
                   ]
@@ -1416,14 +1748,14 @@
                 "method": "PATCH",
                 "header": [],
                 "url": {
-                  "raw": "{{base_url}}/order/cancel/13",
+                  "raw": "{{base_url}}/order/cancel/2147483643",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "order",
                     "cancel",
-                    "13"
+                    "2147483643"
                   ]
                 }
               },
@@ -1458,14 +1790,14 @@
                 "method": "PATCH",
                 "header": [],
                 "url": {
-                  "raw": "{{base_url}}/order/finish/7",
+                  "raw": "{{base_url}}/order/finish/2147483645",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "order",
                     "finish",
-                    "7"
+                    "2147483645"
                   ]
                 }
               },
@@ -1500,14 +1832,14 @@
                 "method": "PATCH",
                 "header": [],
                 "url": {
-                  "raw": "{{base_url}}/order/finish/7",
+                  "raw": "{{base_url}}/order/finish/2147483649",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "order",
                     "finish",
-                    "7"
+                    "2147483649"
                   ]
                 }
               },
@@ -1547,13 +1879,13 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{base_url}}/order/999",
+                  "raw": "{{base_url}}/order/2147483647",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "order",
-                    "999"
+                    "2147483647"
                   ]
                 }
               },
@@ -1588,14 +1920,14 @@
                 "method": "PATCH",
                 "header": [],
                 "url": {
-                  "raw": "{{base_url}}/order/cancel/999",
+                  "raw": "{{base_url}}/order/cancel/2147483641",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "order",
                     "cancel",
-                    "999"
+                    "2147483641"
                   ]
                 }
               },
@@ -1630,14 +1962,14 @@
                 "method": "PATCH",
                 "header": [],
                 "url": {
-                  "raw": "{{base_url}}/order/finish/7",
+                  "raw": "{{base_url}}/order/finish/2147483642",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "order",
                     "finish",
-                    "7"
+                    "2147483642"
                   ]
                 }
               },
@@ -1645,7 +1977,8 @@
             }
           ]
         }
-      ]
+      ],
+      "description": "LUU Y QUAN TRONG: Cac request Cancel/Complete order lam THAY DOI trang thai don hang (orderStatus 0 -> 1/2). Chay lai Collection nhieu lan MA KHONG reset lai database (import.sql) se khien cac don da duoc dung (2147483643, 2147483645, 2147483649) khong con o trang thai 'moi' (status=0), dan den cac test Cancel/Complete thanh cong co the FAIL hoac tra ve 500 (thay vi 200) o lan chay tiep theo. Can RESET DATABASE VE TRANG THAI BAN DAU (re-import import.sql) TRUOC MOI LAN CHAY Postman/Newman de dam bao ket qua nhat quan."
     }
   ]
 }
