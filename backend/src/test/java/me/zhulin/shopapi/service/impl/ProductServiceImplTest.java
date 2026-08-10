@@ -168,7 +168,7 @@ public class ProductServiceImplTest {
                 .save(productInfo);
     }
 
-    // Bo sung: findOne()/findAll() truoc do chua duoc test lan nao (0% coverage)
+    // Bo sung: findOne()/findAll() truoc do chua duoc test lan nao
     @Test
     public void findOneTest() {
         when(productInfoRepository.findByProductId("1")).thenReturn(productInfo);

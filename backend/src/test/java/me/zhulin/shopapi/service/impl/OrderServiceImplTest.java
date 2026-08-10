@@ -145,12 +145,7 @@ public class OrderServiceImplTest {
     }
 
     // ===== Bo sung theo yeu cau ticket: truong hop orderId khong ton tai =====
-    // GHI CHU: sau khi doc code that, findOne() DA CO san null-check dung
-    // (neu orderRepository.findByOrderId() tra ve null thi nem MyException(ORDER_NOT_FOUND)
-    // ngay, khong de lot NullPointerException ra ngoai). Day KHONG phai la dang xac nhan
-    // 1 bug (code xu ly dung), ma la BO SUNG test coverage con thieu cho nhanh nay -
-    // bo test cu chua co truong hop nao mock findByOrderId() tra ve null - de bao ve
-    // hanh vi dung nay khoi bi regression ve sau.
+
     @Test(expected = MyException.class)
     public void finishOrderNotFoundTest() {
         when(orderRepository.findByOrderId(999L)).thenReturn(null);
@@ -166,9 +161,7 @@ public class OrderServiceImplTest {
     }
 
     // Bo sung: cac ham findAll/findByStatus/findByBuyerEmail/findByBuyerPhone
-    // truoc do chua duoc test lan nao (0% coverage) - chi la delegate call
-    // sang OrderRepository nhung van can xac nhan dung tham so duoc truyen qua.
-    @Test
+     @Test
     public void findAllTest() {
         org.springframework.data.domain.Pageable pageable =
                 org.springframework.data.domain.PageRequest.of(0, 10);

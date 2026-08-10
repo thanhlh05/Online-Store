@@ -130,11 +130,7 @@ public class CartServiceImplTest {
     }
 
     // ===== Bo sung theo yeu cau ticket: xac nhan bug that cua mergeLocalCart() =====
-    // GHI CHU: sau khi doc code that, mergeLocalCart() KHONG co try/catch nao ca -
-    // bug "catch loi nhung khong return loi" that ra nam o CartController.mergeCart(),
-    // khong phai o Service nay. Test duoi day chung minh dieu do: Service phai NEM
-    // THANG exception ra ngoai (khong tu nuot), qua đó xac dinh dung vi tri that su
-    // cua bug la o tang Controller.
+
     @Test
     public void mergeLocalCartPropagatesExceptionTest() {
         Mockito.when(productInOrderRepository.save(productInOrder))
