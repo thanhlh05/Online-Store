@@ -123,7 +123,7 @@ public class ProductServiceImplTest {
     public void onSaleProductNullTest() {
         when(productInfoRepository.findByProductId(productInfo.getProductId())).thenReturn(null);
 
-        productService.offSale("1");
+        productService.onSale("1");
     }
 
     @Test
@@ -151,6 +151,45 @@ public class ProductServiceImplTest {
 
     @Test(expected = MyException.class)
     public void deleteProductNullTest() {
+        when(productInfoRepository.findByProductId("1"))
+                .thenReturn(null);
+
         productService.delete("1");
+    }//bosung
+    @Test
+    public void saveDoesNotCheckDuplicateProductIdTest() {
+        when(productInfoRepository.save(productInfo))
+                .thenReturn(productInfo);
+
+        productService.save(productInfo);
+        productService.save(productInfo);
+
+        Mockito.verify(productInfoRepository, Mockito.times(2))
+                .save(productInfo);
+    }
+
+    // Bo sung: findOne()/findAll() truoc do chua duoc test lan nao (0% coverage)
+    @Test
+    public void findOneTest() {
+        when(productInfoRepository.findByProductId("1")).thenReturn(productInfo);
+
+        ProductInfo result = productService.findOne("1");
+
+        Mockito.verify(productInfoRepository, Mockito.times(1)).findByProductId("1");
+        org.junit.Assert.assertEquals(productInfo, result);
+    }
+
+    @Test
+    public void findAllTest() {
+        org.springframework.data.domain.Pageable pageable =
+                org.springframework.data.domain.PageRequest.of(0, 10);
+        org.springframework.data.domain.Page<ProductInfo> page =
+                new org.springframework.data.domain.PageImpl<>(java.util.List.of(productInfo));
+
+        when(productInfoRepository.findAllByOrderByProductId(pageable)).thenReturn(page);
+
+        org.springframework.data.domain.Page<ProductInfo> result = productService.findAll(pageable);
+
+        org.junit.Assert.assertEquals(productInfo, result.getContent().get(0));
     }
 }
