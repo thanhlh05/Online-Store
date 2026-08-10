@@ -8,6 +8,7 @@ import me.zhulin.shopapi.repository.CartRepository;
 import me.zhulin.shopapi.repository.OrderRepository;
 import me.zhulin.shopapi.repository.ProductInOrderRepository;
 import me.zhulin.shopapi.service.ProductService;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -124,5 +125,35 @@ public class CartServiceImplTest {
         cartService.checkout(user);
 
         Mockito.verify(productInOrderRepository, Mockito.times(1)).save(productInOrder);
+        Mockito.verify(productService, Mockito.times(1)).decreaseStock("1", 10);
+        Mockito.verify(orderRepository, Mockito.times(1)).save(Mockito.any());
+    }
+
+    // ===== Bo sung theo yeu cau ticket: xac nhan bug that cua mergeLocalCart() =====
+
+    @Test
+    public void mergeLocalCartPropagatesExceptionTest() {
+        Mockito.when(productInOrderRepository.save(productInOrder))
+                .thenThrow(new RuntimeException("DB error"));
+
+        try {
+            cartService.mergeLocalCart(set, user);
+            Assert.fail("Ky vong RuntimeException duoc nem ra ngoai, nhung khong co exception nao xay ra");
+        } catch (RuntimeException e) {
+            Assert.assertEquals("DB error", e.getMessage());
+        }
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void deleteNullItemIdThrowsNPEInsteadOfMyExceptionTest() {
+        cartService.delete(null, user);
+    }
+
+    // Bo sung: getCart() truoc do chua duoc test lan nao (0% coverage)
+    @Test
+    public void getCartTest() {
+        Cart result = cartService.getCart(user);
+
+        Assert.assertEquals(cart, result);
     }
 }
