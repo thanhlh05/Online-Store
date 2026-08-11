@@ -5,7 +5,7 @@ services:
     image: postgres:15-alpine
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: thanhle0405
+      POSTGRES_PASSWORD: 123456
       POSTGRES_DB: shopping_store
     ports:
       - "5432:5432"
