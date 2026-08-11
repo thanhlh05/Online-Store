@@ -12,7 +12,6 @@
 # IDEs and editors
 *.iml
 
-
 # profiling files
 chrome-profiler-events.json
 speed-measure-plugin.json
@@ -48,9 +47,13 @@ testem.log
 Thumbs.db
 
 ### backend
-
 /backend/target/
 !.mvn/wrapper/maven-wrapper.jar
+
+# Bỏ qua các file cấu hình local cá nhân & môi trường
+/backend/src/main/resources/application-local.yml
+/backend/src/main/resources/application-*.local.yml
+*.env
 
 ### STS ###
 .apt_generated

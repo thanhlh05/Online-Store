@@ -46,28 +46,71 @@ public class UserServiceImplTest {
 
     @Test
     public void createUserTest() {
+        when(passwordEncoder.encode("password")).thenReturn("encodedPassword");
         when(userRepository.save(user)).thenReturn(user);
 
         userService.save(user);
 
+        Mockito.verify(passwordEncoder).encode("password");
         Mockito.verify(userRepository, Mockito.times(2)).save(user);
+        Mockito.verify(cartRepository).save(Mockito.any());
     }
 
     @Test(expected = MyException.class)
     public void createUserExceptionTest() {
+        when(passwordEncoder.encode("password")).thenReturn("encodedPassword");
+
+        when(userRepository.save(user))
+                .thenThrow(new RuntimeException("Database error"));
+
         userService.save(user);
     }
-
     @Test
     public void updateTest() {
         User oldUser = new User();
-        oldUser.setEmail("email@test.com");
+        oldUser.setEmail(user.getEmail());
 
         when(userRepository.findByEmail(user.getEmail())).thenReturn(oldUser);
+
+        when(passwordEncoder.encode("password")).thenReturn("encodedPassword");
+
         when(userRepository.save(oldUser)).thenReturn(oldUser);
 
         User userResult = userService.update(user);
 
-        assertThat(userResult.getName(), is(oldUser.getName()));
+        assertThat(userResult.getName(), is("Name"));
+        assertThat(userResult.getPhone(), is("Phone Test"));
+        assertThat(userResult.getAddress(), is("Address Test"));
+        assertThat(userResult.getPassword(), is("encodedPassword"));
+    }
+    @Test
+    public void saveDoesNotRestrictRoleTest() {
+        user.setRole("ROLE_MANAGER");
+
+        when(userRepository.save(user)).thenReturn(user);
+
+        User saved = userService.save(user);
+
+        assertThat(saved.getRole(), is("ROLE_MANAGER"));
+    }
+
+    // Bo sung: findOne()/findByRole() truoc do chua duoc test lan nao (0% coverage)
+    @Test
+    public void findOneTest() {
+        when(userRepository.findByEmail("email@email.com")).thenReturn(user);
+
+        User result = userService.findOne("email@email.com");
+
+        assertThat(result.getEmail(), is(user.getEmail()));
+    }
+
+    @Test
+    public void findByRoleTest() {
+        java.util.Collection<User> users = java.util.List.of(user);
+        when(userRepository.findAllByRole("ROLE_CUSTOMER")).thenReturn(users);
+
+        java.util.Collection<User> result = userService.findByRole("ROLE_CUSTOMER");
+
+        assertThat(result.size(), is(1));
     }
 }
