@@ -4,7 +4,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: thanhle0405
-    url: jdbc:postgresql://db:5432/shopping_store
+    url: jdbc:postgresql://localhost:5432/shopping_store
     platform: postgres
     initialization-mode: always
     continue-on-error: true
