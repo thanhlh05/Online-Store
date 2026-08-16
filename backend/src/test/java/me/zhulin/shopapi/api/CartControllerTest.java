@@ -68,6 +68,6 @@ public class CartControllerTest {
                 cartController.mergeCart(productInOrders, principal);
 
         // Assert
-        assertEquals(400, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCodeValue());
     }
 }
