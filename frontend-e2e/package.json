@@ -1,0 +1,14 @@
+{
+  "name": "online-store-frontend-e2e",
+  "version": "1.0.0",
+  "description": "CodeceptJS E2E tests for Online Shopping Store frontend",
+  "scripts": {
+    "test": "codeceptjs run --steps",
+    "test:headless": "codeceptjs run --steps",
+    "test:verbose": "codeceptjs run --steps --verbose"
+  },
+  "devDependencies": {
+    "codeceptjs": "^4.1.0",
+    "playwright": "^1.52.0"
+  }
+}

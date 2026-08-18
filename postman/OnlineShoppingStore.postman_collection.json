@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "291250eb-c998-455a-8d21-80cb77528d01",
+    "_postman_id": "57c5acd2-be69-4ec7-95d9-955d72350caa",
     "name": "OnlineShoppingStore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "56876251",
-    "_collection_link": "https://go.postman.co/collection/56876251-291250eb-c998-455a-8d21-80cb77528d01?source=collection_link"
+    "_exporter_id": "48754664",
+    "_collection_link": "https://go.postman.co/collection/48754664-57c5acd2-be69-4ec7-95d9-955d72350caa?source=collection_link"
   },
   "item": [
     {
@@ -15,6 +15,52 @@
           "item": [
             {
               "name": "Customer Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Login Customer thành công - 200 OK\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "if (pm.response.code === 200) {",
+                      "    var res = pm.response.json();",
+                      "    pm.environment.set(\"customer_token\", res.token || res.jwt);",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"customer1@email.com\",\n  \"password\": \"123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Customer Login Copy",
               "event": [
                 {
                   "listen": "test",
@@ -1979,6 +2025,387 @@
         }
       ],
       "description": "LUU Y QUAN TRONG: Cac request Cancel/Complete order lam THAY DOI trang thai don hang (orderStatus 0 -> 1/2). Chay lai Collection nhieu lan MA KHONG reset lai database (import.sql) se khien cac don da duoc dung (2147483643, 2147483645, 2147483649) khong con o trang thai 'moi' (status=0), dan den cac test Cancel/Complete thanh cong co the FAIL hoac tra ve 500 (thay vi 200) o lan chay tiep theo. Can RESET DATABASE VE TRANG THAI BAN DAU (re-import import.sql) TRUOC MOI LAN CHAY Postman/Newman de dam bao ket qua nhat quan."
+    },
+    {
+      "name": "BVA - Boundary Value Analysis",
+      "item": [
+        {
+          "name": "User",
+          "item": [
+            {
+              "name": "POST Register - Password = 12",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Password length 2 - rejected\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"bva_password_2@gmail.com\",\r\n    \"password\": \"12\",\r\n    \"name\": \"BVA Password 2\",\r\n    \"phone\": \"0900000002\",\r\n    \"address\": \"BVA Test\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Register - Password = 123",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Password length 3 - accepted\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"bva_password_4@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"name\": \"BVA Password 3\",\r\n    \"phone\": \"0900000003\",\r\n    \"address\": \"BVA Test\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Cart",
+          "item": [
+            {
+              "name": "POST Add Cart - Quantity = 0",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Quantity = 0 should return 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"productId\": \"D0002\",\r\n    \"quantity\": 0\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/cart/add",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "add"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Add Cart - Quantity = 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200 for quantity 1\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Add product with quantity = 1 succeeds\", function () {\r",
+                      "    pm.expect(pm.response.json()).to.eql(true);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"productId\": \"D0002\",\r\n    \"quantity\": 1\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/cart/add",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "add"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Product",
+          "item": [
+            {
+              "name": "POST Add Product - Stock = 0",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200 for productStock 0\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Request is accepted at the minimum productStock\", function () {\r",
+                      "    pm.expect(pm.response.code).to.eql(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{manager_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"productId\": \"BVA-STOCK-ZERO\",\r\n    \"productName\": \"BVA Stock Zero\",\r\n    \"productPrice\": 40.00,\r\n    \"productStock\": 0,\r\n    \"productDescription\": \"BVA test product stock 0\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/seller/product/new",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "seller",
+                    "product",
+                    "new"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Add Product - Stock = -1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400 for productStock -1\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Request is rejected because productStock is below minimum\", function () {\r",
+                      "    pm.expect(pm.response.code).to.eql(400);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{manager_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"productId\": \"B000128\",\r\n  \"productName\": \"Angular in Action\",\r\n  \"productPrice\": 40.00,\r\n  \"productStock\": -50,\r\n  \"productDescription\": \"Book for learning Angular\",\r\n  \"productIcon\": \"https://via.placeholder.com/150\",\r\n  \"categoryType\": 0,\r\n  \"productStatus\": 0\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/seller/product/new",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "seller",
+                    "product",
+                    "new"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Add Product - Price = -1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400 for negative product price\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Negative product price should be rejected\", function () {\r",
+                      "    pm.expect(pm.response.code).to.eql(400);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{manager_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"productId\": \"B000123\",\r\n  \"productName\": \"Angular in Action\",\r\n  \"productPrice\": -1,\r\n  \"productStock\": 50,\r\n  \"productDescription\": \"Book for learning Angular\",\r\n  \"productIcon\": \"https://via.placeholder.com/150\",\r\n  \"categoryType\": 0,\r\n  \"productStatus\": 0\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/seller/product/new",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "seller",
+                    "product",
+                    "new"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
     }
   ]
 }
