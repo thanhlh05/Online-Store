@@ -220,7 +220,3 @@ Dự án được quản lý tiến độ và theo dõi lỗi trên Jira. Dướ
 * Chạy bộ API Test qua Newman (bao gồm các case BVA mới cập nhật).
 * Cập nhật và hoàn thiện RTM (ánh xạ đầy đủ Requirement ↔ Test Case ↔ Bug).
 * Tiếp tục hoàn thiện độ phủ (coverage) cho Unit Test Service layer.
-
-```
-
-```
