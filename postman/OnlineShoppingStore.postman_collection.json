@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "57c5acd2-be69-4ec7-95d9-955d72350caa",
+    "_postman_id": "b015828a-f980-4ad5-b586-7c1cce0a156b",
     "name": "OnlineShoppingStore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "48754664",
-    "_collection_link": "https://go.postman.co/collection/48754664-57c5acd2-be69-4ec7-95d9-955d72350caa?source=collection_link"
+    "_exporter_id": "56876251",
+    "_collection_link": "https://go.postman.co/collection/56876251-b015828a-f980-4ad5-b586-7c1cce0a156b?source=collection_link"
   },
   "item": [
     {
@@ -15,52 +15,6 @@
           "item": [
             {
               "name": "Customer Login",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"Login Customer thành công - 200 OK\", function () {",
-                      "    pm.response.to.have.status(200);",
-                      "});",
-                      "if (pm.response.code === 200) {",
-                      "    var res = pm.response.json();",
-                      "    pm.environment.set(\"customer_token\", res.token || res.jwt);",
-                      "}"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "noauth"
-                },
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"username\": \"customer1@email.com\",\n  \"password\": \"123\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/login",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "login"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Customer Login Copy",
               "event": [
                 {
                   "listen": "test",
@@ -540,6 +494,56 @@
                 "body": {
                   "mode": "raw",
                   "raw": "{\r\n  \"email\": \"customer1@email.com\",\r\n  \"password\": \"123\",\r\n  \"name\": \"Duplicate User\",\r\n  \"phone\": \"0987654321\",\r\n  \"address\": \"123 Test Street\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Register với role = ROLE_MANAGER (Privilege Escalation - BUG)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Role phải bị ép về ROLE_CUSTOMER (hiện tại đang FAIL - BUG)\", function () {\r",
+                      "    var json = pm.response.json();\r",
+                      "    pm.expect(json.role).to.eql(\"ROLE_CUSTOMER\");\r",
+                      "});\r",
+                      "if (pm.response.code === 200) \r",
+                      "{\r",
+                      "     console.log(\"Actual role returned:\", pm.response.json().role);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"email\": \"privilege_{{$timestamp}}@email.com\",\r\n  \"password\": \"123\",\r\n  \"name\": \"Privilege Test\",\r\n  \"phone\": \"0909999999\",\r\n  \"address\": \"Test Address Privilege\",\r\n  \"role\": \"ROLE_MANAGER\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
