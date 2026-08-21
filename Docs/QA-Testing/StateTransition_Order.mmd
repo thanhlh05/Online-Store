@@ -1,0 +1,29 @@
+stateDiagram-v2
+    direction LR
+    
+    [*] --> NEW : Checkout (POST /cart/checkout)
+    
+    NEW --> CANCELED : Cancel (PATCH /order/cancel/{id})
+    NEW --> FINISHED : Finish (PATCH /order/finish/{id})
+    
+    CANCELED --> [*]
+    FINISHED --> [*]
+    
+    note right of NEW
+        State: 0 (NEW)
+        Default state after checkout
+        Contains: buyer info, products, amount
+    end note
+    
+    note right of CANCELED
+        State: 2 (CANCELED)
+        Trigger: Customer cancels own order
+        OR Employee/Manager cancels any order
+        Side effect: Stock restored
+    end note
+    
+    note right of FINISHED
+        State: 1 (FINISHED)
+        Trigger: Employee or Manager only
+        Customer cannot finish orders
+    end note
