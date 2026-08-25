@@ -220,3 +220,8 @@ Dự án được quản lý tiến độ và theo dõi lỗi trên Jira. Dướ
 * Chạy bộ API Test qua Newman (bao gồm các case BVA mới cập nhật).
 * Cập nhật và hoàn thiện RTM (ánh xạ đầy đủ Requirement ↔ Test Case ↔ Bug).
 * Tiếp tục hoàn thiện độ phủ (coverage) cho Unit Test Service layer.
+
+### 🔹 Sprint 3 (19 Aug – 25 Aug): Áp dụng kỹ thuật kiểm thử mới & Hoàn thiện tài liệu
+* Áp dụng White-box Testing: Thiết lập JaCoCo, chuyển BVA thành Unit Test và đo độ phủ (coverage).
+* Thực thi State Transition Testing cho các luồng nghiệp vụ Order và Cart.
+* Thiết kế Decision Table Testing cho ma trận phân quyền hệ thống (Authorization).
