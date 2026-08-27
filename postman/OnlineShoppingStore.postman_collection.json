@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "b015828a-f980-4ad5-b586-7c1cce0a156b",
+    "_postman_id": "fd1d9ad1-8888-40a8-b370-6ba84d0f50a3",
     "name": "OnlineShoppingStore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "56876251",
-    "_collection_link": "https://go.postman.co/collection/56876251-b015828a-f980-4ad5-b586-7c1cce0a156b?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/56876251-fd1d9ad1-8888-40a8-b370-6ba84d0f50a3?source=collection_link"
   },
   "item": [
     {
@@ -2037,33 +2037,31 @@
           "name": "User",
           "item": [
             {
-              "name": "POST Register - Password = 12",
+              "name": "TC-REG-BVA-01: Baseline (all Nominal)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"Password length 2 - rejected\", function () {\r",
-                      "    pm.response.to.have.status(400);\r",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
                       "});"
                     ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
+                    "type": "text/javascript"
                   }
                 }
               ],
               "request": {
                 "method": "POST",
-                "header": [],
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"email\": \"bva_password_2@gmail.com\",\r\n    \"password\": \"12\",\r\n    \"name\": \"BVA Password 2\",\r\n    \"phone\": \"0900000002\",\r\n    \"address\": \"BVA Test\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
+                  "raw": "{\n  \"email\": \"u949_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0930718094\",\n  \"address\": \"123 Test Street\"\n}"
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2074,37 +2072,34 @@
                     "register"
                   ]
                 }
-              },
-              "response": []
+              }
             },
             {
-              "name": "POST Register - Password = 123",
+              "name": "TC-REG-BVA-02: email min (6 chars)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"Password length 3 - accepted\", function () {\r",
-                      "    pm.response.to.have.status(200);\r",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
                       "});"
                     ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
+                    "type": "text/javascript"
                   }
                 }
               ],
               "request": {
                 "method": "POST",
-                "header": [],
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"email\": \"bva_password_4@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"name\": \"BVA Password 3\",\r\n    \"phone\": \"0900000003\",\r\n    \"address\": \"BVA Test\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
+                  "raw": "{\n  \"email\": \"u6@a.c\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0979095084\",\n  \"address\": \"123 Test Street\"\n}"
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2115,8 +2110,881 @@
                     "register"
                   ]
                 }
-              },
-              "response": []
+              }
+            },
+            {
+              "name": "TC-REG-BVA-03: email min+ (7 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u35@a.c\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0921395656\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-04: email max- (49 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u295_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0929622385\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-05: email max (50 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u342_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0972512911\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-06: name min (2 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u769_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"AB\",\n  \"phone\": \"0944961796\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-07: name min+ (3 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u288_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"ABC\",\n  \"phone\": \"0933194017\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-08: name max- (49 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u501_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"phone\": \"0919477793\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-09: name max (50 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u317_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"phone\": \"0985402288\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-10: password min (3 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u577_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0932099232\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-11: password min+ (4 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u699_aaaa@test.com\",\n  \"password\": \"1234\",\n  \"name\": \"Test User\",\n  \"phone\": \"0943935921\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-12: password max- (19 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u523_aaaa@test.com\",\n  \"password\": \"aaaaaaaaaaaaaaaaaaa\",\n  \"name\": \"Test User\",\n  \"phone\": \"0947279293\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-13: password max (20 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u753_aaaa@test.com\",\n  \"password\": \"aaaaaaaaaaaaaaaaaaaa\",\n  \"name\": \"Test User\",\n  \"phone\": \"0984254463\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-14: phone min (8 digits)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u121_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"09890762\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-15: phone min+ (9 digits)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u392_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"098255881\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-16: phone max- (11 digits)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u648_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"09991209837\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-17: phone max (12 digits)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u817_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"098177631852\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-18: address min (5 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u638_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0985403496\",\n  \"address\": \"ABCDE\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-19: address min+ (6 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u820_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0996406760\",\n  \"address\": \"ABCDEF\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-20: address max- (99 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u909_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0923173809\",\n  \"address\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-BVA-21: address max (100 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u984_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0998876368\",\n  \"address\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-ROB-01: password min- (2 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u531_aaaa@test.com\",\n  \"password\": \"12\",\n  \"name\": \"Test User\",\n  \"phone\": \"0931680966\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-ROB-02: password max+ (21 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u890_aaaa@test.com\",\n  \"password\": \"aaaaaaaaaaaaaaaaaaaaa\",\n  \"name\": \"Test User\",\n  \"phone\": \"0941820825\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-ROB-03: email min- (5 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"aaaaa\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0998058953\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "TC-REG-ROB-04: email max+ (51 chars)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"u162_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0914519297\",\n  \"address\": \"123 Test Street\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "register"
+                  ]
+                }
+              }
             }
           ]
         },
