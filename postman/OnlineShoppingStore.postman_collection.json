@@ -2992,110 +2992,290 @@
           "name": "Cart",
           "item": [
             {
-              "name": "POST Add Cart - Quantity = 0",
+              "name": "C1-01: productId min-1 (2 chars) → Reject 400",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"Quantity = 0 should return 400\", function () {\r",
-                      "    pm.response.to.have.status(400);\r",
+                      "pm.test(\"C1-01: productId 2 chars → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
                       "});"
                     ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
+                    "type": "text/javascript"
                   }
                 }
               ],
               "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{customer_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{customer_token}}", "type": "string" }] },
                 "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"productId\": \"D0002\",\r\n    \"quantity\": 0\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/cart/add",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "cart",
-                    "add"
-                  ]
-                }
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"AB\",\n  \"quantity\": 1\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/cart/add", "host": ["{{base_url}}"], "path": ["cart", "add"] }
               },
               "response": []
             },
             {
-              "name": "POST Add Cart - Quantity = 1",
+              "name": "C1-02: productId min (3 chars) → Accept 200",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"Status code is 200 for quantity 1\", function () {\r",
-                      "    pm.response.to.have.status(200);\r",
-                      "});\r",
-                      "\r",
-                      "pm.test(\"Add product with quantity = 1 succeeds\", function () {\r",
-                      "    pm.expect(pm.response.json()).to.eql(true);\r",
+                      "pm.test(\"C1-02: productId 3 chars → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
                       "});"
                     ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
+                    "type": "text/javascript"
                   }
                 }
               ],
               "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{customer_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{customer_token}}", "type": "string" }] },
                 "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"productId\": \"D0002\",\r\n    \"quantity\": 1\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"D0002\",\n  \"quantity\": 1\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/cart/add", "host": ["{{base_url}}"], "path": ["cart", "add"] }
+              },
+              "response": []
+            },
+            {
+              "name": "C1-03: productId max (30 chars) → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"C1-03: productId 30 chars → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
                   }
-                },
-                "url": {
-                  "raw": "{{base_url}}/cart/add",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "cart",
-                    "add"
-                  ]
                 }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{customer_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"quantity\": 1\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/cart/add", "host": ["{{base_url}}"], "path": ["cart", "add"] }
+              },
+              "response": []
+            },
+            {
+              "name": "C1-04: productId max+1 (31 chars) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"C1-04: productId 31 chars → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{customer_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"quantity\": 1\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/cart/add", "host": ["{{base_url}}"], "path": ["cart", "add"] }
+              },
+              "response": []
+            },
+            {
+              "name": "C2-01: quantity min-1 (0) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"C2-01: quantity 0 → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{customer_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"D0002\",\n  \"quantity\": 0\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/cart/add", "host": ["{{base_url}}"], "path": ["cart", "add"] }
+              },
+              "response": []
+            },
+            {
+              "name": "C2-02: quantity min (1) → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"C2-02: quantity 1 → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{customer_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"D0002\",\n  \"quantity\": 1\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/cart/add", "host": ["{{base_url}}"], "path": ["cart", "add"] }
+              },
+              "response": []
+            },
+            {
+              "name": "C2-03: quantity max (999999) → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"C2-03: quantity 999999 → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{customer_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"D0002\",\n  \"quantity\": 999999\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/cart/add", "host": ["{{base_url}}"], "path": ["cart", "add"] }
+              },
+              "response": []
+            },
+            {
+              "name": "C2-04: quantity max+1 (1000000) → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"C2-04: quantity 1000000 → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{customer_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"D0002\",\n  \"quantity\": 1000000\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/cart/add", "host": ["{{base_url}}"], "path": ["cart", "add"] }
+              },
+              "response": []
+            },
+            {
+              "name": "C-NOM: All valid (productId=D0002, quantity=1) → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"C-NOM: all valid → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{customer_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"D0002\",\n  \"quantity\": 1\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/cart/add", "host": ["{{base_url}}"], "path": ["cart", "add"] }
+              },
+              "response": []
+            },
+            {
+              "name": "R-C01: productId min-2 (null) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"R-C01: productId null → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{customer_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"quantity\": 1\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/cart/add", "host": ["{{base_url}}"], "path": ["cart", "add"] }
+              },
+              "response": []
+            },
+            {
+              "name": "R-C02: productId max+2 (32 chars) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"R-C02: productId 32 chars → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{customer_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"quantity\": 1\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/cart/add", "host": ["{{base_url}}"], "path": ["cart", "add"] }
+              },
+              "response": []
+            },
+            {
+              "name": "R-C03: quantity min-2 (-1) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"R-C03: quantity -1 → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{customer_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"D0002\",\n  \"quantity\": -1\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/cart/add", "host": ["{{base_url}}"], "path": ["cart", "add"] }
               },
               "response": []
             }
@@ -3105,173 +3285,674 @@
           "name": "Product",
           "item": [
             {
-              "name": "POST Add Product - Stock = 0",
+              "name": "P1-01: productId min-1 (2 chars) → Reject 400",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"Status code is 200 for productStock 0\", function () {\r",
-                      "    pm.response.to.have.status(200);\r",
-                      "});\r",
-                      "\r",
-                      "pm.test(\"Request is accepted at the minimum productStock\", function () {\r",
-                      "    pm.expect(pm.response.code).to.eql(200);\r",
+                      "pm.test(\"P1-01: productId 2 chars → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
                       "});"
                     ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
+                    "type": "text/javascript"
                   }
                 }
               ],
               "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{manager_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
                 "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"productId\": \"BVA-STOCK-ZERO\",\r\n    \"productName\": \"BVA Stock Zero\",\r\n    \"productPrice\": 40.00,\r\n    \"productStock\": 0,\r\n    \"productDescription\": \"BVA test product stock 0\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/seller/product/new",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "seller",
-                    "product",
-                    "new"
-                  ]
-                }
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"AB\",\n  \"productName\": \"BVA Product\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
               },
               "response": []
             },
             {
-              "name": "POST Add Product - Stock = -1",
+              "name": "P1-02: productId min (3 chars) → Accept 200",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"Status code is 400 for productStock -1\", function () {\r",
-                      "    pm.response.to.have.status(400);\r",
-                      "});\r",
-                      "\r",
-                      "pm.test(\"Request is rejected because productStock is below minimum\", function () {\r",
-                      "    pm.expect(pm.response.code).to.eql(400);\r",
+                      "pm.test(\"P1-02: productId 3 chars → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
                       "});"
                     ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
+                    "type": "text/javascript"
                   }
                 }
               ],
               "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{manager_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
                 "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"productId\": \"B000128\",\r\n  \"productName\": \"Angular in Action\",\r\n  \"productPrice\": 40.00,\r\n  \"productStock\": -50,\r\n  \"productDescription\": \"Book for learning Angular\",\r\n  \"productIcon\": \"https://via.placeholder.com/150\",\r\n  \"categoryType\": 0,\r\n  \"productStatus\": 0\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/seller/product/new",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "seller",
-                    "product",
-                    "new"
-                  ]
-                }
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA\",\n  \"productName\": \"BVA Product\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
               },
               "response": []
             },
             {
-              "name": "POST Add Product - Price = -1",
+              "name": "P1-03: productId max (30 chars) → Accept 200",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"Status code is 400 for negative product price\", function () {\r",
-                      "    pm.response.to.have.status(400);\r",
-                      "});\r",
-                      "\r",
-                      "pm.test(\"Negative product price should be rejected\", function () {\r",
-                      "    pm.expect(pm.response.code).to.eql(400);\r",
+                      "pm.test(\"P1-03: productId 30 chars → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
                       "});"
                     ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
+                    "type": "text/javascript"
                   }
                 }
               ],
               "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{manager_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
                 "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n  \"productId\": \"B000123\",\r\n  \"productName\": \"Angular in Action\",\r\n  \"productPrice\": -1,\r\n  \"productStock\": 50,\r\n  \"productDescription\": \"Book for learning Angular\",\r\n  \"productIcon\": \"https://via.placeholder.com/150\",\r\n  \"categoryType\": 0,\r\n  \"productStatus\": 0\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"productName\": \"BVA Product\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P1-04: productId max+1 (31 chars) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P1-04: productId 31 chars → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
                   }
-                },
-                "url": {
-                  "raw": "{{base_url}}/seller/product/new",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "seller",
-                    "product",
-                    "new"
-                  ]
                 }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"productName\": \"BVA Product\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P2-01: productName min-1 (2 chars) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P2-01: productName 2 chars → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P201\",\n  \"productName\": \"AB\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P2-02: productName min (3 chars) → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P2-02: productName 3 chars → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P202\",\n  \"productName\": \"ABC\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P2-03: productName max (100 chars) → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P2-03: productName 100 chars → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P203\",\n  \"productName\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P2-04: productName max+1 (101 chars) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P2-04: productName 101 chars → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P204\",\n  \"productName\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P3-01: productPrice min-1 (0) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P3-01: productPrice 0 → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P301\",\n  \"productName\": \"BVA Price Minus\",\n  \"productPrice\": 0,\n  \"productStock\": 50,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P3-02: productPrice min (0.01) → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P3-02: productPrice 0.01 → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P302\",\n  \"productName\": \"BVA Price Min\",\n  \"productPrice\": 0.01,\n  \"productStock\": 50,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P3-03: productPrice max (999999) → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P3-03: productPrice 999999 → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P303\",\n  \"productName\": \"BVA Price Max\",\n  \"productPrice\": 999999,\n  \"productStock\": 50,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P3-04: productPrice max+1 (1000000) → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P3-04: productPrice 1000000 → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P304\",\n  \"productName\": \"BVA Price MaxPlus\",\n  \"productPrice\": 1000000,\n  \"productStock\": 50,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P4-01: productStock min-1 (-1) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P4-01: productStock -1 → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P401\",\n  \"productName\": \"BVA Stock Minus\",\n  \"productPrice\": 25.00,\n  \"productStock\": -1,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P4-02: productStock min (0) → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P4-02: productStock 0 → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P402\",\n  \"productName\": \"BVA Stock Zero\",\n  \"productPrice\": 25.00,\n  \"productStock\": 0,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P4-03: productStock max (999999) → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P4-03: productStock 999999 → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P403\",\n  \"productName\": \"BVA Stock Max\",\n  \"productPrice\": 25.00,\n  \"productStock\": 999999,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P4-04: productStock max+1 (1000000) → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P4-04: productStock 1000000 → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P404\",\n  \"productName\": \"BVA Stock MaxPlus\",\n  \"productPrice\": 25.00,\n  \"productStock\": 1000000,\n  \"productDescription\": \"BVA test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P5-01: productDescription min-1 (null) → Accept 200 (optional)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P5-01: productDescription null → 200 (optional)\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P501\",\n  \"productName\": \"BVA Desc Null\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P5-02: productDescription min (empty, 0 chars) → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P5-02: productDescription empty → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P502\",\n  \"productName\": \"BVA Desc Empty\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P5-03: productDescription max (200 chars) → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P5-03: productDescription 200 chars → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P503\",\n  \"productName\": \"BVA Desc Max\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P5-04: productDescription max+1 (201 chars) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P5-04: productDescription 201 chars → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-P504\",\n  \"productName\": \"BVA Desc MaxPlus\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "P-NOM: All valid → Accept 200",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"P-NOM: all valid → 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-NOM-001\",\n  \"productName\": \"BVA Nominal Product\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"Nominal test case\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "R-P01: productId min-2 (null) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"R-P01: productId null → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productName\": \"BVA Robustness\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"Robustness test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "R-P02: productId max+2 (32 chars) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"R-P02: productId 32 chars → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"productName\": \"BVA Robustness\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"Robustness test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "R-P03: productName min-2 (null) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"R-P03: productName null → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-RP03\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"Robustness test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "R-P04: productName max+2 (102 chars) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"R-P04: productName 102 chars → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-RP04\",\n  \"productName\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"Robustness test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "R-P05: productPrice below min (-1) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"R-P05: productPrice -1 → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-RP05\",\n  \"productName\": \"BVA Robustness Price\",\n  \"productPrice\": -1,\n  \"productStock\": 50,\n  \"productDescription\": \"Robustness test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "R-P06: productStock min-2 (-2) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"R-P06: productStock -2 → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-RP06\",\n  \"productName\": \"BVA Robustness Stock\",\n  \"productPrice\": 25.00,\n  \"productStock\": -2,\n  \"productDescription\": \"Robustness test\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
+              },
+              "response": []
+            },
+            {
+              "name": "R-P07: productDescription max+2 (201 chars) → Reject 400",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"R-P07: productDescription 201 chars → 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{manager_token}}", "type": "string" }] },
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"productId\": \"BVA-RP07\",\n  \"productName\": \"BVA Robustness Desc\",\n  \"productPrice\": 25.00,\n  \"productStock\": 50,\n  \"productDescription\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/seller/product/new", "host": ["{{base_url}}"], "path": ["seller", "product", "new"] }
               },
               "response": []
             }
