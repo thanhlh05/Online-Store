@@ -1,0 +1,25 @@
+$kind: http-request
+name: "TC-CART-BVA-04: productId max- (29 chars) → Accept 200"
+url: "{{base_url}}/cart/add"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "productId": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "quantity": 5
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{customer_token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("TC-CART-BVA-04: productId max- (29 chars) → 200", function () {
+          pm.response.to.have.status(200);
+      });
+    language: text/javascript
+order: 4000

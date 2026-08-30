@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{base_url}}/cart"
+method: POST
+body:
+  type: json
+  content: '[{"productId": "B0001", "count": 1}]'
+auth:
+  type: bearer
+  credentials:
+    token: "{{manager_token}}"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Manager khong duoc merge cart - Status 403 Forbidden\", function () {\r
+
+      \    pm.response.to.have.status(403);\r
+
+      });"
+    language: text/javascript
+order: 5000

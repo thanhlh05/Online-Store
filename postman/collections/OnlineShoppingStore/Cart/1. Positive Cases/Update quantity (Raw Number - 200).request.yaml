@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{base_url}}/cart/B0001"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: "2"
+auth:
+  type: bearer
+  credentials:
+    token: "{{customer_token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Cập nhật số lượng dạng số - Status 200", function () {
+          pm.response.to.have.status(200);
+      });
+    language: text/javascript
+order: 4000

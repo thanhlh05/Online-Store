@@ -1,0 +1,25 @@
+$kind: http-request
+name: "TC-CART-ROB-02: quantity min- (-1) → Reject 400"
+url: "{{base_url}}/cart/add"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "productId": "B0002",
+      "quantity": -1
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{customer_token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("TC-CART-ROB-02: quantity min- (-1) → 400", function () {
+          pm.response.to.have.status(400);
+      });
+    language: text/javascript
+order: 11000

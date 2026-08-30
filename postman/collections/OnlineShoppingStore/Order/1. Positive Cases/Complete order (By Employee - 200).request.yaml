@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{base_url}}/order/finish/2147483645"
+method: PATCH
+auth:
+  type: bearer
+  credentials:
+    token: "{{employee_token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Nhân viên chốt đơn thành công - Status 200", function () {
+          pm.response.to.have.status(200);
+      });
+    language: text/javascript
+order: 5000

@@ -1,0 +1,28 @@
+$kind: http-request
+name: DT-06 Customer PUT /seller/product/B0001/edit
+url: "{{base_url}}/seller/product/B0001/edit"
+method: PUT
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{customer_token}}
+body:
+  type: json
+  content: |-
+    {
+        "productId": "B0001",
+        "productName": "Updated Product",
+        "productPrice": 200,
+        "productStock": 20,
+        "productDescription": "Updated",
+        "productIcon": "https://via.placeholder.com/150",
+        "productStatus": 0,
+        "categoryType": 0
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 403", function () {
+          pm.response.to.have.status(403);
+      });
+    language: text/javascript
+order: 10000

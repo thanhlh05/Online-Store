@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{base_url}}/order/finish/2147483649"
+method: PATCH
+auth:
+  type: bearer
+  credentials:
+    token: "{{manager_token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Manager chốt đơn thành công - Status 200", function () {
+          pm.response.to.have.status(200);
+      });
+    language: text/javascript
+order: 6000

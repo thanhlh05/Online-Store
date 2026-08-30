@@ -1,0 +1,14 @@
+$kind: http-request
+name: DT-12 Customer GET /profile/customer1@email.com
+url: "{{base_url}}/profile/customer1@email.com"
+method: GET
+headers:
+  Authorization: Bearer {{customer_token}}
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+    language: text/javascript
+order: 16000

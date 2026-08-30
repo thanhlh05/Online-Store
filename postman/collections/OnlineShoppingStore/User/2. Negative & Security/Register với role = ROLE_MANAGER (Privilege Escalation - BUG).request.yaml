@@ -1,0 +1,47 @@
+$kind: http-request
+url: "{{base_url}}/register"
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"email\": \"privilege_{{$timestamp}}@email.com\",\r
+
+    \  \"password\": \"123\",\r
+
+    \  \"name\": \"Privilege Test\",\r
+
+    \  \"phone\": \"0909999999\",\r
+
+    \  \"address\": \"Test Address Privilege\",\r
+
+    \  \"role\": \"ROLE_MANAGER\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status code is 200\", function () {\r
+
+      \    pm.response.to.have.status(200);\r
+
+      });\r
+
+      \r
+
+      pm.test(\"Role phải bị ép về ROLE_CUSTOMER (hiện tại đang FAIL - BUG)\", function () {\r
+
+      \    var json = pm.response.json();\r
+
+      \    pm.expect(json.role).to.eql(\"ROLE_CUSTOMER\");\r
+
+      });\r
+
+      if (pm.response.code === 200) \r
+
+      {\r
+
+      \     console.log(\"Actual role returned:\", pm.response.json().role);\r
+
+      }"
+    language: text/javascript
+order: 5000

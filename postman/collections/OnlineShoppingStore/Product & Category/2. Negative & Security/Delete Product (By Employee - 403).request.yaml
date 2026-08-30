@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{base_url}}/seller/product/B0005/delete"
+method: DELETE
+auth:
+  type: bearer
+  credentials:
+    token: "{{employee_token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Employee không được xóa sản phẩm - Status 403 Forbidden", function () {
+          pm.response.to.have.status(403);
+      });
+    language: text/javascript
+order: 3000

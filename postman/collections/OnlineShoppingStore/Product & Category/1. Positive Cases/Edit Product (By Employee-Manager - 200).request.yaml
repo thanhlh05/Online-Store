@@ -1,0 +1,29 @@
+$kind: http-request
+name: Edit Product (By Employee/Manager - 200)
+url: "{{base_url}}/seller/product/B0001/edit"
+method: PUT
+body:
+  type: json
+  content: |-
+    {
+      "productId": "B0001",
+      "productName": "Core Java - 2nd Edition",
+      "productPrice": 35.00,
+      "productStock": 100,
+      "productDescription": "Updated Java book",
+      "productIcon": "https://via.placeholder.com/150",
+      "categoryType": 0,
+      "productStatus": 0
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{employee_token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Sửa sản phẩm thành công - 200 OK", function () {
+          pm.response.to.have.status(200);
+      });
+    language: text/javascript
+order: 5000

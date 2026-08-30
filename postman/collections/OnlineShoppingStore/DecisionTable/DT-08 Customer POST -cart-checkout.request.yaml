@@ -1,0 +1,14 @@
+$kind: http-request
+name: DT-08 Customer POST /cart/checkout
+url: "{{base_url}}/cart/checkout"
+method: POST
+headers:
+  Authorization: Bearer {{customer_token}}
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+    language: text/javascript
+order: 12000

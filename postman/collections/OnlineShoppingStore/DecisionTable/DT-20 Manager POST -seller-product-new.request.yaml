@@ -1,0 +1,41 @@
+$kind: http-request
+name: DT-20 Manager POST /seller/product/new
+url: "{{base_url}}/seller/product/new"
+method: POST
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{manager_token}}
+body:
+  type: json
+  content: |-
+    {
+        "productId": "DTMGR-{{$timestamp}}",
+        "productName": "DT Product By Manager",
+        "productPrice": 150,
+        "productStock": 50,
+        "productDescription": "Created by Manager",
+        "productIcon": "https://via.placeholder.com/150",
+        "productStatus": 0,
+        "categoryType": 0
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      if (pm.response.code === 200) {
+          try {
+              var res = pm.response.json();
+              var pid = res.productId || res.id;
+              if (pid) { pm.environment.set('dt_product_id', pid); }
+              else {
+                  // fallback: parse từ body request
+                  var body = pm.request.body ? pm.request.body.raw : '';
+                  var m = /"productId"\s*:\s*"([^"]+)"/.exec(body);
+                  if (m) pm.environment.set('dt_product_id', m[1]);
+              }
+          } catch (e) {}
+      }
+    language: text/javascript
+order: 24000

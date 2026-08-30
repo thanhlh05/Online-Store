@@ -1,0 +1,30 @@
+$kind: http-request
+name: "TC-PROD-BVA-18: productDescription min (empty) → Accept 200"
+url: "{{base_url}}/seller/product/new"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "productId": "PROD018",
+      "productName": "Sample Product",
+      "productPrice": 40,
+      "productStock": 100,
+      "productDescription": "",
+      "categoryType": 0,
+      "productStatus": 0
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{manager_token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("TC-PROD-BVA-18: productDescription min (empty) → 200", function () {
+          pm.response.to.have.status(200);
+      });
+    language: text/javascript
+order: 18000

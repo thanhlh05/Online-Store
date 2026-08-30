@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{base_url}}/login?employee1@email.com=123"
+method: POST
+queryParams:
+  employee1@email.com: "123"
+order: 1787350197926

@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{base_url}}/cart"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: '[{"productId": "B0001", "count": 1}]'
+auth:
+  type: bearer
+  credentials:
+    token: "{{customer_token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Customer merge cart - Status 200", function () {
+          pm.response.to.have.status(200);
+      });
+    language: text/javascript
+order: 3000

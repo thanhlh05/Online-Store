@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{base_url}}/cart/add"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: '{"productId": "B0001", "quantity": 2}'
+auth:
+  type: bearer
+  credentials:
+    token: "{{manager_token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Manager không được add cart - Status 403 Forbidden", function () {
+          pm.response.to.have.status(403);
+      });
+    language: text/javascript
+order: 2000

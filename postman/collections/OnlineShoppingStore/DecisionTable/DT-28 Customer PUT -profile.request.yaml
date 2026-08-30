@@ -1,0 +1,25 @@
+$kind: http-request
+name: DT-28 Customer PUT /profile
+url: "{{base_url}}/profile"
+method: PUT
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{customer_token}}
+body:
+  type: json
+  content: |-
+    {
+        "email": "customer1@email.com",
+        "password": "123",
+        "name": "Customer One Updated",
+        "phone": "0123456789",
+        "address": "123 Main St"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+    language: text/javascript
+order: 32000

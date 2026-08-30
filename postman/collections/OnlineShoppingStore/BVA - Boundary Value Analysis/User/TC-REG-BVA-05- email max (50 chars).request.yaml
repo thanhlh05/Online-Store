@@ -1,0 +1,24 @@
+$kind: http-request
+name: "TC-REG-BVA-05: email max (50 chars)"
+url: "{{base_url}}/register"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "u342_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@test.com",
+      "password": "123",
+      "name": "Test User",
+      "phone": "0972512911",
+      "address": "123 Test Street"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+    language: text/javascript
+order: 5000

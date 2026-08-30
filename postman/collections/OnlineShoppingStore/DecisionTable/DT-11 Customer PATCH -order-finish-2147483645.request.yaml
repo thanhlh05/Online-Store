@@ -1,0 +1,14 @@
+$kind: http-request
+name: DT-11 Customer PATCH /order/finish/2147483645
+url: "{{base_url}}/order/finish/2147483645"
+method: PATCH
+headers:
+  Authorization: Bearer {{customer_token}}
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 403", function () {
+          pm.response.to.have.status(403);
+      });
+    language: text/javascript
+order: 15000

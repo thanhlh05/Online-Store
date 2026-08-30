@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{base_url}}/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "username": "employee1@email.com",
+        "password": "123"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      if (pm.response.code === 200) {
+          var res = pm.response.json();
+          pm.environment.set("employee_token", res.token || res.jwt);
+      }
+    language: text/javascript
+order: 3000

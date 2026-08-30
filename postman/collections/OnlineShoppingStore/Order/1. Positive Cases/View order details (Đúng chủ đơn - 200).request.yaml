@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{base_url}}/order/2147483642"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{customer_token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Xem đúng chi tiết đơn của mình - Status 200", function () {
+          pm.response.to.have.status(200);
+      });
+    language: text/javascript
+order: 3000

@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{base_url}}/order/cancel/2147483641"
+method: PATCH
+auth:
+  type: bearer
+  credentials:
+    token: "{{customer_token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Hệ thống chặn hủy đơn người khác - Status 401 Unauthorized", function () {
+          pm.response.to.have.status(401);
+      });
+    language: text/javascript
+order: 2000

@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{base_url}}/category/0?page=1&size=10"
+method: GET
+queryParams:
+  page: "1"
+  size: "10"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Lấy danh mục - 200 OK", function () {
+          pm.response.to.have.status(200);
+      });
+    language: text/javascript
+order: 3000

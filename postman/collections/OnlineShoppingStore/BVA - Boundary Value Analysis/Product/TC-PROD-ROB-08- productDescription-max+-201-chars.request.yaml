@@ -1,0 +1,30 @@
+$kind: http-request
+name: "TC-PROD-ROB-08: productDescription max+ (201 chars) → Reject 400"
+url: "{{base_url}}/seller/product/new"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "productName": "Sample Product",
+      "productPrice": 40,
+      "productStock": 100,
+      "productDescription": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "categoryType": 0,
+      "productStatus": 0,
+      "productId": "PRODROB08"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{manager_token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("TC-PROD-ROB-08: productDescription max+ (201 chars) → 400", function () {
+          pm.response.to.have.status(400);
+      });
+    language: text/javascript
+order: 29000

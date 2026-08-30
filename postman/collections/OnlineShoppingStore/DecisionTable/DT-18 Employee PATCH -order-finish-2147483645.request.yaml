@@ -1,0 +1,14 @@
+$kind: http-request
+name: DT-18 Employee PATCH /order/finish/2147483645
+url: "{{base_url}}/order/finish/2147483645"
+method: PATCH
+headers:
+  Authorization: Bearer {{employee_token}}
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+    language: text/javascript
+order: 22000
