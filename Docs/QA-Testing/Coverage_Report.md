@@ -10,17 +10,17 @@ Kết quả đo Coverage được thực hiện bằng JaCoCo sau khi chạy to�
 | Service Class             | Statement % | Branch % |
 |---------------------------|------------:|---------:|
 | ProductServiceImpl        |     **93%** | **100%** |
-| CartServiceImpl           |    **100%** | **100%** |
-| OrderServiceImpl          |    **100%** |  **90%** |
+| CartServiceImpl          |    **100%** | **100%** |
+| OrderServiceImpl          |    **100%** | **100%** |
 | UserServiceImpl           |    **100%** |  **n/a** |
 | ProductInOrderServiceImpl |    **100%** |  **n/a** |
 | CategoryServiceImpl       |    **100%** | **100%** |
-| Total                     |     **97%** |  **97%** |
+| Total                     |     **97%** | **100%** |
 
 **Nhận xét:**
 
 * `CartServiceImpl` đạt 100% Statement Coverage và 100% Branch Coverage.
-* `OrderServiceImpl` đạt 100% Statement Coverage và 90% Branch Coverage, nghĩa là vẫn còn một số nhánh điều kiện chưa được thực thi.
+* `OrderServiceImpl` đạt 100% Statement Coverage và 100% Branch Coverage.
 * `ProductServiceImpl` đạt 93% Statement Coverage và 100% Branch Coverage.
 * `UserServiceImpl` và `ProductInOrderServiceImpl` đạt 100% Statement Coverage. Branch Coverage được JaCoCo ghi nhận là `n/a` do class không có branch có thể đo theo báo cáo.
 * `CategoryServiceImpl` đạt 100% Statement Coverage và 100% Branch Coverage.
@@ -68,26 +68,21 @@ Toàn bộ Unit Test được thực thi bằng Maven:
 mvn test
 ```
 
-Kết quả:
-
+Sau khi bổ sung Unit Test mới (xem Mục 5.5), chạy lại mvn test:
 ```text
-Tests run: 133
+Tests run: 135
 Failures: 0
 Errors: 0
 Skipped: 0
 ```
+![Hình 5 - Maven - unit test](images/mvn-135.png)
 
 Do đó:
 
-* Tổng số Test: **133**
+* Tổng số Test: **135**
 * Failure: **0**
 * Error: **0**
 * Skipped: **0**
-
-
-![Hình 5 - Maven - unit test](images/terminal.png)
-
-**Hình 5. Kết quả chạy 133 Unit Test bằng Maven**
 
 
 Sau khi Unit Test hoàn thành, báo cáo JaCoCo được tạo bằng:
@@ -112,13 +107,10 @@ target/site/jacoco/index.html
 # PHẦN BỔ SUNG — WHITE-BOX TESTING NÂNG CAO (CHƯƠNG 4)
 
 > Phần này bổ sung các kỹ thuật **White-box Testing** còn thiếu, gồm: **Control Flow Graph (CFG)**, **Cyclomatic Complexity**, **Independent Paths**, **Condition Coverage**, **Branch-Condition Coverage** và **Branch Condition Combination Coverage**.
->
-> Các Unit Test và kết quả Coverage ở Phần 1–4 được **giữ nguyên**. Nhóm chỉ bổ sung **một Unit Test mới** ở mục 5.5 để kiểm tra nhánh còn thiếu trong `OrderServiceImpl.cancel()`. Nhánh này là nguyên nhân khiến **Branch Coverage của `OrderServiceImpl` đạt 90%**.
->
-> Unit Test mới ở mục 5.5 được thiết kế để cover nhánh còn thiếu; sẽ được bổ sung vào source và chạy lại JaCoCo trước khi hoàn tất deliverable.
+> Sau khi bổ sung `cancelProductInfoNotFoundTest()` và chạy lại toàn bộ Unit Test, JaCoCo ghi nhận `OrderServiceImpl` đạt **100% Branch Coverage**.
 ## 5. Lựa chọn Method & phạm vi áp dụng
 
-Theo đề bài, nhóm ưu tiên 3 method:
+Nhóm ưu tiên 3 method:
 
 - `OrderServiceImpl.finish()`
 - `OrderServiceImpl.cancel()`
@@ -365,11 +357,7 @@ method này là bảng Condition/Branch-Condition/BCC Combination ở mục 6-8.
 
 ## 5.5. Unit Test bổ sung (duy nhất)
 
-Theo đúng chỉ dẫn *"không xoá/sửa Test Case hiện tại nếu đang đúng"*, toàn bộ
-Unit Test cũ trong `OrderServiceImplTest.java` và `CartServiceImplTest.java`
-được **giữ nguyên 100%**. Chỉ **thêm mới 1 test method** vào cuối
-`OrderServiceImplTest.java` để cover Path **C-P4** (branch `productInfo ==
-null` trong `cancel()`) — nguyên nhân của 90% Branch Coverage:
+Toàn bộ Unit Test cũ trong `OrderServiceImplTest.java` và `CartServiceImplTest.java` được **giữ nguyên 100%**. Chỉ **thêm mới 1 test method** vào cuối `OrderServiceImplTest.java` để cover Path **C-P4** (branch `productInfo == null` trong `cancel()`) — nguyên nhân của 90% Branch Coverage:
 
 ```java
 @Test
@@ -377,24 +365,25 @@ public void cancelProductInfoNotFoundTest() {
     when(orderRepository.findByOrderId(orderMain.getOrderId()))
             .thenReturn(orderMain);
 
-    // Sản phẩm trong đơn hàng không còn tồn tại trong ProductInfoRepository
-    // (ví dụ: sản phẩm đã bị seller xoá) -> productInfo == null
     when(productInfoRepository.findByProductId("1"))
             .thenReturn(null);
 
-    OrderMain orderMainReturn = orderService.cancel(orderMain.getOrderId());
+    OrderMain orderMainReturn =
+            orderService.cancel(orderMain.getOrderId());
 
-    assertThat(orderMainReturn.getOrderId(), is(orderMain.getOrderId()));
-    assertThat(orderMainReturn.getOrderStatus(), is(OrderStatusEnum.CANCELED.getCode()));
+    assertThat(orderMainReturn.getOrderId(),
+            is(orderMain.getOrderId()));
 
-    // increaseStock KHÔNG được gọi vì productInfo == null
-    Mockito.verify(productService, Mockito.never())
-            .increaseStock(ArgumentMatchers.anyString(), ArgumentMatchers.anyInt());
+    assertThat(orderMainReturn.getOrderStatus(),
+            is(OrderStatusEnum.CANCELED.getCode()));
+
+    verify(productService, never()).increaseStock(any(), anyInt());
 }
 ```
 
 Vị trí: `backend/src/test/java/me/zhulin/shopapi/service/impl/OrderServiceImplTest.java`
 (thêm sau `cancelOrderNotFoundTest()`, không đụng đến bất kỳ test nào khác).
+![OrderServiceImpl-cancel().png](images/OrderServiceImpl-cancel.png)
 
 ---
 
@@ -424,7 +413,7 @@ Số liệu Branch Coverage ở mục 1 (JaCoCo) giữ nguyên. Bảng dưới l
 | `finish()` | `!status.equals(NEW)` | `finishStatusCanceledTest`, `finishStatusFinishedTest` | `finishSuccessTest` |
 | `cancel()` | D1: `!status.equals(NEW)` | `cancelStatusCanceledTest`, `cancelStatusFinishTest` | `cancelSuccessTest`, `cancelNoProduct`, `cancelProductInfoNotFoundTest` |
 | `cancel()` | D2: loop còn phần tử? | `cancelSuccessTest`, `cancelProductInfoNotFoundTest` | `cancelNoProduct` |
-| `cancel()` | D3: `productInfo != null` | `cancelSuccessTest` | **`cancelProductInfoNotFoundTest` (mới — trước đây chưa cover, nguyên nhân 90% Branch Coverage)** |
+| `cancel()` | D3: `productInfo != null` | `cancelSuccessTest` | `cancelProductInfoNotFoundTest` |
 | `mergeLocalCart()` | D1: forEach còn phần tử? | `mergeLocalCartTest`, `mergeLocalCartTwoProductTest`, `mergeLocalCartNoProductTest` | *(chưa có test — path lý thuyết M-P1, xem giải thích mục 5.3)* |
 | `mergeLocalCart()` | D2: `old.isPresent()` | `mergeLocalCartTest`, `mergeLocalCartTwoProductTest` | `mergeLocalCartNoProductTest` |
 | `delete()` | `A \|\| B` (tổng thể) | `deleteNoProductTest`, `deleteNoUserTest` | `deleteTest` |
@@ -609,4 +598,3 @@ Do sử dụng toán tử `||`, Java có cơ chế **short-circuit**. Vì vậy,
 Toàn bộ Unit Test và kết quả Coverage gốc được giữ nguyên trong:
 
 `Docs/QA-Testing/Test_Case_WhiteBox.xlsx`
-ng/Test_Case_WhiteBox.xlsx

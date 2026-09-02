@@ -23,6 +23,9 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.never;
 
 @RunWith(SpringRunner.class)
 public class OrderServiceImplTest {
@@ -125,7 +128,25 @@ public class OrderServiceImplTest {
         assertThat(orderMainReturn.getOrderId(), is(orderMain.getOrderId()));
         assertThat(orderMainReturn.getOrderStatus(), is(OrderStatusEnum.CANCELED.getCode()));
     }
+    @Test
+    public void cancelProductInfoNotFoundTest() {
+        when(orderRepository.findByOrderId(orderMain.getOrderId()))
+                .thenReturn(orderMain);
 
+        when(productInfoRepository.findByProductId("1"))
+                .thenReturn(null);
+
+        OrderMain orderMainReturn =
+                orderService.cancel(orderMain.getOrderId());
+
+        assertThat(orderMainReturn.getOrderId(),
+                is(orderMain.getOrderId()));
+
+        assertThat(orderMainReturn.getOrderStatus(),
+                is(OrderStatusEnum.CANCELED.getCode()));
+
+        verify(productService, never()).increaseStock(any(), anyInt());
+    }
     @Test(expected = MyException.class)
     public void cancelStatusCanceledTest() {
         orderMain.setOrderStatus(OrderStatusEnum.CANCELED.getCode());
@@ -236,5 +257,7 @@ public class OrderServiceImplTest {
         assertThat(result.getContent().get(0).getOrderId(),
                 is(orderMain.getOrderId()));
     }
+
 }
+
 
