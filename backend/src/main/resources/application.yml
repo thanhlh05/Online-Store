@@ -6,13 +6,13 @@ spring:
     password: ${DB_PASSWORD:postgres}
     url: ${DB_URL:jdbc:postgresql://localhost:5432/shopping_store}
     platform: postgres
-    initialization-mode: always
+    initialization-mode: always #always-never
     continue-on-error: true
   jpa:
     show-sql: false
 #    generate-ddl: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: create #create-update
     database: postgresql
     properties:
       hibernate:

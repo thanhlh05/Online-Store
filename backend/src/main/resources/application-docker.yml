@@ -6,12 +6,12 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD:postgres}
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://db:5432/shopping_store}
     platform: postgres
-    initialization-mode: always
+    initialization-mode: always #always-never
     continue-on-error: true
   jpa:
     show-sql: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: create #create-update
     database: postgresql
     properties:
       hibernate:
