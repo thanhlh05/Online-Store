@@ -225,3 +225,10 @@ Dự án được quản lý tiến độ và theo dõi lỗi trên Jira. Dướ
 * Áp dụng White-box Testing: Thiết lập JaCoCo, chuyển BVA thành Unit Test và đo độ phủ (coverage).
 * Thực thi State Transition Testing cho các luồng nghiệp vụ Order và Cart.
 * Thiết kế Decision Table Testing cho ma trận phân quyền hệ thống (Authorization).
+
+### 🔹 Sprint 4 (26 Aug – 01 Sep): ÁBVA đúng công thức, Decision Table đủ 6 bước,  bổ sung White-box
+* Sửa lỗi trùng boundary phone + hoàn thiện Register (Standard BVA 21 TC + Robustness chọn lọc).
+* Làm lại BVA cho Product (n=5 → 21 TC) và Cart (n=2 → 9 TC) + Robustness.
+* State Transition Testing – chỉnh sửa nhỏ và xác nhận khớp với code thực tế.
+* Làm lại Decision Table đúng đủ 6 bước (có rút gọn bảng).
+* White-box – bổ sung phần còn thiếu (CFG, Cyclomatic Complexity, Condition / Branch-Condition), giữ nguyên unit test đã có.
