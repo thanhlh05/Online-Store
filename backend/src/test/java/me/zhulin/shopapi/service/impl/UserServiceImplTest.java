@@ -84,14 +84,14 @@ public class UserServiceImplTest {
         assertThat(userResult.getPassword(), is("encodedPassword"));
     }
     @Test
-    public void saveDoesNotRestrictRoleTest() {
+    public void saveRestrictsRoleToCustomerTest() {
         user.setRole("ROLE_MANAGER");
 
         when(userRepository.save(user)).thenReturn(user);
 
         User saved = userService.save(user);
 
-        assertThat(saved.getRole(), is("ROLE_MANAGER"));
+        assertThat(saved.getRole(), is("ROLE_CUSTOMER"));
     }
 
     // Bo sung: findOne()/findByRole() truoc do chua duoc test lan nao (0% coverage)
