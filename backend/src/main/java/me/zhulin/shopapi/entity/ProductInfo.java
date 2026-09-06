@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -30,11 +31,12 @@ public class ProductInfo implements Serializable {
 
     /** 单价. */
     @NotNull
+    @Positive(message = "Price must be greater than 0")
     private BigDecimal productPrice;
 
     /** 库存. */
     @NotNull
-    @Min(0)
+    @Min(value = 0, message = "Stock cannot be negative")
     private Integer productStock;
 
     /** 描述. */
