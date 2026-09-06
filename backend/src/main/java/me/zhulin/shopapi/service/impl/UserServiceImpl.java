@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User save(User user) {
         //register
+        user.setRole("ROLE_CUSTOMER");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         try {
             User savedUser = userRepository.save(user);

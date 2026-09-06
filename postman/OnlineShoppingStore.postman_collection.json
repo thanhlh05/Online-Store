@@ -513,7 +513,7 @@
               "response": []
             },
             {
-              "name": "Register với role = ROLE_MANAGER (Privilege Escalation - BUG)",
+              "name": "Register với role = ROLE_MANAGER (Privilege Escalation - BLOCKED)",
               "event": [
                 {
                   "listen": "test",
@@ -523,7 +523,7 @@
                       "    pm.response.to.have.status(200);\r",
                       "});\r",
                       "\r",
-                      "pm.test(\"Role phải bị ép về ROLE_CUSTOMER (hiện tại đang FAIL - BUG)\", function () {\r",
+                      "pm.test(\"Role phải bị ép về ROLE_CUSTOMER\", function () {\r",
                       "    var json = pm.response.json();\r",
                       "    pm.expect(json.role).to.eql(\"ROLE_CUSTOMER\");\r",
                       "});\r",
