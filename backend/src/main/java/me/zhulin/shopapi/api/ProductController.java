@@ -57,8 +57,9 @@ public class ProductController {
                             "There is already a product with the code provided");
         }
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult);
+            return ResponseEntity.badRequest().body(bindingResult.getFieldErrors());
         }
+
         return ResponseEntity.ok(productService.save(product));
     }
 
@@ -67,7 +68,7 @@ public class ProductController {
                                @Valid @RequestBody ProductInfo product,
                                BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult);
+            return ResponseEntity.badRequest().body(bindingResult.getFieldErrors());
         }
         if (!productId.equals(product.getProductId())) {
             return ResponseEntity.badRequest().body("Id Not Matched");
