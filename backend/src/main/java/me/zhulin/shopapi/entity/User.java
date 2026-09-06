@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 /**
@@ -27,9 +25,11 @@ public class User implements Serializable {
 
     @NaturalId
     @NotEmpty
+    @Email
+    @Size(min = 6, max = 50, message = "Email must be between 6 and 50 characters")
     private String email;
     @NotEmpty
-    @Size(min = 3, message = "Length must be more than 3")
+    @Size(min = 3, max = 20, message = "Password must be between 3 and 20 characters")
     private String password;
     @NotEmpty
     private String name;
