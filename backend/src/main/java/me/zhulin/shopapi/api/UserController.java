@@ -15,7 +15,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 /**
@@ -54,7 +56,11 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<User> save(@RequestBody User user) {
+    public ResponseEntity<?> save(@Valid @RequestBody User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            String errorMessage = bindingResult.getAllErrors().get(0).getDefaultMessage();
+            return ResponseEntity.badRequest().body(errorMessage);
+        }
         try {
             return ResponseEntity.ok(userService.save(user));
         } catch (Exception e) {
