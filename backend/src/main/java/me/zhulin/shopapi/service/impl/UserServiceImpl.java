@@ -54,6 +54,11 @@ public class UserServiceImpl implements UserService {
             return userRepository.save(savedUser);
 
         } catch (Exception e) {
+            e.printStackTrace(); // in full vào log Docker
+            Throwable root = e;
+            while (root.getCause() != null) {
+                root = root.getCause();
+            }
             throw new MyException(ResultEnum.VALID_ERROR);
         }
 

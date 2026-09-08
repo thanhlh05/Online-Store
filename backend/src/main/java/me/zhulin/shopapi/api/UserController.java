@@ -16,6 +16,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import me.zhulin.shopapi.validation.OnCreate;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -56,7 +58,10 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> save(@Valid @RequestBody User user, BindingResult bindingResult) {
+    public ResponseEntity<?> save(
+            @Validated(OnCreate.class) @RequestBody User user,
+            BindingResult bindingResult) {
+
         if (bindingResult.hasErrors()) {
             String errorMessage = bindingResult.getAllErrors().get(0).getDefaultMessage();
             return ResponseEntity.badRequest().body(errorMessage);
@@ -64,7 +69,12 @@ public class UserController {
         try {
             return ResponseEntity.ok(userService.save(user));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            Throwable root = e;
+            while (root.getCause() != null) {
+                root = root.getCause();
+            }
+            String msg = root.getMessage() != null ? root.getMessage() : "Register failed";
+            return ResponseEntity.badRequest().body(msg);
         }
     }
 

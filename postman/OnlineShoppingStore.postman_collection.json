@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "031e747c-a738-4c08-9e40-ab5a48496086",
+    "_postman_id": "c92e15f4-e856-4c4e-a39e-e4d2cb843357",
     "name": "OnlineShoppingStore",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "56876251",
-    "_collection_link": "https://go.postman.co/collection/56876251-031e747c-a738-4c08-9e40-ab5a48496086?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/56876251-c92e15f4-e856-4c4e-a39e-e4d2cb843357?source=collection_link"
   },
   "item": [
     {
@@ -209,7 +209,9 @@
                       "    pm.response.to.have.status(200);",
                       "});"
                     ],
-                    "type": "text/javascript"
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
                   }
                 }
               ],
@@ -218,7 +220,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"testuser_{{$timestamp}}@email.com\",\r\n  \"password\": \"123\",\r\n  \"name\": \"Test User\",\r\n  \"phone\": \"0987654321\",\r\n  \"address\": \"123 Test Street\"\r\n}",
+                  "raw": "{\r\n  \"email\": \"testuser_{{$timestamp}}@email.com\",\r\n  \"password\": \"123456\",\r\n  \"name\": \"Test User\",\r\n  \"phone\": \"0987654321\",\r\n  \"address\": \"123 Test Street\"\r\n}\r\n",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -543,7 +545,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"privilege_{{$timestamp}}@email.com\",\r\n  \"password\": \"123\",\r\n  \"name\": \"Privilege Test\",\r\n  \"phone\": \"0909999999\",\r\n  \"address\": \"Test Address Privilege\",\r\n  \"role\": \"ROLE_MANAGER\"\r\n}",
+                  "raw": "{\r\n  \"email\": \"privilege_{{$timestamp}}@email.com\",\r\n  \"password\": \"123456\",\r\n  \"name\": \"Privilege Test\",\r\n  \"phone\": \"0909999999\",\r\n  \"address\": \"Test Address Privilege\",\r\n  \"role\": \"ROLE_MANAGER\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -5551,15 +5553,6 @@
                 "type": "text"
               }
             ],
-            "url": {
-              "raw": "{{base_url}}/login",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "login"
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n    \"username\": \"customer1@email.com\",\n    \"password\": \"123\"\n}",
@@ -5568,6 +5561,15 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "login"
+              ]
             }
           },
           "response": []
@@ -5600,15 +5602,6 @@
                 "type": "text"
               }
             ],
-            "url": {
-              "raw": "{{base_url}}/login",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "login"
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n    \"username\": \"customer2@email.com\",\n    \"password\": \"123\"\n}",
@@ -5617,6 +5610,15 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "login"
+              ]
             }
           },
           "response": []
@@ -5649,15 +5651,6 @@
                 "type": "text"
               }
             ],
-            "url": {
-              "raw": "{{base_url}}/login",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "login"
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n    \"username\": \"employee1@email.com\",\n    \"password\": \"123\"\n}",
@@ -5666,6 +5659,15 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "login"
+              ]
             }
           },
           "response": []
@@ -5698,15 +5700,6 @@
                 "type": "text"
               }
             ],
-            "url": {
-              "raw": "{{base_url}}/login",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "login"
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n    \"username\": \"manager1@email.com\",\n    \"password\": \"123\"\n}",
@@ -5715,6 +5708,15 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "login"
+              ]
             }
           },
           "response": []
@@ -5803,6 +5805,15 @@
                 "type": "text"
               }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"productId\": \"DT-{{$timestamp}}\",\n    \"productName\": \"DT Product\",\n    \"productPrice\": 100,\n    \"productStock\": 10,\n    \"productDescription\": \"Decision Table test\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{base_url}}/seller/product/new",
               "host": [
@@ -5813,15 +5824,6 @@
                 "product",
                 "new"
               ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"productId\": \"DT-{{$timestamp}}\",\n    \"productName\": \"DT Product\",\n    \"productPrice\": 100,\n    \"productStock\": 10,\n    \"productDescription\": \"Decision Table test\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
             }
           },
           "response": []
@@ -5854,15 +5856,6 @@
                 "type": "text"
               }
             ],
-            "url": {
-              "raw": "{{base_url}}/login",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "login"
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n    \"username\": \"customer1@email.com\",\n    \"password\": \"123\"\n}",
@@ -5871,6 +5864,15 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "login"
+              ]
             }
           },
           "response": []
@@ -5940,6 +5942,15 @@
                 "type": "text"
               }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"productId\": \"B0001\",\n    \"productName\": \"Updated Product\",\n    \"productPrice\": 200,\n    \"productStock\": 20,\n    \"productDescription\": \"Updated\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{base_url}}/seller/product/B0001/edit",
               "host": [
@@ -5951,15 +5962,6 @@
                 "B0001",
                 "edit"
               ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"productId\": \"B0001\",\n    \"productName\": \"Updated Product\",\n    \"productPrice\": 200,\n    \"productStock\": 20,\n    \"productDescription\": \"Updated\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
             }
           },
           "response": []
@@ -5993,6 +5995,15 @@
                 "type": "text"
               }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"productId\": \"B0002\",\n    \"quantity\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{base_url}}/cart/add",
               "host": [
@@ -6002,15 +6013,6 @@
                 "cart",
                 "add"
               ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"productId\": \"B0002\",\n    \"quantity\": 1\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
             }
           },
           "response": []
@@ -6268,6 +6270,15 @@
                 "type": "text"
               }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"productId\": \"B0001\",\n    \"productName\": \"Updated By Employee\",\n    \"productPrice\": 200,\n    \"productStock\": 20,\n    \"productDescription\": \"Updated\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{base_url}}/seller/product/B0001/edit",
               "host": [
@@ -6279,15 +6290,6 @@
                 "B0001",
                 "edit"
               ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"productId\": \"B0001\",\n    \"productName\": \"Updated By Employee\",\n    \"productPrice\": 200,\n    \"productStock\": 20,\n    \"productDescription\": \"Updated\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
             }
           },
           "response": []
@@ -6321,6 +6323,15 @@
                 "type": "text"
               }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"productId\": \"DT-{{$timestamp}}\",\n    \"productName\": \"DT Product\",\n    \"productPrice\": 100,\n    \"productStock\": 10,\n    \"productDescription\": \"Decision Table test\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{base_url}}/seller/product/new",
               "host": [
@@ -6331,15 +6342,6 @@
                 "product",
                 "new"
               ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"productId\": \"DT-{{$timestamp}}\",\n    \"productName\": \"DT Product\",\n    \"productPrice\": 100,\n    \"productStock\": 10,\n    \"productDescription\": \"Decision Table test\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
             }
           },
           "response": []
@@ -6535,6 +6537,15 @@
                 "type": "text"
               }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"productId\": \"DTMGR-{{$timestamp}}\",\n    \"productName\": \"DT Product By Manager\",\n    \"productPrice\": 150,\n    \"productStock\": 50,\n    \"productDescription\": \"Created by Manager\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{base_url}}/seller/product/new",
               "host": [
@@ -6545,15 +6556,6 @@
                 "product",
                 "new"
               ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"productId\": \"DTMGR-{{$timestamp}}\",\n    \"productName\": \"DT Product By Manager\",\n    \"productPrice\": 150,\n    \"productStock\": 50,\n    \"productDescription\": \"Created by Manager\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
             }
           },
           "response": []
@@ -6662,6 +6664,15 @@
                 "type": "text"
               }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"productId\": \"B0001\",\n    \"productName\": \"Updated By Manager\",\n    \"productPrice\": 250,\n    \"productStock\": 20,\n    \"productDescription\": \"Updated\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{base_url}}/seller/product/B0001/edit",
               "host": [
@@ -6673,15 +6684,6 @@
                 "B0001",
                 "edit"
               ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"productId\": \"B0001\",\n    \"productName\": \"Updated By Manager\",\n    \"productPrice\": 250,\n    \"productStock\": 20,\n    \"productDescription\": \"Updated\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
             }
           },
           "response": []
@@ -6753,6 +6755,15 @@
                 "type": "text"
               }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"productId\": \"DT-{{$timestamp}}\",\n    \"productName\": \"DT Product\",\n    \"productPrice\": 100,\n    \"productStock\": 10,\n    \"productDescription\": \"Decision Table test\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{base_url}}/seller/product/new",
               "host": [
@@ -6763,15 +6774,6 @@
                 "product",
                 "new"
               ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"productId\": \"DT-{{$timestamp}}\",\n    \"productName\": \"DT Product\",\n    \"productPrice\": 100,\n    \"productStock\": 10,\n    \"productDescription\": \"Decision Table test\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
             }
           },
           "response": []
@@ -6800,6 +6802,15 @@
                 "type": "text"
               }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"productId\": \"B0001\",\n    \"productName\": \"Updated Product\",\n    \"productPrice\": 200,\n    \"productStock\": 20,\n    \"productDescription\": \"Updated\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{base_url}}/seller/product/B0001/edit",
               "host": [
@@ -6811,15 +6822,6 @@
                 "B0001",
                 "edit"
               ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"productId\": \"B0001\",\n    \"productName\": \"Updated Product\",\n    \"productPrice\": 200,\n    \"productStock\": 20,\n    \"productDescription\": \"Updated\",\n    \"productIcon\": \"https://via.placeholder.com/150\",\n    \"productStatus\": 0,\n    \"categoryType\": 0\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
             }
           },
           "response": []
@@ -6886,15 +6888,6 @@
                 "type": "text"
               }
             ],
-            "url": {
-              "raw": "{{base_url}}/profile",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "profile"
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n    \"email\": \"customer1@email.com\",\n    \"password\": \"123\",\n    \"name\": \"Customer One Updated\",\n    \"phone\": \"0123456789\",\n    \"address\": \"123 Main St\"\n}",
@@ -6903,6 +6896,15 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profile"
+              ]
             }
           },
           "response": []
@@ -7036,15 +7038,6 @@
                 "type": "text"
               }
             ],
-            "url": {
-              "raw": "{{base_url}}/register",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "register"
-              ]
-            },
             "body": {
               "mode": "raw",
               "raw": "{\n    \"email\": \"reg_{{$timestamp}}@email.com\",\n    \"password\": \"123\",\n    \"name\": \"New Registered User\",\n    \"phone\": \"0987654321\",\n    \"address\": \"456 Side St\"\n}",
@@ -7053,6 +7046,15 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{base_url}}/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "register"
+              ]
             }
           },
           "response": []
@@ -7060,19 +7062,19 @@
       ]
     },
     {
-      "name": "Order State Transition Tests",
+      "name": "State Transition (Order + Cart)",
       "item": [
         {
-          "name": "1. Order Transitions (State Machine)",
+          "name": "1. Order Transitions",
           "item": [
             {
-              "name": "TC-ST-01 - Hợp lệ: Khách hàng hủy đơn hàng mới đặt hàng",
+              "name": "TC-ST-01: Customer hủy đơn NEW (Hợp lệ)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"TC-ST-01 - Status 200\", function () {",
+                      "pm.test(\"Status 200\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
                     ],
@@ -7081,35 +7083,40 @@
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer2_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{customer_token}}",
-                    "type": "text"
-                  }
-                ],
+                "header": [],
                 "url": {
-                  "raw": "{{base_url}}/order/cancel/{id}",
+                  "raw": "{{base_url}}/order/cancel/2147483643",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "order",
-                    "cancel"
+                    "cancel",
+                    "2147483643"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-ST-02 - Hợp lệ: Nhân viên đặt đơn hàng mới thành công",
+              "name": "TC-ST-02: Employee finish đơn NEW (Hợp lệ)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"TC-ST-02 - Status 200\", function () {",
+                      "pm.test(\"Status 200\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
                     ],
@@ -7118,35 +7125,40 @@
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employee_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{employee_token}}",
-                    "type": "text"
-                  }
-                ],
+                "header": [],
                 "url": {
-                  "raw": "{{base_url}}/order/finish/{id}",
+                  "raw": "{{base_url}}/order/finish/2147483645",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "order",
-                    "finish"
+                    "finish",
+                    "2147483645"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-ST-03 - Không hợp lệ: Hoàn thành đơn hàng bị hủy",
+              "name": "TC-ST-03: Finish đơn CANCELED (SCRUM-59 - kỳ vọng 400)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"TC-ST-03 - Status 400\", function () {",
+                      "pm.test(\"Status 400\", function () {",
                       "    pm.response.to.have.status(400);",
                       "});"
                     ],
@@ -7155,35 +7167,40 @@
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employee_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{employee_token}}",
-                    "type": "text"
-                  }
-                ],
+                "header": [],
                 "url": {
-                  "raw": "{{base_url}}/order/finish/{id}",
+                  "raw": "{{base_url}}/order/finish/2147483642",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "order",
-                    "finish"
+                    "finish",
+                    "2147483642"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-ST-04 - Không hợp lệ: Hủy đơn hàng đã hoàn tất",
+              "name": "TC-ST-04: Cancel đơn FINISHED (SCRUM-59 - kỳ vọng 400)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"TC-ST-04 - Status 400\", function () {",
+                      "pm.test(\"Status 400\", function () {",
                       "    pm.response.to.have.status(400);",
                       "});"
                     ],
@@ -7192,35 +7209,40 @@
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employee_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{employee_token}}",
-                    "type": "text"
-                  }
-                ],
+                "header": [],
                 "url": {
-                  "raw": "{{base_url}}/order/cancel/{id}",
+                  "raw": "{{base_url}}/order/cancel/2147483648",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "order",
-                    "cancel"
+                    "cancel",
+                    "2147483648"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-ST-05 - Tính lũy đẳng: Hủy hai lần cho cùng một đơn hàng MỚI.",
+              "name": "TC-ST-05: Hủy lần 2 cùng đơn (Idempotency - SCRUM-59)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"TC-ST-05 - Status 400\", function () {",
+                      "pm.test(\"Status 400\", function () {",
                       "    pm.response.to.have.status(400);",
                       "});"
                     ],
@@ -7229,35 +7251,126 @@
                 }
               ],
               "request": {
-                "method": "PATCH (×2)",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{customer_token}}",
-                    "type": "text"
-                  }
-                ],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer2_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
                 "url": {
-                  "raw": "{{base_url}}/order/cancel/{id}",
+                  "raw": "{{base_url}}/order/cancel/2147483643",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "order",
-                    "cancel"
+                    "cancel",
+                    "2147483643"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-ST-06 - Vai trò: Khách hàng cố gắng HOÀN TẤT đơn hàng (bị cấm)",
+              "name": "TC-ST-06: Customer cố finish đơn (bị cấm)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"TC-ST-06 - Status 401\", function () {",
+                      "pm.test(\"Status 403 (Customer bị cấm Finish)\", function () {",
+                      "    pm.response.to.have.status(403);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/order/finish/2147483649",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order",
+                    "finish",
+                    "2147483649"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-ST-07: Employee hủy đơn bất kỳ (Hợp lệ)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{employee_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/order/cancel/2147483649",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order",
+                    "cancel",
+                    "2147483649"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-ST-08: Customer hủy đơn người khác (bị cấm)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status 401\", function () {",
                       "    pm.response.to.have.status(401);",
                       "});"
                     ],
@@ -7266,96 +7379,27 @@
                 }
               ],
               "request": {
-                "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{customer_token}}",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/order/finish/{id}",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "order",
-                    "finish"
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
                   ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-ST-07 - Hợp lệ: Nhân viên hủy bất kỳ đơn hàng nào (của các người dùng khác nhau)",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"TC-ST-07 - Status 200\", function () {",
-                      "    pm.response.to.have.status(200);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
+                },
                 "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{employee_token}}",
-                    "type": "text"
-                  }
-                ],
+                "header": [],
                 "url": {
-                  "raw": "{{base_url}}/order/cancel/{id}",
+                  "raw": "{{base_url}}/order/cancel/2147483647",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "order",
-                    "cancel"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-ST-08 - Không hợp lệ: Khách hàng hủy đơn hàng của người khác (Chưa xác thực)",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"TC-ST-08 - Status 401\", function () {",
-                      "    pm.response.to.have.status(401);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{customer_token}}",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/order/cancel/{id}",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "order",
-                    "cancel"
+                    "cancel",
+                    "2147483647"
                   ]
                 }
               },
@@ -7364,63 +7408,66 @@
           ]
         },
         {
-          "name": "2. Cart Operations & Checkout",
+          "name": "2. Cart Operations",
           "item": [
             {
-              "name": "TC-ST-09 - Bỏ vào giỏ hàng (Phiên Khách hàng chưa đăng nhập)",
+              "name": "TC-ST-09: Guest thêm vào giỏ",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"TC-ST-09 - Status 200\", function () {",
-                      "    pm.response.to.have.status(200);",
+                      "pm.test(\"Status 401 (Guest không được thao tác Cart)\", function () {",
+                      "    pm.response.to.have.status(401);",
                       "});"
                     ],
-                    "type": "text/javascript"
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
                     "key": "Content-Type",
-                    "value": "application/json",
-                    "type": "text"
+                    "value": "application/json"
                   }
                 ],
-                "url": {
-                  "raw": "{{base_url}}/api/cart/add",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "api",
-                    "cart",
-                    "add"
-                  ]
-                },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\"productId\": \"F001\", \"count\": 2}",
+                  "raw": "{\n  \"productId\": \"F0001\",\n  \"quantity\": 2\n}",
                   "options": {
                     "raw": {
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{base_url}}/cart/add",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "add"
+                  ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-ST-10 - Bỏ vào giỏ hàng (Phiên Khách hàng đã đăng nhập)",
+              "name": "TC-ST-10: Customer thêm vào giỏ",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"TC-ST-10 - Status 200\", function () {",
+                      "pm.test(\"Status 200\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
                     ],
@@ -7429,45 +7476,53 @@
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "POST",
                 "header": [
                   {
-                    "key": "Authorization",
-                    "value": "Bearer {{customer_token}}",
-                    "type": "text"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   }
                 ],
-                "url": {
-                  "raw": "{{base_url}}/api/cart/add",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "api",
-                    "cart",
-                    "add"
-                  ]
-                },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\"productId\": \"F001\", \"count\": 3}",
+                  "raw": "{\n  \"productId\": \"F0001\",\n  \"quantity\": 3\n}",
                   "options": {
                     "raw": {
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{base_url}}/cart/add",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "add"
+                  ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-ST-11 - Đăng nhập với giỏ hàng của khách chưa đăng nhập (Merge giỏ hàng)",
+              "name": "TC-ST-11: Login (merge cart)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"TC-ST-11 - Status 200\", function () {",
+                      "pm.test(\"Status 200\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
                     ],
@@ -7476,45 +7531,45 @@
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
-                    "key": "Authorization",
-                    "value": "Bearer {{customer_token}}",
-                    "type": "text"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   }
                 ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"customer1@email.com\",\n  \"password\": \"123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
-                  "raw": "{{base_url}}/api/user/login",
+                  "raw": "{{base_url}}/login",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
-                    "api",
-                    "user",
                     "login"
                   ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\"email\": \"customer1@gmail.com\", \"password\": \"customer123\"}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               },
               "response": []
             },
             {
-              "name": "TC-ST-12 - Checkout với item trong giỏ hàng",
+              "name": "TC-ST-12: Checkout có item",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"TC-ST-12 - Status 200\", function () {",
+                      "pm.test(\"Status 200\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
                     ],
@@ -7523,25 +7578,23 @@
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "POST",
                 "header": [
                   {
-                    "key": "Authorization",
-                    "value": "Bearer {{customer_token}}",
-                    "type": "text"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   }
                 ],
-                "url": {
-                  "raw": "{{base_url}}/api/cart/checkout",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "api",
-                    "cart",
-                    "checkout"
-                  ]
-                },
                 "body": {
                   "mode": "raw",
                   "raw": "{}",
@@ -7550,18 +7603,28 @@
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{base_url}}/cart/checkout",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "checkout"
+                  ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-ST-13 - Checkout với giỏ hàng trống (Blocked)",
+              "name": "TC-ST-13: Checkout giỏ trống (Blocked)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"TC-ST-13 - Status 400\", function () {",
+                      "pm.test(\"Status 400\", function () {",
                       "    pm.response.to.have.status(400);",
                       "});"
                     ],
@@ -7570,25 +7633,23 @@
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
                 "method": "POST",
                 "header": [
                   {
-                    "key": "Authorization",
-                    "value": "Bearer {{customer_token}}",
-                    "type": "text"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   }
                 ],
-                "url": {
-                  "raw": "{{base_url}}/api/cart/checkout",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "api",
-                    "cart",
-                    "checkout"
-                  ]
-                },
                 "body": {
                   "mode": "raw",
                   "raw": "{}",
@@ -7597,18 +7658,71 @@
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{base_url}}/cart/checkout",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "checkout"
+                  ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-ST-14 - Xóa sản phẩm cuối khỏi giỏ hàng (Pre-empty)",
+              "name": "TC-ST-14: Guest xóa sản phẩm khỏi giỏ (chưa đăng nhập)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"TC-ST-14 - Status 200\", function () {",
+                      "pm.test(\"Status 401 (Guest không được phép xóa)\", function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});",
+                      "",
+                      "// Nếu test FAIL với status 500 => xác nhận bug: DELETE /cart/{itemId}",
+                      "// không catch NullPointerException khi Principal null (khác addToCart",
+                      "// có try-catch). Log bug mới, gộp nguyên nhân với SCRUM-59.",
+                      "pm.test(\"Ghi log nếu là lỗi 500 (NPE chưa xử lý)\", function () {",
+                      "    if (pm.response.code === 500) {",
+                      "        console.warn(\"BUG XÁC NHẬN: DELETE /cart/{itemId} với Guest trả 500 thay vì 401 - thiếu xử lý Principal null trong deleteItem()\");",
+                      "    }",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/cart/F0001",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "cart",
+                    "F0001"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-ST-15: Customer xóa sản phẩm khỏi giỏ (đã đăng nhập)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status 200 (Xóa thành công)\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
                     ],
@@ -7617,87 +7731,35 @@
                 }
               ],
               "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "type": "text"
-                  }
-                ],
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
                 "url": {
-                  "raw": "{{base_url}}/api/cart/remove",
+                  "raw": "{{base_url}}/cart/F0001",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
-                    "api",
                     "cart",
-                    "remove"
+                    "F0001"
                   ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\"productId\": \"F001\"}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-ST-15 - Xóa tất cả sản phẩm (Logged-in) trở lại giỏ hàng trống",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"TC-ST-15 - Status 200\", function () {",
-                      "    pm.response.to.have.status(200);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Authorization",
-                    "value": "Bearer {{customer_token}}",
-                    "type": "text"
-                  }
-                ],
-                "url": {
-                  "raw": "{{base_url}}/api/cart/remove",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "api",
-                    "cart",
-                    "remove"
-                  ]
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\"productId\": \"F001\"}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               },
               "response": []
             }
           ]
         }
-      ]
+      ],
+      "description": "Map đúng seed data + API thật.\nSCRUM-59: TC-ST-03/04/05 hiện trả 500, sau khi thêm @ControllerAdvice sẽ trả 400.\nChạy Login (Customer/Employee/Customer2) trước khi chạy folder này.\nThứ tự quan trọng: TC-ST-01 phải chạy trước TC-ST-05."
     }
   ]
 }
