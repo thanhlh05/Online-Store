@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Collections;
+import javax.validation.Valid;
 
 /**
  * Created By Zhu Lin on 3/11/2018.
@@ -56,7 +57,7 @@ public class CartController {
 
 
     @PostMapping("/add")
-    public boolean addToCart(@RequestBody ItemForm form, Principal principal) {
+    public boolean addToCart(@Valid @RequestBody ItemForm form, Principal principal) {
         var productInfo = productService.findOne(form.getProductId());
         try {
             mergeCart(Collections.singleton(new ProductInOrder(productInfo, form.getQuantity())), principal);

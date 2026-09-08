@@ -19,6 +19,7 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 4887904943282174032L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -28,26 +29,29 @@ public class User implements Serializable {
     @Email
     @Size(min = 6, max = 50, message = "Email must be between 6 and 50 characters")
     private String email;
+
     @NotEmpty
-    @Size(min = 3, max = 20, message = "Password must be between 3 and 20 characters")
+    @Size(min = 3, max = 20, message = "Password must be between 3 and 20 characters", groups = me.zhulin.shopapi.validation.OnCreate.class)
+    @Column(columnDefinition = "varchar(100)")
     private String password;
+
     @NotEmpty
     private String name;
+
     @NotEmpty
     private String phone;
+
     @NotEmpty
     private String address;
-    @NotNull
-    private boolean active;
-    @NotEmpty
+
+    private boolean active = true;
+
+    // Không @NotEmpty — Service ép ROLE_CUSTOMER
     private String role = "ROLE_CUSTOMER";
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore  // fix bi-direction toString() recursion problem
+    @JsonIgnore
     private Cart cart;
-
-
-
 
     @Override
     public String toString() {
@@ -62,6 +66,4 @@ public class User implements Serializable {
                 ", role='" + role + '\'' +
                 '}';
     }
-
 }
-
