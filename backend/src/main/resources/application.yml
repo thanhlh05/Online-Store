@@ -41,3 +41,7 @@ server:
 
 jwtSecret: me.zhulin
 jwtExpiration: 86400
+
+logging:
+  level:
+    org.springframework.security: DEBUG

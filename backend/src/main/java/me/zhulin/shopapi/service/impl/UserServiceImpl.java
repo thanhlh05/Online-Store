@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User save(User user) {
         //register
+        user.setRole("ROLE_CUSTOMER");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         try {
             User savedUser = userRepository.save(user);
@@ -53,6 +54,11 @@ public class UserServiceImpl implements UserService {
             return userRepository.save(savedUser);
 
         } catch (Exception e) {
+            e.printStackTrace(); // in full vào log Docker
+            Throwable root = e;
+            while (root.getCause() != null) {
+                root = root.getCause();
+            }
             throw new MyException(ResultEnum.VALID_ERROR);
         }
 
