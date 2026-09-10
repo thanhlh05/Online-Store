@@ -85,17 +85,26 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public void checkout(User user) {
-        // Creat an order
+
+        if (user.getCart() == null
+                || user.getCart().getProducts() == null
+                || user.getCart().getProducts().isEmpty()) {
+            throw new MyException(ResultEnum.CART_EMPTY);
+        }
+
         OrderMain order = new OrderMain(user);
         orderRepository.save(order);
 
-        // clear cart's foreign key & set order's foreign key& decrease stock
         user.getCart().getProducts().forEach(productInOrder -> {
             productInOrder.setCart(null);
             productInOrder.setOrderMain(order);
-            productService.decreaseStock(productInOrder.getProductId(), productInOrder.getCount());
+
+            productService.decreaseStock(
+                    productInOrder.getProductId(),
+                    productInOrder.getCount()
+            );
+
             productInOrderRepository.save(productInOrder);
         });
-
     }
 }
