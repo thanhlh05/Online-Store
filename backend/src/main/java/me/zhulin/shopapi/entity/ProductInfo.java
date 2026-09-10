@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -23,10 +24,10 @@ import java.util.Date;
 @DynamicUpdate
 public class ProductInfo implements Serializable {
     @Id
+    @Size(min = 3, max = 30, message = "Product ID must be between 3 and 30 characters")
     private String productId;
-
     /** 名字. */
-    @NotNull
+    @Size(min = 3, max = 100, message = "Product name must be between 3 and 100 characters")
     private String productName;
 
     /** 单价. */
@@ -40,6 +41,7 @@ public class ProductInfo implements Serializable {
     private Integer productStock;
 
     /** 描述. */
+    @Size(max = 200, message = "Product description must not exceed 200 characters")
     private String productDescription;
 
     /** 小图. */

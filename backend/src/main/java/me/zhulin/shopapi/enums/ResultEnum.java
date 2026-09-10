@@ -16,6 +16,7 @@ public enum ResultEnum  {
     PRODUCT_OFF_SALE(13,"Product is off sale!"),
     PRODUCT_NOT_IN_CART(14,"Product is not in the cart!"),
     CART_CHECKOUT_SUCCESS(20, "Checkout successfully! "),
+    CART_EMPTY(21, "Cart is empty!"),
 
     CATEGORY_NOT_FOUND(30, "Category does not exit!"),
 
