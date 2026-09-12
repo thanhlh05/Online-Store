@@ -30,7 +30,7 @@ Scenario('Cancel an existing order with status New', ({ I }) => {
   I.wait(2);
 
   // Step 6: Verify status changed to canceled
-  // NOTE: The frontend enum OrderStatus has a typo: "Cenceled" instead of "Canceled"
+  // NOTE: The frontend enum OrderStatus has a typo: "Canceled" instead of "Canceled"
   // This is a known UI issue in the codebase (enum/OrderStatus.ts)
-  I.see('Cenceled');
+  I.see('Canceled');
 });

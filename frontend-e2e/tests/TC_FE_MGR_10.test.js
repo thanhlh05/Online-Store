@@ -30,7 +30,7 @@ Scenario('Cancelled order cannot be finished or cancelled again', async ({ I }) 
     await page.waitForFunction(id => {
       const rows = [...document.querySelectorAll('tbody tr')];
       const row = rows.find(r => r.querySelector('th')?.textContent.trim() === String(id));
-      return !!(row && row.querySelectorAll('td')[6]?.textContent.trim() === 'Cenceled');
+      return !!(row && row.querySelectorAll('td')[6]?.textContent.trim() === 'Canceled');
     }, orderId, { timeout: 15000 });
 
     const actions = await page.evaluate(id => {
