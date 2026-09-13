@@ -18,6 +18,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      JAVA_TOOL_OPTIONS: "-javaagent:/jacoco/jacocoagent.jar=destfile=/jacoco/jacoco.exec,append=false"
     depends_on:
       - db
 
