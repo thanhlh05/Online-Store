@@ -598,3 +598,47 @@ Do sử dụng toán tử `||`, Java có cơ chế **short-circuit**. Vì vậy,
 Toàn bộ Unit Test và kết quả Coverage gốc được giữ nguyên trong:
 
 `Docs/QA-Testing/Test_Case_WhiteBox.xlsx`
+
+# API Black-box Execution Coverage (Newman)
+
+Phần này đo mức độ code backend được thực thi khi chạy bộ Test Case
+Black-box thông qua API bằng Newman.
+
+Các Test Case vẫn được thiết kế theo phương pháp Black-box Testing.
+JaCoCo chỉ được sử dụng để đo structural coverage của backend trong
+quá trình thực thi bộ Newman.
+
+## Kết quả
+
+| Metric | Newman API Execution |
+|---|---:|
+| Statement / Instruction Coverage | **31%** |
+| Branch Coverage | **9%** |
+| Line Coverage | 58% |
+| Method Coverage | 40% |
+| Class Coverage | 71% |
+
+## Report
+
+Newman HTML Report:
+
+postman/newman-report/API_Test_Report.html
+
+JaCoCo HTML Report:
+
+backend/target/site/jacoco/index.html
+http://localhost:63342/Online-Store/shop-api/target/site/jacoco/index.html?_ijt=dasqodit27s1qpeo564s06gq2s&_ij_reload=RELOAD_ON_SAVE
+![API Black-box Execution Coverage.png](images/API%20Black-box%20Execution%20Coverage.png)
+JaCoCo Execution Data:
+
+backend/target/jacoco.exec
+
+## Nhận xét
+
+Kết quả 31% Statement / Instruction Coverage và 9% Branch Coverage
+phản ánh mức độ code backend được thực thi khi chạy bộ Test Case
+Black-box bằng Newman.
+
+Coverage này không thay thế Coverage của Unit Test. Test Case vẫn
+được thiết kế theo phương pháp Black-box; JaCoCo chỉ được sử dụng
+để quan sát structural coverage trong quá trình API execution.
