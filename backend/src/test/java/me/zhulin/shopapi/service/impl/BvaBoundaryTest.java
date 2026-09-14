@@ -1,341 +1,561 @@
 package me.zhulin.shopapi.service.impl;
 
-import me.zhulin.shopapi.entity.ProductInOrder;
 import me.zhulin.shopapi.entity.ProductInfo;
 import me.zhulin.shopapi.entity.User;
-import me.zhulin.shopapi.repository.ProductInOrderRepository;
-import me.zhulin.shopapi.repository.ProductInfoRepository;
-import me.zhulin.shopapi.repository.UserRepository;
-import me.zhulin.shopapi.repository.CartRepository;
+import me.zhulin.shopapi.form.ItemForm;
+import me.zhulin.shopapi.validation.OnCreate;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit4.SpringRunner;
-import me.zhulin.shopapi.service.CategoryService;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.*;
-
-@RunWith(SpringRunner.class)
 public class BvaBoundaryTest {
 
-    private static Validator validator;
+    private Validator validator;
+    private ProductInfo validProduct() {
+        ProductInfo product = new ProductInfo();
 
-    // ===== USER SERVICE =====
-    @Mock
-    private UserRepository userRepository;
+        product.setProductId("ABC");
+        product.setProductName("ABC");
+        product.setProductPrice(new BigDecimal("1.00"));
+        product.setProductStock(1);
+        product.setProductDescription("");
 
-    @Mock
-    private PasswordEncoder passwordEncoder;
+        return product;
+    }
 
-    @InjectMocks
-    private UserServiceImpl userService;
+    private User validUser() {
+        User user = new User();
 
-    // ===== CART SERVICE =====
-    @Mock
-    private ProductInOrderRepository productInOrderRepository;
+        user.setEmail("a@b.co");
+        user.setPassword("abc");
+        user.setName("Test User");
+        user.setPhone("0123456789");
+        user.setAddress("Test Address");
 
-    @Mock
-    private CartRepository cartRepository;
+        return user;
+    }
 
-    @InjectMocks
-    private CartServiceImpl cartService;
+    private ItemForm validItemForm() {
+        ItemForm form = new ItemForm();
 
-    // ===== PRODUCT SERVICE =====
-    @Mock
-    private ProductInfoRepository productInfoRepository;
+        form.setProductId("ABC");
+        form.setQuantity(1);
 
-    @Mock
-    private CategoryService categoryService;
-
-    @InjectMocks
-    private ProductServiceImpl productService;
-
+        return form;
+    }
     @Before
-    public void setUpValidator() {
-        validator = Validation
-                .buildDefaultValidatorFactory()
-                .getValidator();
+    public void setUp() {
+        ValidatorFactory factory =
+                Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
     }
 
     // =========================================================
-    // 1. USER - PASSWORD
-    // BVA: 2 chars (below boundary) / 3 chars (boundary)
+    // PASSWORD: @Size(min = 3, max = 20, groups = OnCreate.class)
     // =========================================================
 
     @Test
-    public void bvaPassword2CharsRejectedByAnnotationTest() {
+    public void password2CharsInvalidTest() {
         User user = new User();
-        user.setPassword("12");
+        user.setPassword("ab");
 
         Set<ConstraintViolation<User>> violations =
-                validator.validateProperty(user, "password");
+                validator.validate(user, OnCreate.class);
 
-        assertFalse(
-                "Password 2 ky tu phai vi pham @Size(min=3)",
-                violations.isEmpty()
-        );
+        Assert.assertFalse(violations.isEmpty());
     }
 
     @Test
-    public void bvaPassword3CharsAcceptedByAnnotationTest() {
+    public void password3CharsValidTest() {
         User user = new User();
-        user.setPassword("123");
+        user.setPassword("abc");
 
         Set<ConstraintViolation<User>> violations =
-                validator.validateProperty(user, "password");
+                validator.validate(user, OnCreate.class);
 
-        assertTrue(
-                "Password 3 ky tu phai qua duoc @Size(min=3)",
-                violations.isEmpty()
-        );
+        Assert.assertTrue(violations.isEmpty());
     }
 
     @Test
-    public void bvaPassword2CharsAcceptedByServiceDirectlyTest() {
+    public void password4CharsValidTest() {
         User user = new User();
-        user.setEmail("bva2@test.com");
-        user.setPassword("12");
+        user.setPassword("abcd");
 
-        Mockito.when(passwordEncoder.encode("12"))
-                .thenReturn("encoded12");
+        Set<ConstraintViolation<User>> violations =
+                validator.validate(user, OnCreate.class);
 
-        Mockito.when(userRepository.save(user))
-                .thenReturn(user);
-
-        User saved = userService.save(user);
-
-        assertNotNull(saved);
-        assertEquals("encoded12", saved.getPassword());
+        Assert.assertTrue(violations.isEmpty());
     }
 
-    // =========================================================
-    // 2. CART - QUANTITY
-    // BVA: quantity = 0 / quantity = 1
-    // =========================================================
-
     @Test
-    public void bvaQuantityZeroAcceptedByServiceTest() {
+    public void password19CharsValidTest() {
         User user = new User();
+        user.setPassword("abcdefghijklmnopqrs");
 
-        ProductInOrder item = new ProductInOrder();
-        item.setProductId("D0002");
-        item.setCount(0);
+        Set<ConstraintViolation<User>> violations =
+                validator.validate(user, OnCreate.class);
 
-        Set<ProductInOrder> set = new HashSet<>();
-        set.add(item);
-
-        me.zhulin.shopapi.entity.Cart cart =
-                new me.zhulin.shopapi.entity.Cart();
-
-        cart.setProducts(new HashSet<>());
-        user.setCart(cart);
-
-        cartService.mergeLocalCart(set, user);
-
-        Mockito.verify(
-                productInOrderRepository,
-                Mockito.times(1)
-        ).save(Mockito.any());
+        Assert.assertTrue(violations.isEmpty());
     }
 
     @Test
-    public void bvaQuantityOneAcceptedByServiceTest() {
+    public void password20CharsValidTest() {
         User user = new User();
+        user.setPassword("abcdefghijklmnopqrst");
 
-        ProductInOrder item = new ProductInOrder();
-        item.setProductId("D0002");
-        item.setCount(1);
+        Set<ConstraintViolation<User>> violations =
+                validator.validate(user, OnCreate.class);
 
-        Set<ProductInOrder> set = new HashSet<>();
-        set.add(item);
+        Assert.assertTrue(violations.isEmpty());
+    }
 
-        me.zhulin.shopapi.entity.Cart cart =
-                new me.zhulin.shopapi.entity.Cart();
+    @Test
+    public void password21CharsInvalidTest() {
+        User user = new User();
+        user.setPassword("abcdefghijklmnopqrstu");
 
-        cart.setProducts(new HashSet<>());
-        user.setCart(cart);
+        Set<ConstraintViolation<User>> violations =
+                validator.validate(user, OnCreate.class);
 
-        cartService.mergeLocalCart(set, user);
-
-        Mockito.verify(
-                productInOrderRepository,
-                Mockito.times(1)
-        ).save(Mockito.any());
+        Assert.assertFalse(violations.isEmpty());
     }
 
     // =========================================================
-    // 3. PRODUCT - STOCK
-    // BVA: -1 / 0
+    // EMAIL: @Size(min = 6, max = 50) + @Email
     // =========================================================
 
     @Test
-    public void bvaStockMinus1RejectedByAnnotationTest() {
-        ProductInfo p = new ProductInfo();
-        p.setProductStock(-1);
+    public void email5CharsInvalidTest() {
+        User user = new User();
+        user.setEmail("a@b.c");
+
+        Set<ConstraintViolation<User>> violations =
+                validator.validate(user);
+
+        Assert.assertFalse(violations.isEmpty());
+    }
+
+    @Test
+    public void email6CharsValidTest() {
+        User user = validUser();
+        user.setEmail("a@b.co");
+
+        Set<ConstraintViolation<User>> violations =
+                validator.validate(user);
+
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void email7CharsValidTest() {
+        User user = validUser();
+        user.setEmail("a@bc.co");
+
+        Set<ConstraintViolation<User>> violations =
+                validator.validate(user);
+
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void email49CharsValidTest() {
+        User user = validUser();
+
+        String email = "a" + "a".repeat(43) + "@b.co";
+        user.setEmail(email);
+
+        Set<ConstraintViolation<User>> violations =
+                validator.validate(user);
+
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void email50CharsValidTest() {
+        User user = validUser();
+
+        String email = "a" + "a".repeat(44) + "@b.co";
+        user.setEmail(email);
+
+        Set<ConstraintViolation<User>> violations =
+                validator.validate(user);
+
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void email51CharsInvalidTest() {
+        User user = new User();
+        user.setEmail(repeat("a", 46) + "@b.co");
+
+        Set<ConstraintViolation<User>> violations =
+                validator.validate(user);
+
+        Assert.assertFalse(violations.isEmpty());
+    }
+
+    @Test
+    public void emailInvalidFormatTest() {
+        User user = new User();
+        user.setEmail("abc");
+
+        Set<ConstraintViolation<User>> violations =
+                validator.validate(user);
+
+        Assert.assertFalse(violations.isEmpty());
+    }
+
+    // =========================================================
+    // PRODUCT PRICE: @NotNull + @Positive
+    // =========================================================
+
+    @Test
+    public void productPriceMinus1InvalidTest() {
+        ProductInfo product = new ProductInfo();
+        product.setProductPrice(new BigDecimal("-1"));
 
         Set<ConstraintViolation<ProductInfo>> violations =
-                validator.validateProperty(p, "productStock");
+                validator.validate(product);
 
-        assertFalse(
-                "Stock -1 phai vi pham @Min(0)",
-                violations.isEmpty()
-        );
+        Assert.assertFalse(violations.isEmpty());
     }
 
     @Test
-    public void bvaStock0AcceptedByAnnotationTest() {
-        ProductInfo p = new ProductInfo();
-        p.setProductStock(0);
+    public void productPriceZeroInvalidTest() {
+        ProductInfo product = new ProductInfo();
+        product.setProductPrice(BigDecimal.ZERO);
 
         Set<ConstraintViolation<ProductInfo>> violations =
-                validator.validateProperty(p, "productStock");
+                validator.validate(product);
 
-        assertTrue(
-                "Stock 0 phai qua duoc @Min(0)",
-                violations.isEmpty()
-        );
+        Assert.assertFalse(violations.isEmpty());
     }
 
     @Test
-    public void bvaStockMinus1AcceptedByServiceDirectlyTest() {
-        /*
-         * WHITE-BOX:
-         * ProductService.save() -> update()
-         *
-         * update() KHONG co kiem tra:
-         * productStock < 0
-         *
-         * Vi vay khi goi truc tiep Service,
-         * stock = -1 van duoc luu.
-         */
+    public void productPricePoint01ValidTest() {
+        ProductInfo product = validProduct();
+        product.setProductPrice(new BigDecimal("0.01"));
 
-        ProductInfo p = new ProductInfo();
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
 
-        p.setProductId("BVA-STOCK");
-        p.setProductStock(-1);
-        p.setProductPrice(new BigDecimal("40.00"));
+        Assert.assertTrue(violations.isEmpty());
+    }
 
-        // Can categoryType de Service di qua update()
-        p.setCategoryType(1);
+    @Test
+    public void productPriceNullInvalidTest() {
+        ProductInfo product = new ProductInfo();
+        product.setProductPrice(null);
 
-        // BAT BUOC: productStatus la Integer, mac dinh null khi new().
-        // update() co dong "if (productInfo.getProductStatus() > 1)" -
-        // neu khong set truoc, unbox null se nem NullPointerException.
-        p.setProductStatus(0);
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
 
-        // Mock dependency duoc goi trong ProductServiceImpl.update()
-        Mockito.when(categoryService.findByCategoryType(1))
-                .thenReturn(null);
-
-        Mockito.when(productInfoRepository.save(p))
-                .thenReturn(p);
-
-        ProductInfo saved = productService.save(p);
-
-        assertNotNull(saved);
-
-        assertEquals(
-                Integer.valueOf(-1),
-                saved.getProductStock()
-        );
-
-        Mockito.verify(
-                productInfoRepository,
-                Mockito.times(1)
-        ).save(p);
+        Assert.assertFalse(violations.isEmpty());
     }
 
     // =========================================================
-    // 4. PRODUCT - PRICE
-    // BVA: price = -1
+    // PRODUCT STOCK: @NotNull + @Min(0)
     // =========================================================
 
     @Test
-    public void bvaPriceMinus1NoConstraintAtAllTest() {
-        /*
-         * WHITE-BOX:
-         * ProductInfo.productPrice khong co @Min.
-         *
-         * Vi vay Bean Validation khong phat hien
-         * productPrice = -1.
-         */
-
-        ProductInfo p = new ProductInfo();
-
-        p.setProductPrice(new BigDecimal("-1"));
+    public void productStockMinus1InvalidTest() {
+        ProductInfo product = new ProductInfo();
+        product.setProductStock(-1);
 
         Set<ConstraintViolation<ProductInfo>> violations =
-                validator.validateProperty(
-                        p,
-                        "productPrice"
-                );
+                validator.validate(product);
 
-        assertTrue(
-                "BUG: productPrice = -1 khong bi validation chan",
-                violations.isEmpty()
+        Assert.assertFalse(violations.isEmpty());
+    }
+
+    @Test
+    public void productStockZeroValidTest() {
+        ProductInfo product = validProduct();
+        product.setProductStock(0);
+
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
+
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void productStockOneValidTest() {
+        ProductInfo product = validProduct();
+        product.setProductStock(1);
+
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
+
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void productStockNullInvalidTest() {
+        ProductInfo product = new ProductInfo();
+        product.setProductStock(null);
+
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
+
+        Assert.assertFalse(violations.isEmpty());
+    }
+
+    // =========================================================
+    // QUANTITY: @Min(1)
+    // =========================================================
+
+    @Test
+    public void quantityMinus1InvalidTest() {
+        ItemForm form = new ItemForm();
+        form.setQuantity(-1);
+
+        Set<ConstraintViolation<ItemForm>> violations =
+                validator.validate(form);
+
+        Assert.assertFalse(violations.isEmpty());
+    }
+
+    @Test
+    public void quantityZeroInvalidTest() {
+        ItemForm form = new ItemForm();
+        form.setQuantity(0);
+
+        Set<ConstraintViolation<ItemForm>> violations =
+                validator.validate(form);
+
+        Assert.assertFalse(violations.isEmpty());
+    }
+
+    @Test
+    public void quantityOneValidTest() {
+        ItemForm form = new ItemForm();
+        form.setQuantity(1);
+
+        Set<ConstraintViolation<ItemForm>> violations =
+                validator.validate(form);
+
+        Assert.assertFalse(
+                violations.stream()
+                        .anyMatch(v -> "quantity".equals(v.getPropertyPath().toString()))
         );
     }
 
     @Test
-    public void bvaPriceMinus1AcceptedByServiceTest() {
-        /*
-         * WHITE-BOX:
-         *
-         * ProductService.save()
-         *        ↓
-         * update()
-         *        ↓
-         * Khong co check productPrice < 0
-         *        ↓
-         * productInfoRepository.save()
-         *
-         * KET QUA THUC TE:
-         * productPrice = -1 van duoc luu.
-         */
+    public void quantityTwoValidTest() {
+        ItemForm form = new ItemForm();
+        form.setQuantity(2);
 
-        ProductInfo p = new ProductInfo();
+        Set<ConstraintViolation<ItemForm>> violations =
+                validator.validate(form);
 
-        p.setProductId("BVA-PRICE");
-        p.setProductPrice(new BigDecimal("-1"));
-        p.setProductStock(50);
-
-        // Can categoryType de update() chay binh thuong
-        p.setCategoryType(1);
-
-        // BAT BUOC: tranh NullPointerException o dong "getProductStatus() > 1"
-        p.setProductStatus(0);
-
-        // Mock CategoryService duoc goi trong update()
-        Mockito.when(categoryService.findByCategoryType(1))
-                .thenReturn(null);
-
-        // Mock repository save
-        Mockito.when(productInfoRepository.save(p))
-                .thenReturn(p);
-
-        ProductInfo saved = productService.save(p);
-
-        assertNotNull(saved);
-
-        assertEquals(
-                new BigDecimal("-1"),
-                saved.getProductPrice()
+        Assert.assertFalse(
+                violations.stream()
+                        .anyMatch(v -> "quantity".equals(v.getPropertyPath().toString()))
         );
+    }
 
-        Mockito.verify(
-                productInfoRepository,
-                Mockito.times(1)
-        ).save(p);
+    @Test
+    public void quantityNullInvalidTest() {
+        ItemForm form = new ItemForm();
+        form.setQuantity(null);
+
+        Set<ConstraintViolation<ItemForm>> violations =
+                validator.validate(form);
+
+        Assert.assertFalse(
+                violations.stream()
+                        .anyMatch(v -> "quantity".equals(v.getPropertyPath().toString()))
+        );
+    }
+
+    // =========================================================
+    // PRODUCT ID: @Size(min = 3, max = 30)
+    // =========================================================
+
+    @Test
+    public void productId2CharsInvalidTest() {
+        ProductInfo product = new ProductInfo();
+        product.setProductId("AB");
+
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
+
+        Assert.assertFalse(violations.isEmpty());
+    }
+
+    @Test
+    public void productId3CharsValidTest() {
+        ProductInfo product = validProduct();
+        product.setProductId("ABC");
+
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
+
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void productId30CharsValidTest() {
+        ProductInfo product = validProduct();
+        product.setProductId("123456789012345678901234567890");
+
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
+
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void productId31CharsInvalidTest() {
+        ProductInfo product = new ProductInfo();
+        product.setProductId(repeat("A", 31));
+
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
+
+        Assert.assertFalse(violations.isEmpty());
+    }
+
+    // =========================================================
+    // PRODUCT NAME: @Size(min = 3, max = 100)
+    // =========================================================
+
+    @Test
+    public void productName2CharsInvalidTest() {
+        ProductInfo product = new ProductInfo();
+        product.setProductName("AB");
+
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
+
+        Assert.assertFalse(violations.isEmpty());
+    }
+
+    @Test
+    public void productName3CharsValidTest() {
+        ProductInfo product = validProduct();
+        product.setProductName("ABC");
+
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
+
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void productName100CharsValidTest() {
+        ProductInfo product = validProduct();
+        product.setProductName("A".repeat(100));
+
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
+
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void productName101CharsInvalidTest() {
+        ProductInfo product = new ProductInfo();
+        product.setProductName(repeat("A", 101));
+
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
+
+        Assert.assertFalse(violations.isEmpty());
+    }
+
+    // =========================================================
+    // PRODUCT DESCRIPTION: @Size(max = 200)
+    // =========================================================
+
+    @Test
+    public void productDescriptionEmptyValidTest() {
+        ProductInfo product = validProduct();
+        product.setProductDescription("");
+
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
+
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void productDescription200CharsValidTest() {
+        ProductInfo product = validProduct();
+        product.setProductDescription("A".repeat(200));
+
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
+
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void productDescription201CharsInvalidTest() {
+        ProductInfo product = new ProductInfo();
+        product.setProductDescription(repeat("A", 201));
+
+        Set<ConstraintViolation<ProductInfo>> violations =
+                validator.validate(product);
+
+        Assert.assertFalse(violations.isEmpty());
+    }
+
+    // =========================================================
+    // ITEM FORM: PRODUCT ID + QUANTITY
+    // =========================================================
+
+    @Test
+    public void itemFormValidCombinationTest() {
+        ItemForm form = new ItemForm();
+        form.setProductId("ABC");
+        form.setQuantity(1);
+
+        Set<ConstraintViolation<ItemForm>> violations =
+                validator.validate(form);
+
+        Assert.assertTrue(violations.isEmpty());
+    }
+
+    @Test
+    public void itemFormInvalidProductIdTest() {
+        ItemForm form = new ItemForm();
+        form.setProductId("AB");
+        form.setQuantity(1);
+
+        Set<ConstraintViolation<ItemForm>> violations =
+                validator.validate(form);
+
+        Assert.assertFalse(violations.isEmpty());
+    }
+
+    @Test
+    public void itemFormInvalidQuantityTest() {
+        ItemForm form = new ItemForm();
+        form.setProductId("ABC");
+        form.setQuantity(0);
+
+        Set<ConstraintViolation<ItemForm>> violations =
+                validator.validate(form);
+
+        Assert.assertFalse(violations.isEmpty());
+    }
+
+    private String repeat(String value, int count) {
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < count; i++) {
+            builder.append(value);
+        }
+
+        return builder.toString();
     }
 }

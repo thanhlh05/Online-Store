@@ -5,13 +5,20 @@ import me.zhulin.shopapi.enums.ProductStatusEnum;
 import me.zhulin.shopapi.exception.MyException;
 import me.zhulin.shopapi.repository.ProductInfoRepository;
 import me.zhulin.shopapi.service.CategoryService;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Collections;
 
 import static org.mockito.Mockito.when;
 
@@ -191,5 +198,87 @@ public class ProductServiceImplTest {
         org.springframework.data.domain.Page<ProductInfo> result = productService.findAll(pageable);
 
         org.junit.Assert.assertEquals(productInfo, result.getContent().get(0));
+    }
+
+    @Test
+    public void findUpAllTest() {
+        Pageable pageable = PageRequest.of(0, 10);
+
+        Page<ProductInfo> page =
+                new PageImpl<>(
+                        Collections.singletonList(productInfo),
+                        pageable,
+                        1
+                );
+
+        when(productInfoRepository.findAllByProductStatusOrderByProductIdAsc(
+                ProductStatusEnum.UP.getCode(),
+                pageable
+        )).thenReturn(page);
+
+        Page<ProductInfo> result =
+                productService.findUpAll(pageable);
+
+        Assert.assertSame(page, result);
+        Assert.assertEquals(1, result.getTotalElements());
+
+        Mockito.verify(productInfoRepository)
+                .findAllByProductStatusOrderByProductIdAsc(
+                        ProductStatusEnum.UP.getCode(),
+                        pageable
+                );
+    }
+
+    @Test
+    public void findAllInCategoryTest() {
+        Pageable pageable = PageRequest.of(0, 10);
+
+        Page<ProductInfo> page =
+                new PageImpl<>(
+                        Collections.singletonList(productInfo),
+                        pageable,
+                        1
+                );
+
+        when(productInfoRepository.findAllByCategoryTypeOrderByProductIdAsc(
+                1,
+                pageable
+        )).thenReturn(page);
+
+        Page<ProductInfo> result =
+                productService.findAllInCategory(1, pageable);
+
+        Assert.assertSame(page, result);
+        Assert.assertEquals(1, result.getTotalElements());
+
+        Mockito.verify(productInfoRepository)
+                .findAllByCategoryTypeOrderByProductIdAsc(
+                        1,
+                        pageable
+                );
+    }
+
+    @Test
+    public void findAllInCategoryEmptyPageTest() {
+        Pageable pageable = PageRequest.of(0, 10);
+
+        Page<ProductInfo> emptyPage =
+                Page.empty(pageable);
+
+        when(productInfoRepository.findAllByCategoryTypeOrderByProductIdAsc(
+                99,
+                pageable
+        )).thenReturn(emptyPage);
+
+        Page<ProductInfo> result =
+                productService.findAllInCategory(99, pageable);
+
+        Assert.assertTrue(result.isEmpty());
+
+        Mockito.verify(productInfoRepository)
+                .findAllByCategoryTypeOrderByProductIdAsc(
+                        99,
+                        pageable
+                );
     }
 }

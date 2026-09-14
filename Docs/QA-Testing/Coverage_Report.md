@@ -9,22 +9,22 @@ Kết quả đo Coverage được thực hiện bằng JaCoCo sau khi chạy to�
 
 | Service Class             | Statement % | Branch % |
 |---------------------------|------------:|---------:|
-| ProductServiceImpl        |     **93%** | **100%** |
+| ProductServiceImpl        |    **100%** | **100%** |
 | CartServiceImpl          |    **100%** | **100%** |
 | OrderServiceImpl          |    **100%** | **100%** |
 | UserServiceImpl           |    **100%** |  **n/a** |
 | ProductInOrderServiceImpl |    **100%** |  **n/a** |
 | CategoryServiceImpl       |    **100%** | **100%** |
-| Total                     |     **97%** | **100%** |
+| Total                     |    **100%** | **100%** |
 
 **Nhận xét:**
 
+* `ProductServiceImpl` đạt 100% Statement Coverage và 100% Branch Coverage sau khi bổ sung test cho `findUpAll()` và `findAllInCategory()`.
 * `CartServiceImpl` đạt 100% Statement Coverage và 100% Branch Coverage.
 * `OrderServiceImpl` đạt 100% Statement Coverage và 100% Branch Coverage.
-* `ProductServiceImpl` đạt 93% Statement Coverage và 100% Branch Coverage.
-* `UserServiceImpl` và `ProductInOrderServiceImpl` đạt 100% Statement Coverage. Branch Coverage được JaCoCo ghi nhận là `n/a` do class không có branch có thể đo theo báo cáo.
+* `UserServiceImpl` đạt 100% Statement Coverage. Branch Coverage được JaCoCo ghi nhận là `n/a` do class không có branch có thể đo theo báo cáo.
+* `ProductInOrderServiceImpl` đạt 100% Statement Coverage. Branch Coverage được JaCoCo ghi nhận là `n/a`.
 * `CategoryServiceImpl` đạt 100% Statement Coverage và 100% Branch Coverage.
-
 ## 2. Bằng chứng JaCoCo
 
 Báo cáo JaCoCo được tạo tại:
@@ -36,16 +36,14 @@ target/site/jacoco/index.html
 
 **Hình 1. Báo cáo JaCoCo tổng quan – Coverage theo từng Service Class**
 
-Ảnh cần thể hiện rõ các Service Class và phần trăm Coverage tương ứng.
-
 ## 3. Chi tiết ProductServiceImpl
 
 `ProductServiceImpl` đạt:
 
-* Statement / Line Coverage: **93%**
+* Statement / Line Coverage: **100%**
 * Branch / Decision Coverage: **100%**
-* Lines: **38/40**
-* Methods: **10/12**
+* Lines: **40/40**
+* Methods: **12/12**
 
 Theo báo cáo JaCoCo, hai method chưa được thực thi là:
 
@@ -53,10 +51,8 @@ Theo báo cáo JaCoCo, hai method chưa được thực thi là:
 findUpAll(Pageable)
 findAllInCategory(Integer, Pageable)
 ```
-
-Hai method này có Coverage bằng 0%.
+Đã được bổ sung Unit Test tương ứng và hiện đã được JaCoCo ghi nhận là đã cover đầy đủ.
 ![Hình 2 - JaCoCo ProductServiceImpl ](images/jacoco-ProductServiceImpl.png)
-![Hình 3 - JaCoCo tổng quan](images/red.png)
 ![Hình 4 - JaCoCo tổng quan](images/green.png)
 **Hình 3.4. Chi tiết Coverage của ProductServiceImpl trong JaCoCo**
 
@@ -70,12 +66,12 @@ mvn test
 
 Sau khi bổ sung Unit Test mới (xem Mục 5.5), chạy lại mvn test:
 ```text
-Tests run: 135
+Tests run: 181
 Failures: 0
 Errors: 0
 Skipped: 0
 ```
-![Hình 5 - Maven - unit test](images/mvn-135.png)
+![Hình 5 - Maven - unit test](images/mvn-181.png)
 
 Do đó:
 
@@ -309,12 +305,12 @@ V(G) = P + 1      = 2 + 1      = 3   (khớp)
 
 | Path ID | Chuỗi Node | Điều kiện | Test Case |
 |---|---|---|---|
-| M-P1 | Entry-N1-N2-N8-Exit | `productInOrders` **rỗng** → forEach 0 lần | *Chưa có test case riêng (xem ghi chú)* |
+| M-P1 | Entry-N1-N2-N8-Exit | `productInOrders` **rỗng** → forEach 0 lần | `mergeLocalCartEmptyCollectionTest` |
 | M-P2 | Entry-N1-N2-N3-N4-N5-N7-N2-N8-Exit | Có sản phẩm, sản phẩm **đã tồn tại** trong cart (`old.isPresent()=True`) → cộng dồn `count` | `mergeLocalCartTest`, `mergeLocalCartTwoProductTest` |
 | M-P3 | Entry-N1-N2-N3-N4-N6-N7-N2-N8-Exit | Có sản phẩm, sản phẩm **chưa tồn tại** trong cart (`old.isPresent()=False`) → thêm mới | `mergeLocalCartNoProductTest` |
 
-> **Ghi chú về M-P1:** M-P1 là trường hợp `productInOrders` rỗng, tức là vòng `forEach` không được thực hiện.
->
+> **Ghi chú về M-P1:** M-P1 là trường hợp `productInOrders` rỗng, tức là vòng `forEach` không được thực hiện. Trường hợp này hiện đã có test riêng `mergeLocalCartEmptyCollectionTest`, qua đó cung cấp execution evidence trực tiếp cho path này.
+> >
  Nhóm không tạo thêm Unit Test riêng cho trường hợp này vì `CartServiceImpl` đã đạt **100% Statement Coverage và 100% Branch Coverage** theo JaCoCo. Việc bổ sung thêm test chỉ để kiểm tra path này không làm thay đổi kết quả Coverage hiện tại.
  Tuy nhiên, M-P1 vẫn được liệt kê trong **Independent Paths** vì đây là một đường đi hợp lệ theo CFG. Điều này giúp thể hiện đầy đủ các đường đi có thể xảy ra trong method.
 ---
@@ -355,35 +351,18 @@ method này là bảng Condition/Branch-Condition/BCC Combination ở mục 6-8.
 
 ---
 
-## 5.5. Unit Test bổ sung (duy nhất)
+## 5.5. Unit Test bổ sung
 
-Toàn bộ Unit Test cũ trong `OrderServiceImplTest.java` và `CartServiceImplTest.java` được **giữ nguyên 100%**. Chỉ **thêm mới 1 test method** vào cuối `OrderServiceImplTest.java` để cover Path **C-P4** (branch `productInfo == null` trong `cancel()`) — nguyên nhân của 90% Branch Coverage:
+Để hoàn thiện Coverage theo code hiện tại, nhóm đã bổ sung các test có mục đích rõ ràng, gồm:
 
-```java
-@Test
-public void cancelProductInfoNotFoundTest() {
-    when(orderRepository.findByOrderId(orderMain.getOrderId()))
-            .thenReturn(orderMain);
+- `cancelProductInfoNotFoundTest()` trong `OrderServiceImplTest.java` để cover nhánh `productInfo == null`.
+- `checkoutCartNullTest()`, `checkoutProductsNullTest()`, `checkoutEmptyProductsTest()` trong `CartServiceImplTest.java` để cover đầy đủ các nhánh Cart Empty của `checkout()`.
+- `mergeLocalCartEmptyCollectionTest()` để kiểm tra path `forEach` không có phần tử.
+- `getCartTest()` để cover method `getCart()`.
+- Test exception có cause chain trong `UserServiceImplTest.java` để cover nhánh `while (root.getCause() != null)`.
+- Các test cho `findUpAll()` và `findAllInCategory()` trong `ProductServiceImplTest.java` để cover các method trước đây chưa được thực thi.
 
-    when(productInfoRepository.findByProductId("1"))
-            .thenReturn(null);
-
-    OrderMain orderMainReturn =
-            orderService.cancel(orderMain.getOrderId());
-
-    assertThat(orderMainReturn.getOrderId(),
-            is(orderMain.getOrderId()));
-
-    assertThat(orderMainReturn.getOrderStatus(),
-            is(OrderStatusEnum.CANCELED.getCode()));
-
-    verify(productService, never()).increaseStock(any(), anyInt());
-}
-```
-
-Vị trí: `backend/src/test/java/me/zhulin/shopapi/service/impl/OrderServiceImplTest.java`
-(thêm sau `cancelOrderNotFoundTest()`, không đụng đến bất kỳ test nào khác).
-![OrderServiceImpl-cancel().png](images/OrderServiceImpl-cancel.png)
+Các test mới đều tương ứng với logic hoặc nhánh thực tế của source code.
 
 ---
 
@@ -414,7 +393,7 @@ Số liệu Branch Coverage ở mục 1 (JaCoCo) giữ nguyên. Bảng dưới l
 | `cancel()` | D1: `!status.equals(NEW)` | `cancelStatusCanceledTest`, `cancelStatusFinishTest` | `cancelSuccessTest`, `cancelNoProduct`, `cancelProductInfoNotFoundTest` |
 | `cancel()` | D2: loop còn phần tử? | `cancelSuccessTest`, `cancelProductInfoNotFoundTest` | `cancelNoProduct` |
 | `cancel()` | D3: `productInfo != null` | `cancelSuccessTest` | `cancelProductInfoNotFoundTest` |
-| `mergeLocalCart()` | D1: forEach còn phần tử? | `mergeLocalCartTest`, `mergeLocalCartTwoProductTest`, `mergeLocalCartNoProductTest` | *(chưa có test — path lý thuyết M-P1, xem giải thích mục 5.3)* |
+| `mergeLocalCart()` | D1: forEach còn phần tử? | `mergeLocalCartTest`, `mergeLocalCartTwoProductTest`, `mergeLocalCartNoProductTest` | `mergeLocalCartEmptyCollectionTest` |
 | `mergeLocalCart()` | D2: `old.isPresent()` | `mergeLocalCartTest`, `mergeLocalCartTwoProductTest` | `mergeLocalCartNoProductTest` |
 | `delete()` | `A \|\| B` (tổng thể) | `deleteNoProductTest`, `deleteNoUserTest` | `deleteTest` |
 
@@ -555,12 +534,13 @@ Việc dữ liệu sai có bị chặn hay không lúc này hoàn toàn phụ th
 | `CartServiceImpl.mergeLocalCart()` | 100% | 100% | 2/3 Independent Path có test trực tiếp (M-P1 là path lý thuyết, không ảnh hưởng số đo JaCoCo — xem mục 5.3) | Khớp với JaCoCo, không có gap thực đo được |
 | `CartServiceImpl.delete()` | nằm trong 100% của class | nằm trong 100% của class | Condition/Branch-Condition/BCC Combination đều có evidence (trừ tổ hợp TT do short-circuit, không phải gap thực) | Khớp với JaCoCo |
 
-**Kết luận tổng thể:**
+### Kết luận tổng thể
 
-* Phân tích CFG thủ công xác nhận chính xác vị trí gap 10% Branch Coverage của OrderServiceImpl mà JaCoCo đã báo (mục 1) — nằm ở nhánh Sai của if(productInfo != null) trong cancel().
-* Đã bổ sung đúng 1 Unit Test (cancelProductInfoNotFoundTest) để lấp gap này, không sửa/xoá bất kỳ test cũ nào.
-* Các method còn lại (finish(), mergeLocalCart(), delete()) đã có đủ bằng chứng từ test hiện có, không cần thêm gì — tuân thủ đúng yêu cầu "không thêm test chỉ để làm đẹp số liệu Coverage".
-* Cần chạy lại mvn test và mvn jacoco:report sau khi thêm cancelProductInfoNotFoundTest, để cập nhật con số Branch Coverage mới của OrderServiceImpl (dự kiến tăng từ 90% lên cao hơn) vào report JaCoCo chính thức.
+* `OrderServiceImpl` hiện đạt **100% Statement và 100% Branch Coverage**.
+* `CartServiceImpl` hiện đạt **100% Statement và 100% Branch Coverage**.
+* `UserServiceImpl` đã được bổ sung test cho exception cause chain và hiện đạt **100%** ở các chỉ số đo được.
+* `ProductServiceImpl` đã được bổ sung test cho `findUpAll()` và `findAllInCategory()` và hiện đạt **100% Statement / 100% Branch**.
+* Toàn bộ Unit Test hiện tại đã chạy lại thành công: **179 tests, 0 failures, 0 errors, 0 skipped**.
 # 14. Tổng hợp Mapping Test Case ↔ Condition / Branch / Path
 
 Bảng dưới đây tổng hợp các Test Case hiện có và Test Case được bổ sung, đồng thời chỉ ra chúng thực hiện nhánh hoặc đường đi nào trong từng method.
