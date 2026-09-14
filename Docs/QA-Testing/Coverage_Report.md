@@ -75,7 +75,7 @@ Skipped: 0
 
 Do đó:
 
-* Tổng số Test: **135**
+* Tổng số Test: **181**
 * Failure: **0**
 * Error: **0**
 * Skipped: **0**
@@ -600,18 +600,19 @@ quá trình thực thi bộ Newman.
 
 ## Report
 
-Newman HTML Report:
+### Newman HTML Report
 
-postman/newman-report/API_Test_Report.html
+`postman/newman-report/API_Test_Report.html`
 
-JaCoCo HTML Report:
+### JaCoCo Execution Data — Black-box
 
-backend/target/site/jacoco/index.html
-http://localhost:63342/Online-Store/shop-api/target/site/jacoco/index.html?_ijt=dasqodit27s1qpeo564s06gq2s&_ij_reload=RELOAD_ON_SAVE
+`jacoco/jacoco.exec`
+
+### Unit Test JaCoCo Report
+
+`backend/target/site/jacoco/index.html`
+
 ![API Black-box Execution Coverage.png](images/API%20Black-box%20Execution%20Coverage.png)
-JaCoCo Execution Data:
-
-backend/target/jacoco.exec
 
 ## Nhận xét
 
