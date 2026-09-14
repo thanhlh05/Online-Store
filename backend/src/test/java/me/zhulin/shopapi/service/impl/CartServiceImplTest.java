@@ -8,6 +8,7 @@ import me.zhulin.shopapi.repository.CartRepository;
 import me.zhulin.shopapi.repository.OrderRepository;
 import me.zhulin.shopapi.repository.ProductInOrderRepository;
 import me.zhulin.shopapi.service.ProductService;
+import me.zhulin.shopapi.entity.OrderMain;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
+
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -84,13 +86,19 @@ public class CartServiceImplTest {
         productInOrder2.setProductId("2");
         productInOrder2.setCount(10);
 
-        user.getCart().getProducts().add(productInOrder2);
+        Set<ProductInOrder> twoProducts = new HashSet<>();
+        twoProducts.add(productInOrder);
+        twoProducts.add(productInOrder2);
 
-        cartService.mergeLocalCart(set, user);
+        cartService.mergeLocalCart(twoProducts, user);
 
         Mockito.verify(cartRepository, Mockito.times(1)).save(cart);
-        Mockito.verify(productInOrderRepository, Mockito.times(1)).save(productInOrder);
-        Mockito.verify(productInOrderRepository, Mockito.times(1)).save(productInOrder2);
+        Mockito.verify(productInOrderRepository, Mockito.times(1))
+                .save(productInOrder);
+        Mockito.verify(productInOrderRepository, Mockito.times(1))
+                .save(productInOrder2);
+
+        Assert.assertTrue(user.getCart().getProducts().contains(productInOrder2));
     }
 
     @Test
@@ -129,8 +137,46 @@ public class CartServiceImplTest {
         Mockito.verify(orderRepository, Mockito.times(1)).save(Mockito.any());
     }
 
-    // ===== Bo sung theo yeu cau ticket: xac nhan bug that cua mergeLocalCart() =====
+    // ===== Bo sung: cover cac nhanh Cart Empty trong checkout() =====
+    @Test(expected = MyException.class)
+    public void checkoutCartNullTest() {
+        user.setCart(null);
 
+        try {
+            cartService.checkout(user);
+        } finally {
+            Mockito.verify(orderRepository, Mockito.never())
+                    .save(Mockito.any(OrderMain.class));
+        }
+    }
+    @Test(expected = MyException.class)
+    public void checkoutProductsNullTest() {
+        Cart emptyProductsCart = new Cart();
+        emptyProductsCart.setProducts(null);
+
+        user.setCart(emptyProductsCart);
+
+        try {
+            cartService.checkout(user);
+        } finally {
+            Mockito.verify(orderRepository, Mockito.never())
+                    .save(Mockito.any(OrderMain.class));
+        }
+    }
+    @Test(expected = MyException.class)
+    public void checkoutEmptyProductsTest() {
+        Cart emptyCart = new Cart();
+        emptyCart.setProducts(new HashSet<>());
+
+        user.setCart(emptyCart);
+
+        try {
+            cartService.checkout(user);
+        } finally {
+            Mockito.verify(orderRepository, Mockito.never())
+                    .save(Mockito.any(OrderMain.class));
+        }
+    }
     @Test
     public void mergeLocalCartPropagatesExceptionTest() {
         Mockito.when(productInOrderRepository.save(productInOrder))
@@ -155,5 +201,30 @@ public class CartServiceImplTest {
         Cart result = cartService.getCart(user);
 
         Assert.assertEquals(cart, result);
+    }
+    @Test
+    public void mergeLocalCartEmptyCollectionTest() {
+        Set<ProductInOrder> empty = new HashSet<>();
+
+        cartService.mergeLocalCart(empty, user);
+
+        Assert.assertEquals(
+                1,
+                user.getCart().getProducts().size()
+        );
+
+        Assert.assertTrue(
+                user.getCart().getProducts().contains(productInOrder)
+        );
+
+        Mockito.verify(
+                cartRepository,
+                Mockito.times(1)
+        ).save(cart);
+
+        Mockito.verify(
+                productInOrderRepository,
+                Mockito.never()
+        ).save(Mockito.any(ProductInOrder.class));
     }
 }
