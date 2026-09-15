@@ -27,27 +27,37 @@ KiemChungPhanMem/
 │       ├── ci.yml                    
 │       └── deploy.yml             
 │
-├── backend/                         
-├── frontend/                         
-│
-├── Docs/                            
-│   ├── Requirements/                
-│   │   ├── API_Spec.md              
-│   │   └── SRS.docx                
-│   │
-│   └── QA-Testing/                  
-│       ├── Test_Plan.docx            
-│       ├── RTM.xlsx                  
-│       ├── Test_Case_Report_API.xlsx
-│       ├── Test_Case_Report_FE.xlsx  
-│       ├── Bug_Report.xlsx           
-│       └── Test_Summary_Report.docx  
-│
-├── postman/                         
+├── backend/                    # Spring Boot
+│   ├── src/main/java/...
+│   ├── src/test/java/...       # Unit test (181 tests)
+│   └── target/site/jacoco/     # JaCoCo Unit (sau mvn test)
+├── frontend/                   # Angular 7
+├── frontend-e2e/               # CodeceptJS + Playwright
+├── postman/
 │   ├── OnlineShoppingStore.postman_collection.json
 │   ├── environment.dev.postman_environment.json
-│   └── newman-report/                
+│   └── newman-report/          # HTML Newman
+├── jacoco/                     # agent.jar, cli.jar, jacoco.exec (BB dump)
+├── jacoco-bb-report/           # JaCoCo HTML khi chạy Newman (BB)
+├── Docs/
+│   ├── Requirements/
+│   │   ├── SRS.docx
+│   │   └── API_Spec.md
+│   └── QA-Testing/
+│       ├── TEST PLAN.docx
+│       ├── Test_Summary_Report.docx
+│       ├── Coverage_Report.md
+│       ├── RTM.xlsx
+│       ├── Bug_Report.xlsx
+│       ├── Test_Case_Report_API.xlsx
+│       ├── Test_Case_Report_FE.xlsx
+│       ├── Test_Case_BVA.xlsx
+│       ├── Test_Case_DecisionTable.xlsx
+│       ├── Test_Case_StateTransition.xlsx
+│       ├── Test_Case_WhiteBox.xlsx
+│       └── images/             # Ảnh JaCoCo, CFG…          
 │
+├── .dockerignore
 ├── .gitattributes
 ├── .gitignore
 ├── docker-compose.yml                
@@ -57,127 +67,123 @@ KiemChungPhanMem/
 
 ---
 
-## 3. Yêu cầu môi trường & Công nghệ sử dụng
+## 3. Yêu cầu môi trường
 
-### 🔹 Yêu cầu môi trường (Prerequisites)
-
-Trước khi chạy ứng dụng, cần cài đặt các phần mềm sau:
-
-* **Chạy Local:** Java 11, Maven, Node.js (v12.22.12), npm, Angular CLI, PostgreSQL.
-* **Chạy Docker:** Docker Desktop (đã cung cấp sẵn Docker Engine và Docker Compose để build và chạy container).
-
-### 🔹 Công nghệ sử dụng
-
-* **Backend:** Java 11, Spring Boot 2.2, Spring Security, JWT Authentication, Spring Data JPA, Hibernate, PostgreSQL, Maven.
-* **Frontend:** Angular 7, Angular CLI, Bootstrap 4.
-* **Triển khai & CI/CD:** Docker, Docker Compose, GitHub Actions.
-* **Kiểm thử & Automation:** Postman, Newman (API Testing), CodeceptJS (UI Automation), JUnit/Mockito (Unit Test).
-
-### 🔹 Kiến trúc ứng dụng
-
-```text
-┌──────────────────────┐        REST API         ┌──────────────────────┐
-│   Frontend Angular   │ ──────────────────────> │  Backend Spring Boot │
-└──────────────────────┘                         └──────────┬───────────┘
-                                                            │ JPA/Hibernate
-                                                            ▼
-                                                 ┌──────────────────────┐
-                                                 │ PostgreSQL Database  │
-                                                 └──────────────────────┘
-
-```
+- **Docker Desktop** (khuyến nghị chạy full stack)
+- Hoặc local: JDK 11, Maven, Node.js (FE/E2E), PostgreSQL
+- Newman + reporter: `npm i -g newman newman-reporter-htmlextra`
+- Codecept: trong `frontend-e2e` → `npm install`
 
 ---
 
 ## 4. Hướng dẫn khởi chạy ứng dụng
 
-### Cách 1: Chạy trực tiếp qua Local Environment
+### Docker (khuyến nghị)
 
-**1. Backend (Spring Boot)**
-*Yêu cầu: Java 11, Maven, PostgreSQL đang hoạt động.*
+```bash
+docker compose down -v
+docker compose up -d --build
+docker ps
+```
+
+| Service | URL |
+|----------|-----|
+| Frontend | http://localhost:3000 |
+| Backend | http://localhost:8080/api |
+| DB | localhost:5432 |
+
+Backend có thể gắn **JaCoCo agent** (port **6300**, volume `./jacoco`) — xem `docker-compose.yml`.
+
+### Local (không Docker)
+
+```bash
+# Backend
+cd backend && mvn spring-boot:run
+
+# Frontend
+cd frontend && npm install && npm start
+# thường http://localhost:4200
+```
+
+**Tài khoản mẫu** (password: `123`):
+
+| Email | Role |
+|-------|------|
+| customer1@email.com | CUSTOMER |
+| customer2@email.com | CUSTOMER |
+| employee1@email.com | EMPLOYEE |
+| manager1@email.com | MANAGER |
+
+---
+
+## 5. Chạy kiểm thử
+
+### 5.1 Unit test + JaCoCo Unit (White-box)
 
 ```bash
 cd backend
-mvn clean install
-mvn spring-boot:run
-
+mvn test
+mvn jacoco:report
 ```
 
-* API Server sẽ khởi chạy tại: `http://localhost:8080`
+- Kỳ vọng: **Tests run: 181, Failures: 0**
+- HTML: `backend/target/site/jacoco/index.html`
+- Service layer: **100% Statement / 100% Branch** (chi tiết `Docs/QA-Testing/Coverage_Report.md`)
 
-**2. Frontend (Angular)**
-*Yêu cầu: Node.js, npm, Angular CLI.*
+Một class:
 
 ```bash
-cd frontend
-npm install
-npm start
-
+mvn test -Dtest=BvaBoundaryTest
+mvn test -Dtest=CartControllerTest
 ```
 
-* Web App sẽ chạy tại: `http://localhost:4200`
-
----
-
-### Cách 2: Triển khai nhanh bằng Docker Desktop
-
-*Yêu cầu: Đã cài đặt và bật Docker Desktop.*
+### 5.2 API — Newman (Black-box)
 
 ```bash
-# Khởi động toàn bộ ứng dụng (Database, Backend, Frontend)
-docker compose up --build -d
-
-# Kiểm tra trạng thái các Container
-docker ps
-
-# Dừng hệ thống
-docker compose down
-
-```
-
----
-
-## 5. Chạy Automation Test API (Newman)
-
-Trước khi thực hiện, cài đặt Newman và di chuyển vào thư mục chứa bài test:
-
-```bash
-# Cài đặt Newman và Reporter HTML (nếu chưa có)
-npm install -g newman
-npm install -g newman-reporter-htmlextra
-
-# Di chuyển vào thư mục postman
 cd postman
-
+newman run OnlineShoppingStore.postman_collection.json ^
+  -e environment.dev.postman_environment.json ^
+  -r htmlextra --reporter-htmlextra-export newman-report/API_Test_Report.html
 ```
 
-Lựa chọn 1 trong 3 cách dưới đây để chạy bộ kiểm thử API:
+*(Linux/macOS: dùng `\` thay `^`)*
 
-* **Cách 1: Chạy và xuất báo cáo file HTML (Khuyến nghị)**
+### 5.3 JaCoCo khi chạy Newman (BB coverage)
+
+Thứ tự:
+
+1. Backend Docker **Up** (agent port 6300)  
+2. Chạy Newman  
+3. Dump (backend vẫn chạy):
 
 ```bash
-newman run OnlineShoppingStore.postman_collection.json \
-  -e environment.dev.postman_environment.json \
-  -r htmlextra --reporter-htmlextra-export newman-report/report.html
-
+java -jar jacoco/jacococli.jar dump --address localhost --port 6300 --destfile jacoco/jacoco.exec
 ```
 
-* **Cách 2: Chạy trực tiếp trên Terminal (Không xuất file HTML)**
+4. Report:
 
 ```bash
-newman run OnlineShoppingStore.postman_collection.json \
-  -e environment.dev.postman_environment.json
-
+java -jar jacoco/jacococli.jar report jacoco/jacoco.exec ^
+  --classfiles backend/target/classes ^
+  --sourcefiles backend/src/main/java ^
+  --html jacoco-bb-report --xml jacoco-bb-report/jacoco.xml
 ```
 
-* **Cách 3: Chạy với định dạng giao diện dòng lệnh CLI chuẩn**
+- HTML BB: `jacoco-bb-report/index.html` → khoảng **39% Instruction / 10% Branch** (toàn project)  
+- **Không trộn** với Unit: Unit = `backend/target/site/jacoco`; BB = `jacoco-bb-report`
+
+### 5.4 E2E CodeceptJS
 
 ```bash
-newman run OnlineShoppingStore.postman_collection.json \
-  -e environment.dev.postman_environment.json \
-  -r cli
-
+# FE Docker :3000 đang chạy
+cd frontend-e2e
+npm test
+# hoặc
+npx codeceptjs run --steps
+npx codeceptjs run "tests/TC_FE_{CUS_LOG_03,EMP_03,MGR_03}.test.js" --steps
 ```
+
+Kỳ vọng gần đây: **44 passed** (toàn suite npm test).
 
 ---
 
@@ -197,6 +203,16 @@ Dự án được cấu hình GitHub Actions tự động (`.github/workflows/`)
 ## 7. Nhật ký công việc đã hoàn thành (Sprints)
 
 Dự án được quản lý tiến độ và theo dõi lỗi trên Jira. Dưới đây là tóm tắt các hạng mục công việc đã được hoàn thành qua từng giai đoạn:
+**Tóm tắt**
+
+| Sprint | Nội dung chính |
+|--------|----------------|
+| 0 | Repo, Jira, Postman, Newman, CI |
+| 1 | SRS, Test Plan, TC FE/API, Unit khởi đầu |
+| 2 | Execute, BVA Postman, Codecept, log bug |
+| 3–4 | ST, DT 6 bước, BVA 4n+1, White-box CFG |
+| 5 | Fix validation, privilege escalation, 500→4xx, FE message |
+| 6 | Unit (181, service 100%), JaCoCo BB, đồng bộ Docs, chốt nộp |
 
 ### 🔹 Sprint 0 (29 Jul – 5 Aug): Thiết lập hạ tầng & Kiểm thử API cơ bản
 
@@ -241,3 +257,10 @@ Dự án được quản lý tiến độ và theo dõi lỗi trên Jira. Dướ
 * Hoàn tất White-box Testing (OrderServiceImpl.cancel) và tích hợp vào SRS.
 * Xác minh lại State Transition + Decision Table sau khi fix.
 * Log thêm các bug còn lại (SCRUM-78 → 81) và cập nhật Postman, Bug_Report, Jira.
+
+### 🔹 Sprint 6 (9 Sep – 15 Sep): Đồng bộ tài liệu
+* Unit Test: 181 tests, 0 fail; Service Layer JaCoCo 100% Statement/Branch.
+* Bổ sung path white-box (cancel productInfo null, mergeLocalCart empty, findUpAll/findAllInCategory).
+* Đo BB coverage khi chạy Newman (JaCoCo agent) → jacoco-bb-report/ (39% Instruction / 10% Branch).
+* Đồng bộ SRS, Test Plan, Test Summary, RTM, Bug_Report, Excel TC (Retest PASS các bug đã fix).
+* Commit báo cáo độc lập: Coverage_Report.md, jacoco-bb-report, Docs/QA-Testing/*.
