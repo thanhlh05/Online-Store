@@ -293,10 +293,10 @@ Không phát hiện anomaly def-use bắt buộc phải thêm test chỉ cho hì
 ## 12. `@Valid` và Validation Flow
 
 * **ProductController:** endpoint ghi dùng `@Valid` → Bean Validation chặn sớm (400).
-* **UserController** (`register` / `profile`) và **CartController** (`merge` / `add` / `modify`): **thiếu `@Valid`** trên một số `@RequestBody` → dữ liệu invalid có thể lọt xuống Service nếu Service không tự validate.
-
-Unit test BVA (Bean Validation trên entity/form) và thực tế API cho thấy khoảng trống nhất quán validation giữa Product và User/Cart.
-
+* **UserController** (`register` / `profile`) và **CartController** (`add` / …): **trước đây** thiếu `@Valid` trên một số `@RequestBody` → dữ liệu invalid có thể lọt xuống Service (nguyên nhân gốc bug BVA User/Cart: SCRUM-47, 48, 66–68, 72…).
+* **Hiện tại (sau Sprint fix):** đã bổ sung `@Valid` / `@Validated` + annotation (`@Size`, `@Min`, `@Positive`…) trên entity/form tương ứng. Retest PASS — xem Mục 10 SRS và Bug_Report.
+* Unit test BVA (`BvaBoundaryTest`) xác nhận Bean Validation reject đúng biên; không còn coi “thiếu @Valid” là trạng thái hiện tại của hệ thống.
+  
 **Đề xuất (không bắt buộc trong phạm vi chỉ đo coverage):** thêm `@Valid` + annotation `@Size` / `@Min` / `@Positive` tương ứng trên User, ItemForm, v.v.
 
 ---
