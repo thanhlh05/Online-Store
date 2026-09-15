@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CategoryPage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">me.zhulin.shopapi.vo.response</a> &gt; <span class="el_source">CategoryPage.java</span></div><h1>CategoryPage.java</h1><pre class="source lang-java linenums">package me.zhulin.shopapi.vo.response;
+
+import me.zhulin.shopapi.entity.ProductInfo;
+import org.springframework.data.domain.Page;
+
+/**
+ * Created By Zhu Lin on 12/28/2018.
+ */
+public class CategoryPage {
+    private String category;
+    private Page&lt;ProductInfo&gt; page;
+
+<span class="fc" id="L13">    public CategoryPage(String category, Page&lt;ProductInfo&gt; page) {</span>
+<span class="fc" id="L14">        this.category = category;</span>
+<span class="fc" id="L15">        this.page = page;</span>
+<span class="fc" id="L16">    }</span>
+
+    public String getCategory() {
+<span class="fc" id="L19">        return category;</span>
+    }
+
+    public void setCategory(String category) {
+<span class="fc" id="L23">        this.category = category;</span>
+<span class="fc" id="L24">    }</span>
+
+    public Page&lt;ProductInfo&gt; getPage() {
+<span class="fc" id="L27">        return page;</span>
+    }
+
+    public void setPage(Page&lt;ProductInfo&gt; page) {
+<span class="nc" id="L31">        this.page = page;</span>
+<span class="nc" id="L32">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

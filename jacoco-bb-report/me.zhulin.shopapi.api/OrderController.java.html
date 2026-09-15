@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">me.zhulin.shopapi.api</a> &gt; <span class="el_source">OrderController.java</span></div><h1>OrderController.java</h1><pre class="source lang-java linenums">package me.zhulin.shopapi.api;
+
+
+import me.zhulin.shopapi.entity.OrderMain;
+import me.zhulin.shopapi.entity.ProductInOrder;
+import me.zhulin.shopapi.service.OrderService;
+import me.zhulin.shopapi.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+
+/**
+ * Created By Zhu Lin on 3/14/2018.
+ */
+@RestController
+@CrossOrigin
+<span class="fc" id="L24">public class OrderController {</span>
+    @Autowired
+    OrderService orderService;
+    @Autowired
+    UserService userService;
+
+    @GetMapping(&quot;/order&quot;)
+    public Page&lt;OrderMain&gt; orderList(@RequestParam(value = &quot;page&quot;, defaultValue = &quot;1&quot;) Integer page,
+                                     @RequestParam(value = &quot;size&quot;, defaultValue = &quot;10&quot;) Integer size,
+                                     Authentication authentication) {
+<span class="fc" id="L34">        PageRequest request = PageRequest.of(page - 1, size);</span>
+        Page&lt;OrderMain&gt; orderPage;
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;ROLE_CUSTOMER&quot;))) {</span>
+<span class="fc" id="L37">            orderPage = orderService.findByBuyerEmail(authentication.getName(), request);</span>
+        } else {
+<span class="fc" id="L39">            orderPage = orderService.findAll(request);</span>
+        }
+<span class="fc" id="L41">        return orderPage;</span>
+    }
+
+
+    @PatchMapping(&quot;/order/cancel/{id}&quot;)
+    public ResponseEntity&lt;OrderMain&gt; cancel(@PathVariable(&quot;id&quot;) Long orderId, Authentication authentication) {
+<span class="fc" id="L47">        OrderMain orderMain = orderService.findOne(orderId);</span>
+<span class="fc bfc" id="L48" title="All 4 branches covered.">        if (!authentication.getName().equals(orderMain.getBuyerEmail()) &amp;&amp; authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;ROLE_CUSTOMER&quot;))) {</span>
+
+<span class="fc" id="L50">            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();</span>
+        }
+<span class="fc" id="L52">        return ResponseEntity.ok(orderService.cancel(orderId));</span>
+    }
+
+    @PatchMapping(&quot;/order/finish/{id}&quot;)
+    public ResponseEntity&lt;OrderMain&gt; finish(@PathVariable(&quot;id&quot;) Long orderId, Authentication authentication) {
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;ROLE_CUSTOMER&quot;))) {</span>
+<span class="nc" id="L58">            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();</span>
+        }
+<span class="fc" id="L60">        return ResponseEntity.ok(orderService.finish(orderId));</span>
+    }
+
+    @GetMapping(&quot;/order/{id}&quot;)
+    public ResponseEntity show(@PathVariable(&quot;id&quot;) Long orderId, Authentication authentication) {
+<span class="fc" id="L65">        boolean isCustomer = authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;ROLE_CUSTOMER&quot;));</span>
+<span class="fc" id="L66">        OrderMain orderMain = orderService.findOne(orderId);</span>
+<span class="pc bpc" id="L67" title="1 of 4 branches missed.">        if (isCustomer &amp;&amp; !authentication.getName().equals(orderMain.getBuyerEmail())) {</span>
+<span class="fc" id="L68">            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();</span>
+        }
+
+<span class="fc" id="L71">        Collection&lt;ProductInOrder&gt; items = orderMain.getProducts();</span>
+<span class="fc" id="L72">        return ResponseEntity.ok(orderMain);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

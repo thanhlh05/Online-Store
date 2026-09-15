@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">me.zhulin.shopapi.service.impl</a> &gt; <span class="el_source">OrderServiceImpl.java</span></div><h1>OrderServiceImpl.java</h1><pre class="source lang-java linenums">package me.zhulin.shopapi.service.impl;
+
+
+import me.zhulin.shopapi.entity.OrderMain;
+import me.zhulin.shopapi.entity.ProductInOrder;
+import me.zhulin.shopapi.entity.ProductInfo;
+import me.zhulin.shopapi.enums.OrderStatusEnum;
+import me.zhulin.shopapi.enums.ResultEnum;
+import me.zhulin.shopapi.exception.MyException;
+import me.zhulin.shopapi.repository.OrderRepository;
+import me.zhulin.shopapi.repository.ProductInOrderRepository;
+import me.zhulin.shopapi.repository.ProductInfoRepository;
+import me.zhulin.shopapi.repository.UserRepository;
+import me.zhulin.shopapi.service.OrderService;
+import me.zhulin.shopapi.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * Created By Zhu Lin on 3/14/2018.
+ */
+@Service
+<span class="fc" id="L26">public class OrderServiceImpl implements OrderService {</span>
+    @Autowired
+    OrderRepository orderRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    ProductInfoRepository productInfoRepository;
+    @Autowired
+    ProductService productService;
+    @Autowired
+    ProductInOrderRepository productInOrderRepository;
+
+    @Override
+    public Page&lt;OrderMain&gt; findAll(Pageable pageable) {
+<span class="fc" id="L40">        return orderRepository.findAllByOrderByOrderStatusAscCreateTimeDesc(pageable);</span>
+    }
+
+    @Override
+    public Page&lt;OrderMain&gt; findByStatus(Integer status, Pageable pageable) {
+<span class="nc" id="L45">        return orderRepository.findAllByOrderStatusOrderByCreateTimeDesc(status, pageable);</span>
+    }
+
+    @Override
+    public Page&lt;OrderMain&gt; findByBuyerEmail(String email, Pageable pageable) {
+<span class="fc" id="L50">        return orderRepository.findAllByBuyerEmailOrderByOrderStatusAscCreateTimeDesc(email, pageable);</span>
+    }
+
+    @Override
+    public Page&lt;OrderMain&gt; findByBuyerPhone(String phone, Pageable pageable) {
+<span class="nc" id="L55">        return orderRepository.findAllByBuyerPhoneOrderByOrderStatusAscCreateTimeDesc(phone, pageable);</span>
+    }
+
+    @Override
+    public OrderMain findOne(Long orderId) {
+<span class="fc" id="L60">        OrderMain orderMain = orderRepository.findByOrderId(orderId);</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if(orderMain == null) {</span>
+<span class="nc" id="L62">            throw new MyException(ResultEnum.ORDER_NOT_FOUND);</span>
+        }
+<span class="fc" id="L64">        return orderMain;</span>
+    }
+
+    @Override
+    @Transactional
+    public OrderMain finish(Long orderId) {
+<span class="fc" id="L70">        OrderMain orderMain = findOne(orderId);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if(!orderMain.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())) {</span>
+<span class="fc" id="L72">            throw new MyException(ResultEnum.ORDER_STATUS_ERROR);</span>
+        }
+
+<span class="fc" id="L75">        orderMain.setOrderStatus(OrderStatusEnum.FINISHED.getCode());</span>
+<span class="fc" id="L76">        orderRepository.save(orderMain);</span>
+<span class="fc" id="L77">        return orderRepository.findByOrderId(orderId);</span>
+    }
+
+    @Override
+    @Transactional
+    public OrderMain cancel(Long orderId) {
+<span class="fc" id="L83">        OrderMain orderMain = findOne(orderId);</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if(!orderMain.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())) {</span>
+<span class="fc" id="L85">            throw new MyException(ResultEnum.ORDER_STATUS_ERROR);</span>
+        }
+
+<span class="fc" id="L88">        orderMain.setOrderStatus(OrderStatusEnum.CANCELED.getCode());</span>
+<span class="fc" id="L89">        orderRepository.save(orderMain);</span>
+
+        // Restore Stock
+<span class="fc" id="L92">        Iterable&lt;ProductInOrder&gt; products = orderMain.getProducts();</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        for(ProductInOrder productInOrder : products) {</span>
+<span class="fc" id="L94">            ProductInfo productInfo = productInfoRepository.findByProductId(productInOrder.getProductId());</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">            if(productInfo != null) {</span>
+<span class="fc" id="L96">                productService.increaseStock(productInOrder.getProductId(), productInOrder.getCount());</span>
+            }
+<span class="fc" id="L98">        }</span>
+<span class="fc" id="L99">        return orderRepository.findByOrderId(orderId);</span>
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

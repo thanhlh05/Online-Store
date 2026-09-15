@@ -7,5 +7,11 @@ RUN mvn clean package -DskipTests -B
 
 FROM eclipse-temurin:11-jre
 WORKDIR /app
+
 COPY --from=build /app/target/*.jar app.jar
+COPY jacocoagent.jar /jacoco/jacocoagent.jar
+
+RUN mkdir -p /jacoco
 ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=docker"]
+
+

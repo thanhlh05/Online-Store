@@ -10,10 +10,13 @@ import me.zhulin.shopapi.service.CartService;
 import me.zhulin.shopapi.service.ProductInOrderService;
 import me.zhulin.shopapi.service.ProductService;
 import me.zhulin.shopapi.service.UserService;
+import me.zhulin.shopapi.exception.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.security.Principal;
 import java.util.Collection;
@@ -75,10 +78,21 @@ public class CartController {
     }
 
     @DeleteMapping("/{itemId}")
-    public void deleteItem(@PathVariable("itemId") String itemId, Principal principal) {
-        User user = userService.findOne(principal.getName());
-         cartService.delete(itemId, user);
-         // flush memory into DB
+    public ResponseEntity<Void> deleteItem(@PathVariable("itemId") String itemId,
+                                           Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        try {
+            User user = userService.findOne(principal.getName());
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            cartService.delete(itemId, user);
+            return ResponseEntity.ok().build();
+        } catch (MyException e) {
+            throw e; // GlobalExceptionHandler → 400
+        }
     }
 
 

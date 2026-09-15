@@ -1,20 +1,7 @@
 /**
- * TC_FE_MGR_03 - Edit Product with Negative Price
- *
- * INTENTIONAL FAILURE TEST:
- * This test targets a REAL BUG in the application.
- *
- * BUG DESCRIPTION:
- * The backend ProductController edit endpoint (PUT /seller/product/{id}/edit)
- * uses @Valid annotation on ProductInfo, but ProductInfo entity only has
- * @NotNull on productPrice - there is NO @Min(0) or similar constraint.
- *
- * This means the backend ACCEPTS negative prices without any validation error.
- * The test expects the form to reject negative prices, but the system will
- * actually accept them - causing this test to FAIL.
- *
- * This is an EXPECTED FAILURE that demonstrates automation can catch real bugs.
- * The test should be marked as "known issue" in test reports.
+ * TC_FE_MGR_03 - Known issue SCRUM-81
+ * Backend có thể trả 400 khi price âm; FE không hiển thị message lỗi.
+ * Test kỳ vọng thấy "Price must be greater than 0" → FAIL cho đến khi FE fix.
  */
 
 Feature('TC_FE_MGR_03 - Edit Product with Negative Price (Known Bug)');

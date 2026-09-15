@@ -113,4 +113,24 @@ public class UserServiceImplTest {
 
         assertThat(result.size(), is(1));
     }
+    @Test(expected = MyException.class)
+    public void saveExceptionWithCauseTest() {
+        User user = new User();
+        user.setEmail("a@b.co");
+        user.setPassword("abc");
+        user.setName("Name");
+        user.setPhone("0123456789");
+        user.setAddress("Address");
+
+        RuntimeException rootCause =
+                new RuntimeException("Database error");
+
+        RuntimeException outerException =
+                new RuntimeException("Outer error", rootCause);
+
+        Mockito.when(userRepository.save(Mockito.any(User.class)))
+                .thenThrow(outerException);
+
+        userService.save(user);
+    }
 }
