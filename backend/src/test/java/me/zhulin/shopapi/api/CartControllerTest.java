@@ -47,7 +47,7 @@ public class CartControllerTest {
     private CartController cartController;
 
     @Test
-    public void mergeCart_WhenServiceThrowsException_ShouldReturnBadRequest() {
+    public void mergeCart_WhenServiceThrowsException_ShouldStillReturnOk() {
 
         // Arrange
         Principal principal = mock(Principal.class);

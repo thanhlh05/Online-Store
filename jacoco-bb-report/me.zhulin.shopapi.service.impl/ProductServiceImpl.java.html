@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">me.zhulin.shopapi.service.impl</a> &gt; <span class="el_source">ProductServiceImpl.java</span></div><h1>ProductServiceImpl.java</h1><pre class="source lang-java linenums">package me.zhulin.shopapi.service.impl;
+
+
+import me.zhulin.shopapi.entity.ProductInfo;
+import me.zhulin.shopapi.enums.ProductStatusEnum;
+import me.zhulin.shopapi.enums.ResultEnum;
+import me.zhulin.shopapi.exception.MyException;
+import me.zhulin.shopapi.repository.ProductInfoRepository;
+import me.zhulin.shopapi.service.CategoryService;
+import me.zhulin.shopapi.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * Created By Zhu Lin on 3/10/2018.
+ */
+@Service
+<span class="fc" id="L21">public class ProductServiceImpl implements ProductService {</span>
+
+    @Autowired
+    ProductInfoRepository productInfoRepository;
+
+    @Autowired
+    CategoryService categoryService;
+
+    @Override
+    public ProductInfo findOne(String productId) {
+
+<span class="fc" id="L32">        ProductInfo productInfo = productInfoRepository.findByProductId(productId);</span>
+<span class="fc" id="L33">        return productInfo;</span>
+    }
+
+    @Override
+    public Page&lt;ProductInfo&gt; findUpAll(Pageable pageable) {
+<span class="nc" id="L38">        return productInfoRepository.findAllByProductStatusOrderByProductIdAsc(ProductStatusEnum.UP.getCode(),pageable);</span>
+    }
+
+    @Override
+    public Page&lt;ProductInfo&gt; findAll(Pageable pageable) {
+<span class="fc" id="L43">        return productInfoRepository.findAllByOrderByProductId(pageable);</span>
+    }
+
+    @Override
+    public Page&lt;ProductInfo&gt; findAllInCategory(Integer categoryType, Pageable pageable) {
+<span class="fc" id="L48">        return productInfoRepository.findAllByCategoryTypeOrderByProductIdAsc(categoryType, pageable);</span>
+    }
+
+    @Override
+    @Transactional
+    public void increaseStock(String productId, int amount) {
+<span class="fc" id="L54">        ProductInfo productInfo = findOne(productId);</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (productInfo == null) throw new MyException(ResultEnum.PRODUCT_NOT_EXIST);</span>
+
+<span class="fc" id="L57">        int update = productInfo.getProductStock() + amount;</span>
+<span class="fc" id="L58">        productInfo.setProductStock(update);</span>
+<span class="fc" id="L59">        productInfoRepository.save(productInfo);</span>
+<span class="fc" id="L60">    }</span>
+
+    @Override
+    @Transactional
+    public void decreaseStock(String productId, int amount) {
+<span class="fc" id="L65">        ProductInfo productInfo = findOne(productId);</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (productInfo == null) throw new MyException(ResultEnum.PRODUCT_NOT_EXIST);</span>
+
+<span class="fc" id="L68">        int update = productInfo.getProductStock() - amount;</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        if(update &lt;= 0) throw new MyException(ResultEnum.PRODUCT_NOT_ENOUGH );</span>
+
+<span class="fc" id="L71">        productInfo.setProductStock(update);</span>
+<span class="fc" id="L72">        productInfoRepository.save(productInfo);</span>
+<span class="fc" id="L73">    }</span>
+
+    @Override
+    @Transactional
+    public ProductInfo offSale(String productId) {
+<span class="nc" id="L78">        ProductInfo productInfo = findOne(productId);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (productInfo == null) throw new MyException(ResultEnum.PRODUCT_NOT_EXIST);</span>
+
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (productInfo.getProductStatus() == ProductStatusEnum.DOWN.getCode()) {</span>
+<span class="nc" id="L82">            throw new MyException(ResultEnum.PRODUCT_STATUS_ERROR);</span>
+        }
+
+        //æ›´æ–°
+<span class="nc" id="L86">        productInfo.setProductStatus(ProductStatusEnum.DOWN.getCode());</span>
+<span class="nc" id="L87">        return productInfoRepository.save(productInfo);</span>
+    }
+
+    @Override
+    @Transactional
+    public ProductInfo onSale(String productId) {
+<span class="nc" id="L93">        ProductInfo productInfo = findOne(productId);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if (productInfo == null) throw new MyException(ResultEnum.PRODUCT_NOT_EXIST);</span>
+
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (productInfo.getProductStatus() == ProductStatusEnum.UP.getCode()) {</span>
+<span class="nc" id="L97">            throw new MyException(ResultEnum.PRODUCT_STATUS_ERROR);</span>
+        }
+
+        //æ›´æ–°
+<span class="nc" id="L101">        productInfo.setProductStatus(ProductStatusEnum.UP.getCode());</span>
+<span class="nc" id="L102">        return productInfoRepository.save(productInfo);</span>
+    }
+
+    @Override
+    public ProductInfo update(ProductInfo productInfo) {
+
+        // if null throw exception
+<span class="fc" id="L109">        categoryService.findByCategoryType(productInfo.getCategoryType());</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        if(productInfo.getProductStatus() &gt; 1) {</span>
+<span class="nc" id="L111">            throw new MyException(ResultEnum.PRODUCT_STATUS_ERROR);</span>
+        }
+
+
+<span class="fc" id="L115">        return productInfoRepository.save(productInfo);</span>
+    }
+
+    @Override
+    public ProductInfo save(ProductInfo productInfo) {
+<span class="fc" id="L120">        return update(productInfo);</span>
+    }
+
+    @Override
+    public void delete(String productId) {
+<span class="fc" id="L125">        ProductInfo productInfo = findOne(productId);</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        if (productInfo == null) throw new MyException(ResultEnum.PRODUCT_NOT_EXIST);</span>
+<span class="fc" id="L127">        productInfoRepository.delete(productInfo);</span>
+
+<span class="fc" id="L129">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

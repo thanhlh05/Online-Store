@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CartController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">me.zhulin.shopapi.api</a> &gt; <span class="el_source">CartController.java</span></div><h1>CartController.java</h1><pre class="source lang-java linenums">package me.zhulin.shopapi.api;
+
+
+import me.zhulin.shopapi.entity.Cart;
+import me.zhulin.shopapi.entity.ProductInOrder;
+import me.zhulin.shopapi.entity.User;
+import me.zhulin.shopapi.form.ItemForm;
+import me.zhulin.shopapi.repository.ProductInOrderRepository;
+import me.zhulin.shopapi.service.CartService;
+import me.zhulin.shopapi.service.ProductInOrderService;
+import me.zhulin.shopapi.service.ProductService;
+import me.zhulin.shopapi.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.Collection;
+import java.util.Collections;
+import javax.validation.Valid;
+
+/**
+ * Created By Zhu Lin on 3/11/2018.
+ */
+@CrossOrigin
+@RestController
+@RequestMapping(&quot;/cart&quot;)
+<span class="fc" id="L29">public class CartController {</span>
+    @Autowired
+    CartService cartService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    ProductService productService;
+    @Autowired
+    ProductInOrderService productInOrderService;
+    @Autowired
+    ProductInOrderRepository productInOrderRepository;
+
+    @PostMapping(&quot;&quot;)
+    public ResponseEntity&lt;Cart&gt; mergeCart(@RequestBody Collection&lt;ProductInOrder&gt; productInOrders, Principal principal) {
+<span class="fc" id="L43">        User user = userService.findOne(principal.getName());</span>
+        try {
+<span class="fc" id="L45">            cartService.mergeLocalCart(productInOrders, user);</span>
+<span class="nc" id="L46">        } catch (Exception e) {</span>
+<span class="nc" id="L47">            ResponseEntity.badRequest().body(&quot;Merge Cart Failed&quot;);</span>
+<span class="fc" id="L48">        }</span>
+<span class="fc" id="L49">        return ResponseEntity.ok(cartService.getCart(user));</span>
+    }
+
+    @GetMapping(&quot;&quot;)
+    public Cart getCart(Principal principal) {
+<span class="fc" id="L54">        User user = userService.findOne(principal.getName());</span>
+<span class="fc" id="L55">        return cartService.getCart(user);</span>
+    }
+
+
+    @PostMapping(&quot;/add&quot;)
+    public boolean addToCart(@Valid @RequestBody ItemForm form, Principal principal) {
+<span class="fc" id="L61">        var productInfo = productService.findOne(form.getProductId());</span>
+        try {
+<span class="fc" id="L63">            mergeCart(Collections.singleton(new ProductInOrder(productInfo, form.getQuantity())), principal);</span>
+<span class="fc" id="L64">        } catch (Exception e) {</span>
+<span class="fc" id="L65">            return false;</span>
+<span class="fc" id="L66">        }</span>
+<span class="fc" id="L67">        return true;</span>
+    }
+
+    @PutMapping(&quot;/{itemId}&quot;)
+    public ProductInOrder modifyItem(@PathVariable(&quot;itemId&quot;) String itemId, @RequestBody Integer quantity, Principal principal) {
+<span class="fc" id="L72">        User user = userService.findOne(principal.getName());</span>
+<span class="fc" id="L73">         productInOrderService.update(itemId, quantity, user);</span>
+<span class="fc" id="L74">        return productInOrderService.findOne(itemId, user);</span>
+    }
+
+    @DeleteMapping(&quot;/{itemId}&quot;)
+    public void deleteItem(@PathVariable(&quot;itemId&quot;) String itemId, Principal principal) {
+<span class="fc" id="L79">        User user = userService.findOne(principal.getName());</span>
+<span class="fc" id="L80">         cartService.delete(itemId, user);</span>
+         // flush memory into DB
+<span class="fc" id="L82">    }</span>
+
+
+    @PostMapping(&quot;/checkout&quot;)
+    public ResponseEntity checkout(Principal principal) {
+<span class="fc" id="L87">        User user = userService.findOne(principal.getName());// Email as username</span>
+<span class="nc" id="L88">        cartService.checkout(user);</span>
+<span class="nc" id="L89">        return ResponseEntity.ok(null);</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

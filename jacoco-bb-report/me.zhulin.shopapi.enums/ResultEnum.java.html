@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResultEnum.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">me.zhulin.shopapi.enums</a> &gt; <span class="el_source">ResultEnum.java</span></div><h1>ResultEnum.java</h1><pre class="source lang-java linenums">package me.zhulin.shopapi.enums;
+
+import lombok.Getter;
+
+/**
+ * Created By Zhu Lin on 3/10/2018.
+ */
+
+<span class="fc" id="L9">@Getter</span>
+public enum ResultEnum  {
+
+<span class="fc" id="L12">    PARAM_ERROR(1, &quot;Parameter Error!&quot;),</span>
+<span class="fc" id="L13">    PRODUCT_NOT_EXIST(10, &quot;Product does not exit!&quot;),</span>
+<span class="fc" id="L14">    PRODUCT_NOT_ENOUGH(11, &quot;Not enough products in stock!&quot;),</span>
+<span class="fc" id="L15">    PRODUCT_STATUS_ERROR(12, &quot;Status is incorrect!&quot;),</span>
+<span class="fc" id="L16">    PRODUCT_OFF_SALE(13,&quot;Product is off sale!&quot;),</span>
+<span class="fc" id="L17">    PRODUCT_NOT_IN_CART(14,&quot;Product is not in the cart!&quot;),</span>
+<span class="fc" id="L18">    CART_CHECKOUT_SUCCESS(20, &quot;Checkout successfully! &quot;),</span>
+<span class="fc" id="L19">    CART_EMPTY(21, &quot;Cart is empty!&quot;),</span>
+
+<span class="fc" id="L21">    CATEGORY_NOT_FOUND(30, &quot;Category does not exit!&quot;),</span>
+
+<span class="fc" id="L23">    ORDER_NOT_FOUND(60, &quot;OrderMain is not exit!&quot;),</span>
+<span class="fc" id="L24">    ORDER_STATUS_ERROR(61, &quot;Status is not correct&quot;),</span>
+
+
+<span class="fc" id="L27">    VALID_ERROR(50, &quot;Wrong information&quot;),</span>
+<span class="fc" id="L28">    USER_NOT_FOUNT(40,&quot;User is not found!&quot;)</span>
+    ;
+
+<span class="fc" id="L31">    private Integer code;</span>
+
+<span class="fc" id="L33">    private String message;</span>
+
+<span class="fc" id="L35">    ResultEnum(Integer code, String message) {</span>
+<span class="fc" id="L36">        this.code = code;</span>
+<span class="fc" id="L37">        this.message = message;</span>
+<span class="fc" id="L38">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
