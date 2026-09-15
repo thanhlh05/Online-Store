@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpringSecurityConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">me.zhulin.shopapi.security</a> &gt; <span class="el_source">SpringSecurityConfig.java</span></div><h1>SpringSecurityConfig.java</h1><pre class="source lang-java linenums">package me.zhulin.shopapi.security;
+
+import me.zhulin.shopapi.security.JWT.JwtEntryPoint;
+import me.zhulin.shopapi.security.JWT.JwtFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.sql.DataSource;
+
+/**
+ * Created By Zhu Lin on 1/1/2019.
+ */
+@Configuration
+@EnableWebSecurity
+@DependsOn(&quot;passwordEncoder&quot;)
+<span class="fc" id="L28">public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{</span>
+
+    @Autowired
+    JwtFilter jwtFilter;
+    @Autowired
+    private JwtEntryPoint accessDenyHandler;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    @Qualifier(&quot;dataSource&quot;)
+    DataSource dataSource;
+
+    @Value(&quot;${spring.queries.users-query}&quot;)
+    private String usersQuery;
+
+    @Value(&quot;${spring.queries.roles-query}&quot;)
+    private String rolesQuery;
+
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception{
+<span class="fc" id="L49">        auth</span>
+<span class="fc" id="L50">                .jdbcAuthentication()</span>
+<span class="fc" id="L51">                .usersByUsernameQuery(usersQuery)</span>
+<span class="fc" id="L52">                .authoritiesByUsernameQuery(rolesQuery)</span>
+<span class="fc" id="L53">                .dataSource(dataSource)</span>
+<span class="fc" id="L54">                .passwordEncoder(passwordEncoder);</span>
+<span class="fc" id="L55">    }</span>
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+<span class="fc" id="L60">        return super.authenticationManagerBean();</span>
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception{
+<span class="fc" id="L65">        http.cors().and().csrf().disable()</span>
+<span class="fc" id="L66">                .authorizeRequests()</span>
+
+<span class="fc" id="L68">                .antMatchers(&quot;/profile/**&quot;).authenticated()</span>
+<span class="fc" id="L69">                .antMatchers(&quot;/cart/**&quot;).access(&quot;hasAnyRole('CUSTOMER')&quot;)</span>
+<span class="fc" id="L70">                .antMatchers(&quot;/order/finish/**&quot;).access(&quot;hasAnyRole('EMPLOYEE', 'MANAGER')&quot;)</span>
+<span class="fc" id="L71">                .antMatchers(&quot;/order/**&quot;).authenticated()</span>
+<span class="fc" id="L72">                .antMatchers(&quot;/profiles/**&quot;).authenticated()</span>
+<span class="fc" id="L73">                .antMatchers(&quot;/seller/product/new&quot;).access(&quot;hasAnyRole('MANAGER')&quot;)</span>
+<span class="fc" id="L74">                .antMatchers(&quot;/seller/**/delete&quot;).access(&quot;hasAnyRole( 'MANAGER')&quot;)</span>
+<span class="fc" id="L75">                .antMatchers(&quot;/seller/**&quot;).access(&quot;hasAnyRole('EMPLOYEE', 'MANAGER')&quot;)</span>
+<span class="fc" id="L76">                .anyRequest().permitAll()</span>
+
+<span class="fc" id="L78">                .and()</span>
+<span class="fc" id="L79">                .exceptionHandling().authenticationEntryPoint(accessDenyHandler)</span>
+<span class="fc" id="L80">                .and()</span>
+<span class="fc" id="L81">                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);</span>
+
+<span class="fc" id="L83">        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);</span>
+<span class="fc" id="L84">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

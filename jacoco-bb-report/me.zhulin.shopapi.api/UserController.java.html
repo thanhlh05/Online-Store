@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">me.zhulin.shopapi.api</a> &gt; <span class="el_source">UserController.java</span></div><h1>UserController.java</h1><pre class="source lang-java linenums">package me.zhulin.shopapi.api;
+
+import me.zhulin.shopapi.entity.User;
+import me.zhulin.shopapi.security.JWT.JwtProvider;
+import me.zhulin.shopapi.service.UserService;
+import me.zhulin.shopapi.vo.request.LoginForm;
+import me.zhulin.shopapi.vo.response.JwtResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import me.zhulin.shopapi.validation.OnCreate;
+
+import javax.validation.Valid;
+import java.security.Principal;
+
+/**
+ * Created By Zhu Lin on 1/1/2019.
+ */
+@CrossOrigin
+@RestController
+<span class="fc" id="L30">public class UserController {</span>
+
+    @Autowired
+    UserService userService;
+
+
+    @Autowired
+    JwtProvider jwtProvider;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @PostMapping(&quot;/login&quot;)
+    public ResponseEntity&lt;JwtResponse&gt; login(@RequestBody LoginForm loginForm) {
+        // throws Exception if authentication failed
+
+        try {
+<span class="fc" id="L47">            Authentication authentication = authenticationManager.authenticate(</span>
+<span class="fc" id="L48">                    new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword()));</span>
+<span class="fc" id="L49">            SecurityContextHolder.getContext().setAuthentication(authentication);</span>
+<span class="fc" id="L50">            String jwt = jwtProvider.generate(authentication);</span>
+<span class="fc" id="L51">            UserDetails userDetails = (UserDetails) authentication.getPrincipal();</span>
+<span class="fc" id="L52">            User user = userService.findOne(userDetails.getUsername());</span>
+<span class="fc" id="L53">            return ResponseEntity.ok(new JwtResponse(jwt, user.getEmail(), user.getName(), user.getRole()));</span>
+<span class="fc" id="L54">        } catch (AuthenticationException e) {</span>
+<span class="fc" id="L55">            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();</span>
+        }
+    }
+
+
+    @PostMapping(&quot;/register&quot;)
+    public ResponseEntity&lt;?&gt; save(
+            @Validated(OnCreate.class) @RequestBody User user,
+            BindingResult bindingResult) {
+
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (bindingResult.hasErrors()) {</span>
+<span class="fc" id="L66">            String errorMessage = bindingResult.getAllErrors().get(0).getDefaultMessage();</span>
+<span class="fc" id="L67">            return ResponseEntity.badRequest().body(errorMessage);</span>
+        }
+        try {
+<span class="fc" id="L70">            return ResponseEntity.ok(userService.save(user));</span>
+<span class="fc" id="L71">        } catch (Exception e) {</span>
+<span class="fc" id="L72">            Throwable root = e;</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">            while (root.getCause() != null) {</span>
+<span class="fc" id="L74">                root = root.getCause();</span>
+            }
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">            String msg = root.getMessage() != null ? root.getMessage() : &quot;Register failed&quot;;</span>
+<span class="fc" id="L77">            return ResponseEntity.badRequest().body(msg);</span>
+        }
+    }
+
+    @PutMapping(&quot;/profile&quot;)
+    public ResponseEntity&lt;User&gt; update(@RequestBody User user, Principal principal) {
+
+        try {
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            if (!principal.getName().equals(user.getEmail())) throw new IllegalArgumentException();</span>
+<span class="fc" id="L86">            return ResponseEntity.ok(userService.update(user));</span>
+<span class="fc" id="L87">        } catch (Exception e) {</span>
+<span class="fc" id="L88">            return ResponseEntity.badRequest().build();</span>
+        }
+    }
+
+    @GetMapping(&quot;/profile/{email}&quot;)
+    public ResponseEntity&lt;User&gt; getProfile(@PathVariable(&quot;email&quot;) String email, Principal principal) {
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (principal.getName().equals(email)) {</span>
+<span class="fc" id="L95">            return ResponseEntity.ok(userService.findOne(email));</span>
+        } else {
+<span class="fc" id="L97">            return ResponseEntity.badRequest().build();</span>
+        }
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
