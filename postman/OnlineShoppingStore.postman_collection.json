@@ -2195,21 +2195,24 @@
           "name": "User",
           "item": [
             {
-              "name": "TC-REG-BVA-01: Baseline (all Nominal)",
+              "name": "TC-REG-BVA-01 Baseline",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2219,7 +2222,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u949_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0930718094\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"bva_nom_{{$timestamp}}@email.com\",\n  \"password\": \"password1\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0912345678\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2234,21 +2242,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-02: email min (6 chars)",
+              "name": "TC-REG-BVA-02 email min",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2258,7 +2269,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u6@a.c\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0979095084\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"a@b.co\",\n  \"password\": \"password1\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0912345678\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2273,21 +2289,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-03: email min+ (7 chars)",
+              "name": "TC-REG-BVA-03 email min+",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2297,7 +2316,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u35@a.c\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0921395656\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"ab@c.co\",\n  \"password\": \"password1\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0912345678\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2312,21 +2336,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-04: email max- (49 chars)",
+              "name": "TC-REG-BVA-04 email max-",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2336,7 +2363,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u295_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0929622385\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@test.com\",\n  \"password\": \"password1\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0912345678\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2351,21 +2383,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-05: email max (50 chars)",
+              "name": "TC-REG-BVA-05 email max",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2375,7 +2410,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u342_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0972512911\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@test.com\",\n  \"password\": \"password1\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0912345678\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2390,21 +2430,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-06: name min (2 chars)",
+              "name": "TC-REG-BVA-06 name min",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2414,7 +2457,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u769_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"AB\",\n  \"phone\": \"0944961796\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"n6_{$timestamp}@email.com\",\n  \"password\": \"password1\",\n  \"name\": \"AB\",\n  \"phone\": \"0912345678\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2429,21 +2477,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-07: name min+ (3 chars)",
+              "name": "TC-REG-BVA-07 name min+",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2453,7 +2504,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u288_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"ABC\",\n  \"phone\": \"0933194017\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"n7_{$timestamp}@email.com\",\n  \"password\": \"password1\",\n  \"name\": \"ABC\",\n  \"phone\": \"0912345678\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2468,21 +2524,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-08: name max- (49 chars)",
+              "name": "TC-REG-BVA-08 name max-",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2492,7 +2551,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u501_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"phone\": \"0919477793\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"n8_{$timestamp}@email.com\",\n  \"password\": \"password1\",\n  \"name\": \"NAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"phone\": \"0912345678\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2507,21 +2571,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-09: name max (50 chars)",
+              "name": "TC-REG-BVA-09 name max",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2531,7 +2598,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u317_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"phone\": \"0985402288\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"n9_{$timestamp}@email.com\",\n  \"password\": \"password1\",\n  \"name\": \"NAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"phone\": \"0912345678\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2546,21 +2618,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-10: password min (3 chars)",
+              "name": "TC-REG-BVA-10 password min",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2570,7 +2645,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u577_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0932099232\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"p10_{$timestamp}@email.com\",\n  \"password\": \"abc\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0912345678\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2585,21 +2665,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-11: password min+ (4 chars)",
+              "name": "TC-REG-BVA-11 password min+",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2609,7 +2692,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u699_aaaa@test.com\",\n  \"password\": \"1234\",\n  \"name\": \"Test User\",\n  \"phone\": \"0943935921\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"p11_{$timestamp}@email.com\",\n  \"password\": \"abcd\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0912345678\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2624,21 +2712,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-12: password max- (19 chars)",
+              "name": "TC-REG-BVA-12 password max-",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2648,7 +2739,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u523_aaaa@test.com\",\n  \"password\": \"aaaaaaaaaaaaaaaaaaa\",\n  \"name\": \"Test User\",\n  \"phone\": \"0947279293\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"p12_{$timestamp}@email.com\",\n  \"password\": \"abcdefghij123456789\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0912345678\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2663,21 +2759,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-13: password max (20 chars)",
+              "name": "TC-REG-BVA-13 password max",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2687,7 +2786,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u753_aaaa@test.com\",\n  \"password\": \"aaaaaaaaaaaaaaaaaaaa\",\n  \"name\": \"Test User\",\n  \"phone\": \"0984254463\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"p13_{$timestamp}@email.com\",\n  \"password\": \"abcdefghij1234567890\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0912345678\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2702,21 +2806,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-14: phone min (8 digits)",
+              "name": "TC-REG-BVA-14 phone min",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2726,7 +2833,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u121_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"09890762\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"ph14_{$timestamp}@email.com\",\n  \"password\": \"password1\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"09123456\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2741,21 +2853,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-15: phone min+ (9 digits)",
+              "name": "TC-REG-BVA-15 phone min+",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2765,7 +2880,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u392_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"098255881\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"ph15_{$timestamp}@email.com\",\n  \"password\": \"password1\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"091234567\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2780,21 +2900,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-16: phone max- (11 digits)",
+              "name": "TC-REG-BVA-16 phone max-",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2804,7 +2927,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u648_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"09991209837\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"ph16_{$timestamp}@email.com\",\n  \"password\": \"password1\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"09123456789\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2819,21 +2947,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-17: phone max (12 digits)",
+              "name": "TC-REG-BVA-17 phone max",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2843,7 +2974,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u817_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"098177631852\",\n  \"address\": \"123 Test Street\"\n}"
+                  "raw": "{\n  \"email\": \"ph17_{$timestamp}@email.com\",\n  \"password\": \"password1\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"091234567890\",\n  \"address\": \"123 Duong ABC, Q1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2858,21 +2994,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-18: address min (5 chars)",
+              "name": "TC-REG-BVA-18 address min",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2882,7 +3021,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u638_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0985403496\",\n  \"address\": \"ABCDE\"\n}"
+                  "raw": "{\n  \"email\": \"a18_{$timestamp}@email.com\",\n  \"password\": \"password1\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0912345678\",\n  \"address\": \"ABCDE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2897,21 +3041,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-19: address min+ (6 chars)",
+              "name": "TC-REG-BVA-19 address min+",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2921,7 +3068,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u820_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0996406760\",\n  \"address\": \"ABCDEF\"\n}"
+                  "raw": "{\n  \"email\": \"a19_{$timestamp}@email.com\",\n  \"password\": \"password1\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0912345678\",\n  \"address\": \"ABCDEF\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2936,21 +3088,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-20: address max- (99 chars)",
+              "name": "TC-REG-BVA-20 address max-",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
+                "auth": {
+                  "type": "noauth"
+                },
                 "method": "POST",
                 "header": [
                   {
@@ -2960,7 +3115,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u909_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0923173809\",\n  \"address\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\n}"
+                  "raw": "{\n  \"email\": \"a20_{$timestamp}@email.com\",\n  \"password\": \"password1\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0912345678\",\n  \"address\": \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -2975,60 +3135,24 @@
               "response": []
             },
             {
-              "name": "TC-REG-BVA-21: address max (100 chars)",
+              "name": "TC-REG-BVA-21 address max",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
+                      "pm.test(\"BVA Register - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
               "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"email\": \"u984_aaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0998876368\",\n  \"address\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\n}"
+                "auth": {
+                  "type": "noauth"
                 },
-                "url": {
-                  "raw": "{{base_url}}/register",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "register"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-REG-ROB-01: password min- (2 chars)",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"Status code is 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
                 "method": "POST",
                 "header": [
                   {
@@ -3038,124 +3162,12 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"u531_aaaa@test.com\",\n  \"password\": \"12\",\n  \"name\": \"Test User\",\n  \"phone\": \"0931680966\",\n  \"address\": \"123 Test Street\"\n}"
-                },
-                "url": {
-                  "raw": "{{base_url}}/register",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "register"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-REG-ROB-02: password max+ (21 chars)",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"Status code is 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
+                  "raw": "{\n  \"email\": \"a21_{$timestamp}@email.com\",\n  \"password\": \"password1\",\n  \"name\": \"Nguyen Van A\",\n  \"phone\": \"0912345678\",\n  \"address\": \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
                   }
-                }
-              ],
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"email\": \"u890_aaaa@test.com\",\n  \"password\": \"aaaaaaaaaaaaaaaaaaaaa\",\n  \"name\": \"Test User\",\n  \"phone\": \"0941820825\",\n  \"address\": \"123 Test Street\"\n}"
-                },
-                "url": {
-                  "raw": "{{base_url}}/register",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "register"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-REG-ROB-03: email min- (5 chars)",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"Status code is 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"email\": \"aaaaa\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0998058953\",\n  \"address\": \"123 Test Street\"\n}"
-                },
-                "url": {
-                  "raw": "{{base_url}}/register",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "register"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-REG-ROB-04: email max+ (51 chars)",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"Status code is 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"email\": \"u162_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@test.com\",\n  \"password\": \"123\",\n  \"name\": \"Test User\",\n  \"phone\": \"0914519297\",\n  \"address\": \"123 Test Street\"\n}"
                 },
                 "url": {
                   "raw": "{{base_url}}/register",
@@ -3175,17 +3187,17 @@
           "name": "Cart",
           "item": [
             {
-              "name": "TC-CART-BVA-01: Baseline (productId=B0002, qty=5) → Accept 200",
+              "name": "TC-CART-BVA-01 Baseline",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-CART-BVA-01: Baseline (productId=B0002, qty=5) → 200\", function () {",
+                      "pm.test(\"BVA Cart Add - 200\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -3209,7 +3221,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"B0002\",\n   \"quantity\": 5\n}",
+                  "raw": "{\n  \"productId\": \"B0002\",\n  \"quantity\": 5\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3230,17 +3242,17 @@
               "response": []
             },
             {
-              "name": "TC-CART-BVA-02: productId min (ABC, 3 chars) → Accept 200",
+              "name": "TC-CART-BVA-02 productId min",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-CART-BVA-02: productId min (ABC, 3 chars) → 200\", function () {",
+                      "pm.test(\"BVA Cart Add - 200\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -3264,7 +3276,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"ABC\",\n   \"quantity\": 5\n}",
+                  "raw": "{\n  \"productId\": \"ABC\",\n  \"quantity\": 5\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3285,17 +3297,17 @@
               "response": []
             },
             {
-              "name": "TC-CART-BVA-03: productId min+ (ABCD, 4 chars) → Accept 200",
+              "name": "TC-CART-BVA-03 productId min+",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-CART-BVA-03: productId min+ (ABCD, 4 chars) → 200\", function () {",
+                      "pm.test(\"BVA Cart Add - 200\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -3319,7 +3331,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"ABCD\",\n   \"quantity\": 5\n}",
+                  "raw": "{\n  \"productId\": \"ABCD\",\n  \"quantity\": 5\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3340,17 +3352,17 @@
               "response": []
             },
             {
-              "name": "TC-CART-BVA-04: productId max- (29 chars) → Accept 200",
+              "name": "TC-CART-BVA-04 productId max-",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-CART-BVA-04: productId max- (29 chars) → 200\", function () {",
+                      "pm.test(\"BVA Cart Add - 200\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -3374,7 +3386,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n   \"quantity\": 5\n}",
+                  "raw": "{\n  \"productId\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"quantity\": 5\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3395,17 +3407,17 @@
               "response": []
             },
             {
-              "name": "TC-CART-BVA-05: productId max (30 chars) → Accept 200",
+              "name": "TC-CART-BVA-05 productId max",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-CART-BVA-05: productId max (30 chars) → 200\", function () {",
+                      "pm.test(\"BVA Cart Add - 200\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -3429,7 +3441,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n   \"quantity\": 5\n}",
+                  "raw": "{\n  \"productId\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"quantity\": 5\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3450,17 +3462,17 @@
               "response": []
             },
             {
-              "name": "TC-CART-BVA-06: quantity min (1) → Accept 200",
+              "name": "TC-CART-BVA-06 quantity min",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-CART-BVA-06: quantity min (1) → 200\", function () {",
+                      "pm.test(\"BVA Cart Add - 200\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -3484,7 +3496,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"B0002\",\n   \"quantity\": 1\n}",
+                  "raw": "{\n  \"productId\": \"B0002\",\n  \"quantity\": 1\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3505,17 +3517,17 @@
               "response": []
             },
             {
-              "name": "TC-CART-BVA-07: quantity min+ (2) → Accept 200",
+              "name": "TC-CART-BVA-07 quantity min+",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-CART-BVA-07: quantity min+ (2) → 200\", function () {",
+                      "pm.test(\"BVA Cart Add - 200\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -3539,7 +3551,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"B0002\",\n   \"quantity\": 2\n}",
+                  "raw": "{\n  \"productId\": \"B0002\",\n  \"quantity\": 2\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3560,17 +3572,17 @@
               "response": []
             },
             {
-              "name": "TC-CART-BVA-08: quantity max- (998) → Accept 200",
+              "name": "TC-CART-BVA-08 quantity max-",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-CART-BVA-08: quantity max- (998) → 200\", function () {",
+                      "pm.test(\"BVA Cart Add - 200\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -3594,7 +3606,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"B0002\",\n   \"quantity\": 998\n}",
+                  "raw": "{\n  \"productId\": \"B0002\",\n  \"quantity\": 998\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3615,17 +3627,17 @@
               "response": []
             },
             {
-              "name": "TC-CART-BVA-09: quantity max (999) → Accept 200",
+              "name": "TC-CART-BVA-09 quantity max",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-CART-BVA-09: quantity max (999) → 200\", function () {",
+                      "pm.test(\"BVA Cart Add - 200\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -3649,227 +3661,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"B0002\",\n   \"quantity\": 999\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/cart/add",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "cart",
-                    "add"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-CART-ROB-01: quantity min- (0) → Reject 400",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"TC-CART-ROB-01: quantity min- (0) → 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{customer_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n   \"productId\": \"B0002\",\n   \"quantity\": 0\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/cart/add",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "cart",
-                    "add"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-CART-ROB-02: quantity min- (-1) → Reject 400",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"TC-CART-ROB-02: quantity min- (-1) → 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{customer_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n   \"productId\": \"B0002\",\n   \"quantity\": -1\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/cart/add",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "cart",
-                    "add"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-CART-ROB-03: productId min- (AB, 2 chars) → Reject 400",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"TC-CART-ROB-03: productId min- (AB, 2 chars) → 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{customer_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n   \"productId\": \"AB\",\n   \"quantity\": 5\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/cart/add",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "cart",
-                    "add"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-CART-ROB-04: productId max+ (31 chars) → Reject 400",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"TC-CART-ROB-04: productId max+ (31 chars) → 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{customer_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n   \"productId\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n   \"quantity\": 5\n}",
+                  "raw": "{\n  \"productId\": \"B0002\",\n  \"quantity\": 999\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3895,17 +3687,17 @@
           "name": "Product",
           "item": [
             {
-              "name": "TC-PROD-BVA-01: Baseline → Accept 200",
+              "name": "TC-PROD-BVA-01 Baseline",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-01: Baseline → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -3920,7 +3712,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -3929,7 +3721,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD001\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 40,\n  \"productStock\": 100,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3937,31 +3729,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-02: productId min (3 chars) → Accept 200",
+              "name": "TC-PROD-BVA-02 name min",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-02: productId min (3 chars) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -3976,7 +3769,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -3985,7 +3778,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"ABC\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"ABC\",\n  \"productPrice\": 40,\n  \"productStock\": 100,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3993,31 +3786,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-03: productId min+ (4 chars) → Accept 200",
+              "name": "TC-PROD-BVA-03 name min+",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-03: productId min+ (4 chars) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4032,7 +3826,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4041,7 +3835,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"ABCD\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"ABCD\",\n  \"productPrice\": 40,\n  \"productStock\": 100,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4049,31 +3843,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-04: productId max- (29 chars) → Accept 200",
+              "name": "TC-PROD-BVA-04 name max-",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-04: productId max- (29 chars) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4088,7 +3883,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4097,7 +3892,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"productPrice\": 40,\n  \"productStock\": 100,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4105,31 +3900,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-05: productId max (30 chars) → Accept 200",
+              "name": "TC-PROD-BVA-05 name max",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-05: productId max (30 chars) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4144,7 +3940,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4153,7 +3949,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"productPrice\": 40,\n  \"productStock\": 100,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4161,31 +3957,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-06: productName min (3 chars) → Accept 200",
+              "name": "TC-PROD-BVA-06 price min",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-06: productName min (3 chars) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4200,7 +3997,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4209,7 +4006,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD006\",\n   \"productName\": \"ABC\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 0.01,\n  \"productStock\": 100,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4217,31 +4014,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-07: productName min+ (4 chars) → Accept 200",
+              "name": "TC-PROD-BVA-07 price min+",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-07: productName min+ (4 chars) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4256,7 +4054,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4265,7 +4063,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD007\",\n   \"productName\": \"ABCD\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 0.02,\n  \"productStock\": 100,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4273,31 +4071,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-08: productName max- (99 chars) → Accept 200",
+              "name": "TC-PROD-BVA-08 price max-",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-08: productName max- (99 chars) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4312,7 +4111,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4321,7 +4120,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD008\",\n   \"productName\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 999999,\n  \"productStock\": 100,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4329,31 +4128,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-09: productName max (100 chars) → Accept 200",
+              "name": "TC-PROD-BVA-09 price max",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-09: productName max (100 chars) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4368,7 +4168,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4377,7 +4177,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD009\",\n   \"productName\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 1000000,\n  \"productStock\": 100,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4385,31 +4185,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-10: productPrice min (0.01) → Accept 200",
+              "name": "TC-PROD-BVA-10 stock min",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-10: productPrice min (0.01) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4424,7 +4225,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4433,7 +4234,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD010\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 0.01,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 40,\n  \"productStock\": 0,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4441,31 +4242,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-11: productPrice min+ (0.02) → Accept 200",
+              "name": "TC-PROD-BVA-11 stock min+",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-11: productPrice min+ (0.02) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4480,7 +4282,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4489,7 +4291,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD011\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 0.02,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 40,\n  \"productStock\": 1,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4497,31 +4299,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-12: productPrice max- (999999) → Accept 200",
+              "name": "TC-PROD-BVA-12 stock max-",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-12: productPrice max- (999999) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4536,7 +4339,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4545,7 +4348,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD012\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 999999,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 40,\n  \"productStock\": 9998,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4553,31 +4356,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-13: productPrice max (1000000) → Accept 200",
+              "name": "TC-PROD-BVA-13 stock max",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-13: productPrice max (1000000) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4592,7 +4396,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4601,7 +4405,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD013\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 1000000,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 40,\n  \"productStock\": 9999,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4609,31 +4413,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-14: productStock min (0) → Accept 200",
+              "name": "TC-PROD-BVA-14 desc min",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-14: productStock min (0) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4648,7 +4453,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4657,7 +4462,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD014\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 0,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 40,\n  \"productStock\": 100,\n  \"productDescription\": \"\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4665,31 +4470,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-15: productStock min+ (1) → Accept 200",
+              "name": "TC-PROD-BVA-15 desc min+",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-15: productStock min+ (1) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4704,7 +4510,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4713,7 +4519,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD015\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 1,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 40,\n  \"productStock\": 100,\n  \"productDescription\": \"A\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4721,31 +4527,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-16: productStock max- (9998) → Accept 200",
+              "name": "TC-PROD-BVA-16 desc max-",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-16: productStock max- (9998) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4760,7 +4567,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4769,7 +4576,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD016\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 9998,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 40,\n  \"productStock\": 100,\n  \"productDescription\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4777,31 +4584,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-17: productStock max (9999) → Accept 200",
+              "name": "TC-PROD-BVA-17 desc max",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-17: productStock max (9999) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4816,7 +4624,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4825,7 +4633,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD017\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 9999,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 40,\n  \"productStock\": 100,\n  \"productDescription\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4833,31 +4641,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-18: productDescription min (empty) → Accept 200",
+              "name": "TC-PROD-BVA-18 category min",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-18: productDescription min (empty) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4872,7 +4681,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4881,7 +4690,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD018\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 40,\n  \"productStock\": 100,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 0,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4889,31 +4698,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-19: productDescription min+ (1 char) → Accept 200",
+              "name": "TC-PROD-BVA-19 category min+",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-19: productDescription min+ (1 char) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4928,7 +4738,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4937,7 +4747,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD019\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"A\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 40,\n  \"productStock\": 100,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 1,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4945,31 +4755,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-20: productDescription max- (199 chars) → Accept 200",
+              "name": "TC-PROD-BVA-20 category max-",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-20: productDescription max- (199 chars) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -4984,7 +4795,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -4993,7 +4804,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD020\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 40,\n  \"productStock\": 100,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 2,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -5001,31 +4812,32 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "TC-PROD-BVA-21: productDescription max (200 chars) → Accept 200",
+              "name": "TC-PROD-BVA-21 category max",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"TC-PROD-BVA-21: productDescription max (200 chars) → 200\", function () {",
+                      "pm.test(\"BVA Edit Product - 200 OK\", function () {",
                       "    pm.response.to.have.status(200);",
                       "});"
-                    ],
-                    "type": "text/javascript"
+                    ]
                   }
                 }
               ],
@@ -5040,7 +4852,7 @@
                     }
                   ]
                 },
-                "method": "POST",
+                "method": "PUT",
                 "header": [
                   {
                     "key": "Content-Type",
@@ -5049,7 +4861,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n   \"productId\": \"PROD021\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
+                  "raw": "{\n  \"productId\": \"B0004\",\n  \"productName\": \"Sample Product\",\n  \"productPrice\": 40,\n  \"productStock\": 100,\n  \"productDescription\": \"Sample description\",\n  \"productIcon\": \"https://example.com/img.png\",\n  \"categoryType\": 3,\n  \"productStatus\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -5057,462 +4869,15 @@
                   }
                 },
                 "url": {
-                  "raw": "{{base_url}}/seller/product/new",
+                  "raw": "{{base_url}}/seller/product/B0004/edit",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
                     "seller",
                     "product",
-                    "new"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-PROD-ROB-01: productId min- (AB, 2 chars) → Reject 400",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"TC-PROD-ROB-01: productId min- (AB, 2 chars) → 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{manager_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n   \"productId\": \"AB\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/seller/product/new",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "seller",
-                    "product",
-                    "new"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-PROD-ROB-02: productId max+ (31 chars) → Reject 400",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"TC-PROD-ROB-02: productId max+ (31 chars) → 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{manager_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n   \"productId\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/seller/product/new",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "seller",
-                    "product",
-                    "new"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-PROD-ROB-03: productName min- (AB, 2 chars) → Reject 400",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"TC-PROD-ROB-03: productName min- (AB, 2 chars) → 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{manager_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n   \"productName\": \"AB\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0,\n   \"productId\": \"PRODROB03\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/seller/product/new",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "seller",
-                    "product",
-                    "new"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-PROD-ROB-04: productName max+ (101 chars) → Reject 400",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"TC-PROD-ROB-04: productName max+ (101 chars) → 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{manager_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n   \"productName\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0,\n   \"productId\": \"PRODROB04\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/seller/product/new",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "seller",
-                    "product",
-                    "new"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-PROD-ROB-05: productPrice min- (0) → Reject 400",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"TC-PROD-ROB-05: productPrice min- (0) → 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{manager_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 0,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0,\n   \"productId\": \"PRODROB05\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/seller/product/new",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "seller",
-                    "product",
-                    "new"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-PROD-ROB-06: productPrice min- (-1) → Reject 400",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"TC-PROD-ROB-06: productPrice min- (-1) → 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{manager_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n   \"productName\": \"Sample Product\",\n   \"productPrice\": -1,\n   \"productStock\": 100,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0,\n   \"productId\": \"PRODROB06\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/seller/product/new",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "seller",
-                    "product",
-                    "new"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-PROD-ROB-07: productStock min- (-1) → Reject 400",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"TC-PROD-ROB-07: productStock min- (-1) → 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{manager_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": -1,\n   \"productDescription\": \"Sample description\",\n   \"categoryType\": 0,\n   \"productStatus\": 0,\n   \"productId\": \"PRODROB07\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/seller/product/new",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "seller",
-                    "product",
-                    "new"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-PROD-ROB-08: productDescription max+ (201 chars) → Reject 400",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"TC-PROD-ROB-08: productDescription max+ (201 chars) → 400\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{manager_token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n   \"productName\": \"Sample Product\",\n   \"productPrice\": 40,\n   \"productStock\": 100,\n   \"productDescription\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n   \"categoryType\": 0,\n   \"productStatus\": 0,\n   \"productId\": \"PRODROB08\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{base_url}}/seller/product/new",
-                  "host": [
-                    "{{base_url}}"
-                  ],
-                  "path": [
-                    "seller",
-                    "product",
-                    "new"
+                    "B0004",
+                    "edit"
                   ]
                 }
               },
